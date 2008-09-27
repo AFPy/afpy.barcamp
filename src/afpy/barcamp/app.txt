@@ -5,7 +5,7 @@ Do a functional doctest test on the app.
 
 Let's first create an instance of Afpy.barcamp at the top level:
 
-   >>> from afpybarcamp.app import Afpy.barcamp
+   >>> from afpy.barcamp.app import Afpy.barcamp
    >>> root = getRootFolder()
    >>> root['app'] = Afpy.barcamp()
 

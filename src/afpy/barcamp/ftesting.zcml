@@ -1,11 +1,11 @@
 <configure
    xmlns="http://namespaces.zope.org/zope"
-   i18n_domain="afpybarcamp"
-   package="afpybarcamp"
+   i18n_domain="afpy.barcamp"
+   package="afpy.barcamp"
    >
 
   <include package="grok" />
-  <include package="afpybarcamp" />
+  <include package="afpy.barcamp" />
 
   <!-- Typical functional testing security setup -->
   <securityPolicy
