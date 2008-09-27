@@ -1,0 +1,11 @@
+setup.py
+src/afpy.barcamp.egg-info/PKG-INFO
+src/afpy.barcamp.egg-info/SOURCES.txt
+src/afpy.barcamp.egg-info/dependency_links.txt
+src/afpy.barcamp.egg-info/entry_points.txt
+src/afpy.barcamp.egg-info/not-zip-safe
+src/afpy.barcamp.egg-info/requires.txt
+src/afpy.barcamp.egg-info/top_level.txt
+src/afpybarcamp/__init__.py
+src/afpybarcamp/app.py
+src/afpybarcamp/tests.py
