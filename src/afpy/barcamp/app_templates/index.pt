@@ -7,5 +7,18 @@
   <p>Your Grok application is up and running.
   Edit <code>afpy/barcamp/app_templates/index.pt</code> to change
   this page.</p>
+
+<h1>Event list</h1>
+
+<ul>
+    <li tal:repeat="event python:context.values()">
+        <a href="#"
+           tal:content="event/name"
+           tal:attributes="href event/__name__">
+            Event name
+        </a>
+    </li>
+</ul>
+
 </body>
 </html>
