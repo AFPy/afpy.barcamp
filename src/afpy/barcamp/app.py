@@ -1,6 +1,6 @@
 import grok
 
-class Afpy.barcamp(grok.Application, grok.Container):
+class AfpyBarcamp(grok.Application, grok.Container):
     pass
 
 class Index(grok.View):
