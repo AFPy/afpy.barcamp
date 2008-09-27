@@ -4,10 +4,10 @@ from zope.interface import implements, Interface
 
 class IEvent(Interface):
 
-    start_date = Datetime(title=u'start date')
-    end_date = Datetime(title=u'end date')
     name = TextLine(title=u'name')
     address = TextLine(title=u'address')
+    start_date = Datetime(title=u'start date')
+    end_date = Datetime(title=u'end date')
 
 
 class Event(grok.Container):
@@ -21,9 +21,15 @@ class Event(grok.Container):
         self.start_date = start_date
         self.end_date = end_date
 
-class Index(grok.View):
+class Index(grok.DisplayForm):
     """view of the event"""
+    form_fields = grok.AutoFields(IEvent)
 
-    def render(self): pass
+class EditEvent(grok.EditForm):
+    """view to edit the event"""
+    form_fields = grok.AutoFields(IEvent)
 
-
+    @grok.action('Apply')
+    def apply(self, **data):
+        self.applyData(self.context, **data)
+        self.redirect(self.url('index'))
