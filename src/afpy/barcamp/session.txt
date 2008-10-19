@@ -1,0 +1,13 @@
+Afpy barcamp
+============
+
+:Test-Layer: unit
+
+
+Session
+-------
+We can create a session:
+
+  >>> from afpy.barcamp.session import Session
+  >>> grokintro = Session(u'Introduction to Grok')
+

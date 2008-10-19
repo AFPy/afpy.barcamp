@@ -1,0 +1,24 @@
+Afpy barcamp
+============
+
+:Test-Layer: unit
+
+pycon2009/sessions/introduction-a-python/slides.pdf/@@comments
+pycon2009/people/ogrisel/photo
+
+  >>> from datetime import date
+
+Event
+-----
+We can create an event:
+
+  >>> from afpy.barcamp.event import Event
+  >>> pyconfr = Event(u'Pycon FR 2009')
+
+The event can store several informations:
+
+  >>> pyconfr.address = u'La Villette'
+  >>> pyconfr.start_date = date(2009, 6, 6)
+  >>> pyconfr.end_date = date(2009, 6, 8)
+
+

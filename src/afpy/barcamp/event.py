@@ -1,8 +1,11 @@
-import grok
-from zope.schema import Datetime, TextLine
+from zope.app.container.interfaces import IContainer
 from zope.interface import implements, Interface
+from zope.schema import Datetime, TextLine
+from zope.app.folder import Folder
+import grok
 
-class IEvent(Interface):
+class IEvent(IContainer):
+    """interface of an event"""
 
     name = TextLine(title=u'name')
     address = TextLine(title=u'address')
@@ -12,14 +15,16 @@ class IEvent(Interface):
 
 class Event(grok.Container):
     """the event itself"""
-    implements(IEvent)
 
-    def __init__(self, name, address, start_date, end_date):
+    implements(IEvent)
+    name = address = start_date = end_date = None
+
+    def __init__(self, name=None):
         super(Event, self).__init__()
         self.name = name
-        self.address = address
-        self.start_date = start_date
-        self.end_date = end_date
+        self['sessions'] = Folder()
+        self['people'] = Folder()
+
 
 class Index(grok.DisplayForm):
     """view of the event"""

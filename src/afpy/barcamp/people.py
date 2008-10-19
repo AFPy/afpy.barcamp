@@ -3,22 +3,23 @@ from zope.interface import Interface, implements
 from zope.schema import TextLine
 import grok
 
-class ISession(IContainer):
-    """interface of a session"""
-
+class IPeople(IContainer):
+    """interface of a people"""
+    
     name = TextLine(title=u'name')
 
 
-class Session(grok.Container):
-    """the session (egs a presentation or tutorial"""
+class People(grok.Container):
+    """the person that is supposed to make a presentation"""
 
-    implements(ISession)
+    implements(IPeople)
 
     def __init__(self, name):
+        super(People, self).__init__()
         self.name = name
 
 
 class Index(grok.View):
-    """the view of the presentation"""
+    """the view of the person"""
 
     def render(self): pass

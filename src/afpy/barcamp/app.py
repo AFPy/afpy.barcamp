@@ -18,7 +18,8 @@ class AddEvent(grok.Form):
 
     @grok.action('Add event')
     def add(self, **data):
-        obj = Event(**data)
+        obj = Event()
+        self.applyData(obj, **data)
         # TODO generate a correct blurb that removes accents
         name = data['name'].lower().replace(' ', '_')
         self.context[name] = obj
