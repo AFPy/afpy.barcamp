@@ -19,9 +19,10 @@ class Session(grok.Container):
 
 
 class Index(grok.DisplayForm):
-    """view of the event
+    """view of the session
     """
     form_fields = grok.AutoFields(ISession)
+    grok.context(Session)
 
 
 class Edit(grok.EditForm):
@@ -36,11 +37,11 @@ class Sessions(grok.Container):
     """
 
 
-class Index(Contents, grok.View):
+class SessionList(Contents, grok.View):
     """view of the list of sessions
     """
+    grok.name('index')
     grok.context(Sessions)
-    grok.template('sessionlist.pt')
 
 
 
