@@ -1,24 +1,46 @@
+from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
-from zope.interface import Interface, implements
-from zope.schema import TextLine
+from zope.interface import implements, Interface
+from zope.schema import Datetime, TextLine
 import grok
 
 class ISession(IContainer):
-    """interface of a session"""
-
+    """interface of a session
+    """
     name = TextLine(title=u'name')
+    date = Datetime(title=u'date')
 
 
 class Session(grok.Container):
-    """the session (egs a presentation or tutorial"""
-
+    """the session itself
+    """
     implements(ISession)
-
-    def __init__(self, name):
-        self.name = name
+    name = date = None
 
 
-class Index(grok.View):
-    """the view of the presentation"""
+class Index(grok.DisplayForm):
+    """view of the event
+    """
+    form_fields = grok.AutoFields(ISession)
 
-    def render(self): pass
+
+class Edit(grok.EditForm):
+    """edit form for the session
+    """
+    form_fields = grok.AutoFields(ISession)
+    grok.context(Session)
+
+
+class Sessions(grok.Container):
+    """the container for sessions
+    """
+
+
+class Index(Contents, grok.View):
+    """view of the list of sessions
+    """
+    grok.context(Sessions)
+    grok.template('sessionlist.pt')
+
+
+

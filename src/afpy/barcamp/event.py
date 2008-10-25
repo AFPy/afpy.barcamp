@@ -5,8 +5,8 @@ from zope.app.folder import Folder
 import grok
 
 class IEvent(IContainer):
-    """interface of an event"""
-
+    """interface of an event
+    """
     name = TextLine(title=u'name')
     address = TextLine(title=u'address')
     start_date = Datetime(title=u'start date')
@@ -14,8 +14,8 @@ class IEvent(IContainer):
 
 
 class Event(grok.Container):
-    """the event itself"""
-
+    """the event itself
+    """
     implements(IEvent)
     name = address = start_date = end_date = None
 
@@ -27,11 +27,14 @@ class Event(grok.Container):
 
 
 class Index(grok.DisplayForm):
-    """view of the event"""
+    """view of the event
+    """
     form_fields = grok.AutoFields(IEvent)
 
+
 class EditEvent(grok.EditForm):
-    """view to edit the event"""
+    """view to edit the event
+    """
     form_fields = grok.AutoFields(IEvent)
 
     @grok.action('Apply')
