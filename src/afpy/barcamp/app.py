@@ -6,6 +6,7 @@ from zope.interface import Interface
 class AfpyBarcamp(grok.Application, grok.Container):
     pass
 
+
 class Index(Contents, grok.View):
     pass # see app_templates/index.pt
 

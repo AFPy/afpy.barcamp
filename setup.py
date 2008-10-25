@@ -21,6 +21,7 @@ setup(name='afpy.barcamp',
       zip_safe=False,
       install_requires=['setuptools',
                         'grok',
+                        'grokui.admin',
                         'z3c.testsetup',
                         # Add extra requirements here
                         ],
