@@ -19,7 +19,8 @@
 
   <body tal:attributes="onload body_onload | nothing">
 
-<div style="background:#EEEEEE; margin:1em; text-align:center">Afpy Barcamp</div>
+<div style="background:#EEEEEE; margin:1em; text-align:center">Afpy Barcamp (see
+barcampmacros.pt for the layout)</div>
 
    <metal:block define-slot="body" />
 

@@ -5,7 +5,9 @@
 <body>
 <div metal:fill-slot="body">
 
-<h1>People list</h1>
+<h1>Session list</h1>
+
+<a href="..">return to event</a>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"
@@ -67,8 +69,7 @@
                                      checked request/ids_checked|nothing;"/>
             </td>
             <td><a href="#"
-                 tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                 tal:attributes="href url"
                  tal:content="structure item/icon|default">
                 </a
                 ><span tal:condition="item/rename"
@@ -79,8 +80,7 @@
                      /></span
                 ><span tal:condition="not:item/rename">
                   <a href="#"
-                     tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                     tal:attributes="href url"
                      tal:content="item/id"
                      >foo</a
                   ><a href="#"
@@ -189,7 +189,7 @@
         //-->
     </script>
 
-<a href="addevent">add an event</a>
+<a href="add">add a session</a>
 
 </div>
 </body>

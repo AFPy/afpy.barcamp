@@ -67,8 +67,7 @@
                                      checked request/ids_checked|nothing;"/>
             </td>
             <td><a href="#"
-                 tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                 tal:attributes="href url"
                  tal:content="structure item/icon|default">
                 </a
                 ><span tal:condition="item/rename"
@@ -79,8 +78,7 @@
                      /></span
                 ><span tal:condition="not:item/rename">
                   <a href="#"
-                     tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                     tal:attributes="href url"
                      tal:content="item/id"
                      >foo</a
                   ><a href="#"

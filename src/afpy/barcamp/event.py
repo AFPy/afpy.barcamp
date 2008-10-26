@@ -1,7 +1,9 @@
+from afpy.barcamp.people import PeopleContainer
+from afpy.barcamp.session import SessionContainer
 from zope.app.container.interfaces import IContainer
+from zope.app.folder import Folder
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
-from zope.app.folder import Folder
 import grok
 
 class IEvent(IContainer):
@@ -22,8 +24,8 @@ class Event(grok.Container):
     def __init__(self, name=None):
         super(Event, self).__init__()
         self.name = name
-        self['sessions'] = Folder()
-        self['people'] = Folder()
+        self['sessions'] = SessionContainer()
+        self['people'] = PeopleContainer()
 
 
 class Index(grok.DisplayForm):

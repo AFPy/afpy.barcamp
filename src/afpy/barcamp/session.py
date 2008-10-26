@@ -1,3 +1,4 @@
+from grokcore import formlib
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.interface import implements, Interface
@@ -18,30 +19,47 @@ class Session(grok.Container):
     name = date = None
 
 
-class Index(grok.DisplayForm):
+class Index(formlib.DisplayForm):
     """view of the session
     """
     form_fields = grok.AutoFields(ISession)
     grok.context(Session)
 
 
-class Edit(grok.EditForm):
+class Edit(formlib.EditForm):
     """edit form for the session
     """
     form_fields = grok.AutoFields(ISession)
     grok.context(Session)
 
 
-class Sessions(grok.Container):
+class SessionContainer(grok.Container):
     """the container for sessions
     """
 
 
-class SessionList(Contents, grok.View):
+class SessionListView(Contents, grok.View):
     """view of the list of sessions
     """
     grok.name('index')
-    grok.context(Sessions)
+    grok.context(SessionContainer)
 
 
+class Add(formlib.AddForm):
+    """add form for a session
+    """
+    grok.context(SessionContainer)
+    form_fields = grok.AutoFields(ISession)
+
+    def setUpWidgets(self, ignore_request = False):
+        super(Add, self).setUpWidgets(ignore_request)
+
+    @formlib.action('Add session')
+    def add(self, **data):
+        obj = Session()
+        self.applyData(obj, **data)
+        # TODO generate a correct blurb that removes accents
+        name = data['name'].lower().replace(' ', '_')
+        self.context[name] = obj
+        self.redirect(self.url('index'))
 
