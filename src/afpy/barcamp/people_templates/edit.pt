@@ -4,6 +4,8 @@
 
 <body metal:fill-slot="body">
 
+<h1 tal:content="context/name">event title</h1>
+
 <a href="..">return to list</a>
 
 <form action="." tal:attributes="action request/URL" method="post"
