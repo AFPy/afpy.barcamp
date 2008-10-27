@@ -1,0 +1,8 @@
+div.label {
+    float:left;
+    margin-right: 1em;
+    min-width: 9em;
+}
+div.row {
+    background: #EEEEEE;
+}
