@@ -1,4 +1,5 @@
 from afpy.barcamp.people import PeopleContainer
+from grokcore import formlib
 from afpy.barcamp.session import SessionContainer
 from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
@@ -28,18 +29,18 @@ class Event(grok.Container):
         self['people'] = PeopleContainer()
 
 
-class Index(grok.DisplayForm):
+class Index(formlib.DisplayForm):
     """view of the event
     """
     form_fields = grok.AutoFields(IEvent)
 
 
-class EditEvent(grok.EditForm):
+class EditEvent(formlib.EditForm):
     """view to edit the event
     """
     form_fields = grok.AutoFields(IEvent)
 
-    @grok.action('Apply')
+    @formlib.action('Apply')
     def apply(self, **data):
         self.applyData(self.context, **data)
         self.redirect(self.url('index'))

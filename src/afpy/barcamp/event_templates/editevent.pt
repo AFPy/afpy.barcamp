@@ -1,71 +1,75 @@
-<tal:tag condition="view/update"/>
-<html metal:use-macro="context/@@barcampmacros/page"
-    i18n:domain="zope">
-  <body>
-  <div metal:fill-slot="body">
+<html metal:use-macro="context/@@barcampmacros/page">
+<head>
+</head>
 
+<body metal:fill-slot="body">
 
-    <form action="." tal:attributes="action request/URL" method="post"
-          enctype="multipart/form-data">
+<h1 tal:content="context/name">event title</h1>
 
-      <div metal:define-macro="formbody">
+<a href="..">return to list</a>
 
-        <h3 tal:condition="view/label"
-            tal:content="view/label"
-            i18n:translate=""
-            >Edit something</h3>
+<form action="." tal:attributes="action request/URL" method="post"
+      class="edit-form" enctype="multipart/form-data">
 
-        <p tal:define="status view/update"
-           tal:condition="status"
-           tal:content="status" 
-           i18n:translate=""/>
+  <h1 i18n:translate=""
+    tal:condition="view/label"
+    tal:content="view/label">Label</h1>
 
-        <p tal:condition="view/errors" i18n:translate="">
-          There are <strong tal:content="python:len(view.errors)"
-                            i18n:name="num_errors">6</strong> input errors.
-        </p>
+  <div class="form-status"
+    tal:define="status view/status"
+    tal:condition="status">
 
-        <div metal:define-slot="extra_info" tal:replace="nothing">
-        </div>
+    <div i18n:translate="" tal:content="view/status">
+      Form status summary
+    </div>
 
-        <div class="row"
-             metal:define-slot="extra_top" tal:replace="nothing">
-          <div class="label">Extra top</div>
-          <div class="field"><input type="text" style="width:100%" /></div>
-        </div>
-
-        <div metal:use-macro="context/@@form_macros/widget_rows" />
-
-        <div class="separator"></div>
-
-        <div class="row"
-             metal:define-slot="extra_bottom" tal:replace="nothing">
-          <div class="label">Extra bottom</div>
-          <div class="field"><input type="text" style="width:100%" /></div>
-        </div>
-        <div class="separator"></div>
-      </div>
-
-      <div class="row">
-        <div class="controls">
-          <input type="submit" value="Refresh" 
-              i18n:attributes="value refresh-button" />
-          <input type="submit" name="UPDATE_SUBMIT" value="Change" 
-              i18n:attributes="value submit-button"/>
-        </div>
-      </div>
-
-      <div class="separator"></div>
-
-    </form>
-
-<a href="."
-   tal:content="context/__name__">
-  event
-</a>
-
+    <ul class="errors" tal:condition="view/errors">
+      <li tal:repeat="error view/error_views">
+         <span tal:replace="structure error">Error Type</span>
+      </li>
+    </ul>
   </div>
 
-  </body>
+  <table class="form-fields">
+    <tbody>
+      <tal:block repeat="widget view/widgets">
+        <tr>
+          <td class="label" tal:define="hint widget/hint">
+            <label tal:condition="python:hint"
+                   tal:attributes="for widget/name">
+              <span class="required" tal:condition="widget/required"
+              >*</span><span i18n:translate=""
+                             tal:content="widget/label">label</span>
+            </label>
+            <label tal:condition="python:not hint"
+                   tal:attributes="for widget/name">
+              <span class="required" tal:condition="widget/required"
+              >*</span><span i18n:translate=""
+                             tal:content="widget/label">label</span>
+            </label>
+          </td>
+          <td class="field">
+            <div class="widget" tal:content="structure widget">
+              <input type="text" />
+            </div>
+            <div class="error" tal:condition="widget/error">
+              <span tal:replace="structure widget/error">error</span>
+            </div>
+          </td>
+        </tr>
+      </tal:block>
+    </tbody>
+  </table>
 
+  <div id="actionsView">
+    <span class="actionButtons" tal:condition="view/availableActions">
+      <input tal:repeat="action view/actions"
+             tal:replace="structure action/render"
+             />
+    </span>
+    <a href=".">cancel</a>
+  </div>
+</form>
+
+</body>
 </html>
