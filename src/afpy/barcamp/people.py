@@ -2,13 +2,17 @@ from grokcore import formlib
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, implements
-from zope.schema import TextLine
+from zope.schema import TextLine, Password
 import grok
 
 class IPeople(IContainer):
     """interface of a people"""
     
     name = TextLine(title=u'name')
+    password = Password(title=u'password')
+
+    def is_private( ):
+        pass
 
 
 class People(grok.Container):
@@ -17,16 +21,22 @@ class People(grok.Container):
     name = None
     implements(IPeople)
 
+    def is_private(self):
+        return self.password is not None
+
 
 class Index(formlib.DisplayForm):
     """the view of the person
     """
     grok.context(People)
 
+class IPeopleContainer(IContainer):
+    pass
 
 class PeopleContainer(grok.Container):
     """the cotainer for people
     """
+    implements(IPeopleContainer)
 
 class PeopleListView(Contents, grok.View):
     """view for the list of people

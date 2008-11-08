@@ -1,0 +1,27 @@
+<html metal:use-macro="context/@@barcampmacros/page"
+      i18n:domain="afpy.barcamp">
+<body>
+<div metal:fill-slot="body">
+
+<p tal:content="view/prompt">Please enter your nickname</p>
+
+<form action=""
+      method="post">
+
+    <input type="text"
+           name="nickname"
+           value=""
+           tal:attributes="value view/sessionnick"  />
+
+    <input type="submit"
+       name="submit" />
+    <a href="#"
+       tal:attributes="href python:view.url('')"
+       i18n:translate="">
+      cancel
+    </a>
+</form>
+
+</div>
+</body>
+</html>

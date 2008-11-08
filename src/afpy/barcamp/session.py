@@ -1,8 +1,12 @@
+from afpy.barcamp.people import People, IPeopleContainer
 from grokcore import formlib
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
+from zope.component import getUtility
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
+from zope.security.interfaces import Unauthorized
+from zope.session.interfaces import ISession as IZopeSession
 import grok
 
 class ISession(IContainer):
@@ -32,6 +36,9 @@ class Edit(formlib.EditForm):
     form_fields = grok.AutoFields(ISession)
     grok.context(Session)
 
+
+class ISessionContainer(IContainer):
+    pass
 
 class SessionContainer(grok.Container):
     """the container for sessions
@@ -63,3 +70,38 @@ class Add(formlib.AddForm):
         self.context[name] = obj
         self.redirect(self.url('index'))
 
+class Register(grok.View):
+    """view to register to a session
+    """
+    grok.context(Session)
+
+    def update(self):
+        self.prompt = u'Please enter your nickname'
+        self.sessionnick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        if self.sessionnick:
+            self.prompt = u'Please confirm your nickname'
+
+        self.postednick = self.request.get('nickname')
+        if self.postednick:
+            self.register(self.postednick)
+            self.redirect(self.url(''))
+
+    def register(self, nick):
+        peoplelist = getUtility(IPeopleContainer)
+        if nick in peoplelist:
+            people = peoplelist[nick]
+            if people.is_private():
+                raise Unauthorized('barre oit')
+        else:
+            people = People()
+            people.name = nick
+            peoplelist[nick] = people
+            IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
+
+
+    
+
+
+
+
+        

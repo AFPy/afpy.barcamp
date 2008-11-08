@@ -5,6 +5,8 @@ from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
+from afpy.barcamp.people import IPeopleContainer
+from afpy.barcamp.session import ISessionContainer
 import grok
 
 class IEvent(IContainer):
@@ -16,17 +18,19 @@ class IEvent(IContainer):
     end_date = Datetime(title=u'end date')
 
 
-class Event(grok.Container):
+class Event(grok.Container, grok.Site):
     """the event itself
     """
     implements(IEvent)
     name = address = start_date = end_date = None
-
-    def __init__(self, name=None):
-        super(Event, self).__init__()
-        self.name = name
-        self['sessions'] = SessionContainer()
-        self['people'] = PeopleContainer()
+    grok.local_utility(SessionContainer,
+                       public=True,
+                       provides=ISessionContainer,
+                       name_in_container='sessions')
+    grok.local_utility(PeopleContainer,
+                       public=True,
+                       provides=IPeopleContainer,
+                       name_in_container='people')
 
 
 class Index(formlib.DisplayForm):
