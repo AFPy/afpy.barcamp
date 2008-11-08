@@ -28,6 +28,11 @@ class AddEvent(formlib.AddForm):
         self.context[name] = obj
         self.redirect(self.url('index'))
 
-class BarcampMacros(grok.View):
-    """The view providing the global macros"""
+class BarcampToplevelMacros(grok.View):
+    """The view providing the global macros for view upper than event level"""
     grok.context(Interface)
+
+class BarcampMacros(grok.View):
+    """The view providing the global macros for event under the event level"""
+    grok.context(Interface)
+

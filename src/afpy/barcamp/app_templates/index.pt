@@ -1,11 +1,11 @@
-<html metal:use-macro="context/@@barcampmacros/page"
+<html metal:use-macro="context/@@barcamptoplevelmacros/page"
       i18n:domain="afpy.barcamp">
 <head>
 </head>
 <body>
 <div metal:fill-slot="body">
 
-<h1>Event list</h1>
+<h2>Event list</h2>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"

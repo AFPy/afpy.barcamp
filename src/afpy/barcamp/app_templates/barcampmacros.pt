@@ -22,11 +22,34 @@
 
   <body tal:attributes="onload body_onload | nothing">
 
-<div style="background:#EEEEEE; margin:1em; text-align:center">Afpy Barcamp (see
-barcampmacros.pt for the layout)</div>
+  <div id="banner" class="vevent">
+    <!-- use the hcalendar microformat to semantically tag the event -->
+    <!-- http://microformats.org/wiki/hcalendar -->
+    <h1><a class="summary" href="/"
+        >End of the World Unconference</a></h1>
+    <div class="date">28, 29, 30th of july 2012</div>
+    <div class="location">Paris, center of the world</div>
+    <p class="url">http://add_server_url_here</p>
+  </div>
 
-   <metal:block define-slot="body" />
+  <div id="navigation">
+    <ul>
+      <li><a href="#" i18n:translate="">Program</a></li>
+      <li><a href="#" i18n:translate="">People</a></li>
+      <li><a href="#" i18n:translate="">Location</a></li>
+      <li><a href="#" i18n:translate="">Sponsors</a></li>
+    </ul>
+  </div>
+  <div style="clear:both"></div>
 
+  <div id="content">
+    <metal:block define-slot="body" />
+  </div>
+
+  <div id="footer">
+    <p i18n:translate="">powered by <a href="https://hg.afpy.org/afpy.barcamp"
+        >afpy.barcamp</a></p>
+  </div>
 
   </body>
 

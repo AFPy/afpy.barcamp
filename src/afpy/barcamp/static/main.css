@@ -1,8 +1,109 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(200, 255, 200);
+}
+
+/*
+ * top level banner
+ */
+
+div#banner {
+  padding: 0.5em 1em;
+  background-color: rgb(200, 255, 200);
+  color: rgb(0, 10, 0);
+}
+
+div#banner a, div#banner a:hover, div#banner a:visited {
+  color: rgb(0, 10, 0);
+}
+
+div#banner h1 a {
+  text-decoration: none;
+  font-family: "Trebuchet MS",sans-serif;
+  float: left;
+}
+
+/*
+ * microformat vevent
+ */
+
+div.vevent .date {
+  text-align: right;
+  padding: 0.2em 0.3em;
+}
+
+div.vevent .location {
+  text-align: right;
+  font-style: italic;
+  padding: 0.5em;
+}
+
+div.vevent .url {
+  visibility: hidden;
+  display: none;
+}
+
+/*
+ * navigation menu
+ */
+
+div#navigation {
+  font-family: "Trebuchet MS",sans-serif;
+  padding: 0.2em 1em;
+  float: right;
+}
+
+div#navigation ul {
+  margin: 0;
+  padding: 0.2em;
+  font-size: 1.1em;
+  list-style-type: none;
+  text-transform:lowercase;
+}
+
+div#navigation li {
+  float: left;
+  margin-left: 1em; 
+}
+
+div#navigation a, div#navigation a:hover, div#navigation a:visited {
+  color: rgb(0, 10, 0);
+}
+
+/*
+ * main content area
+ */
+
+div#content {
+  background-color: white;
+  padding: 1em;
+}
+
+/*
+ * footer
+ */
+
+div#footer {
+  padding: 0.5em 1em;
+  background-color: rgb(200, 255, 200);
+  color: rgb(0, 10, 0);
+}
+
+div#footer a, div#footer a:hover, div#footer a:visited {
+  color: rgb(0, 10, 0);
+}
+
+/*
+ * global styling rules
+ */
+
 div.label {
     float:left;
     margin-right: 1em;
     min-width: 9em;
 }
+
 div.row {
-    background: #EEEEEE;
+    background: #eee;
 }
