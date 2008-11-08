@@ -24,6 +24,7 @@ setup(name='afpy.barcamp',
                         'grokui.admin',
                         'z3c.testsetup',
                         # Add extra requirements here
+                        'z3c.flashmessage >= 1.0',
                         ],
       entry_points="""
       # Add entry points here

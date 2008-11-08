@@ -1,5 +1,6 @@
 from afpy.barcamp.people import People, IPeopleContainer
 from grokcore import formlib
+from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.component import getUtility
@@ -84,6 +85,10 @@ class Register(grok.View):
         self.postednick = self.request.get('nickname')
         if self.postednick:
             self.register(self.postednick)
+            msg = (u'You have successfully registered'
+                   u' to the %s event!'
+                    % self.context.__name__)
+            SessionMessageSource().send(msg)
             self.redirect(self.url(''))
 
     def register(self, nick):
