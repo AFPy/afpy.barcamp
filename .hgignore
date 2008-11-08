@@ -1,8 +1,14 @@
 syntax: glob
-*.pyc
+**/*.pyc
 *.swp
 parts/*
 bin/*
 *.egg-info
 .installed.cfg
 develop-eggs/*
+eggs/*
+dist/*
+build/*
+lib/*
+include/*
+
