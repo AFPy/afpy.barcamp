@@ -8,6 +8,7 @@ People
 We can create a people:
 
   >>> from afpy.barcamp.people import People
-  >>> ccomb = People(u'Christophe')
+  >>> ccomb = People()
+  >>> ccomb.name = u'Christophe'
 
 

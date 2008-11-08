@@ -104,9 +104,3 @@ class Register(grok.View):
             IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
 
 
-    
-
-
-
-
-        

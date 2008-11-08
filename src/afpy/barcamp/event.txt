@@ -13,7 +13,8 @@ Event
 We can create an event:
 
   >>> from afpy.barcamp.event import Event
-  >>> pyconfr = Event(u'Pycon FR 2009')
+  >>> pyconfr = Event()
+  >>> pyconfr.name = u'Pycon FR 2009'
 
 The event can store several informations:
 
