@@ -1,0 +1,50 @@
+afpy.barcamp
+============
+
+Barcamp and other conference-like web application.
+
+TODO: add here a high level overview of the project
+
+
+Set up the dev environment
+--------------------------
+
+Clone the source code with ``mercurial``::
+
+  $ hg clone https://hg.afpy.org/afpy.barcamp
+
+Install ``virtualenv`` and set the ``afpy.barcamp`` folder as the root
+of the environment::
+
+  $ virtualenv --no-site-package ./afpy.barcamp
+  $ cd afpy.barcamp
+  $ source bin/activate
+
+Configure your ``~/.buildout/default.cfg`` to configure and eggs cache
+folder such as::
+
+  [buildout]
+  eggs-directory = /home/joeuser/.buildout/eggs
+
+Launch the bootstrap script that fetches the buildout utility::
+
+  $ ./bin/python bootstrap.py
+
+Launch the buildout that will install all dependencies (grok, zope
+libraries, ...) and setup an inplace grok/zope instance::
+
+  $ ./bin/buildout
+
+Have a coffee.
+
+Then you can start the server on the default port::
+
+  $ ./bin/zopectl fg
+
+Then server is available at http://localhost:8080/ .
+
+
+Launching the tests
+===================
+
+TODO

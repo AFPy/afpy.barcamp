@@ -9,4 +9,6 @@ develop-eggs/*
 eggs/*
 dist/*
 build/*
+lib/*
+include/*
 
