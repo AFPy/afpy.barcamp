@@ -16,12 +16,17 @@ Clone the source code with ``mercurial``::
 Install ``virtualenv`` and set the ``afpy.barcamp`` folder as the root
 of the environment::
 
+  $ sudo easy_install virtualenv
   $ virtualenv --no-site-package ./afpy.barcamp
   $ cd afpy.barcamp
   $ source bin/activate
 
-Configure your ``~/.buildout/default.cfg`` to configure and eggs cache
-folder such as::
+The goal of ``virtualenv`` is to isolate the python dependencies of the
+``afpy.barcamp`` project to make it completely independent of the system
+python libs.
+
+You can then configure your ``~/.buildout/default.cfg`` to configure
+and eggs cache folder such as::
 
   [buildout]
   eggs-directory = /home/joeuser/.buildout/eggs
