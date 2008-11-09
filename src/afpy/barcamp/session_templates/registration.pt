@@ -1,0 +1,7 @@
+<form method="post"
+      tal:condition="python: view.nick in context.nicknames"
+      action="@@unregister">
+  <input type="submit"
+         name="unregister"
+         value="remove me from this session" />
+</form>

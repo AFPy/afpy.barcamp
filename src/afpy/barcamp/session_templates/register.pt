@@ -6,12 +6,13 @@
 <p tal:content="view/prompt">Please enter your nickname</p>
 
 <form action=""
+      tal:condition="not:view/registered"
       method="post">
 
     <input type="text"
            name="nickname"
            value=""
-           tal:attributes="value view/sessionnick"  />
+           tal:attributes="value view/nick"  />
 
     <input type="submit"
        name="register" />
@@ -21,6 +22,12 @@
       cancel
     </a>
 </form>
+
+<a href="?new"
+   tal:condition="view/registered">
+    change user
+</a>
+
 
 </div>
 </body>

@@ -18,7 +18,7 @@ class IPeople(IContainer):
 class People(grok.Container):
     """the person that is supposed to make a presentationi
     """
-    name = None
+    name = password = None
     implements(IPeople)
 
     def is_private(self):

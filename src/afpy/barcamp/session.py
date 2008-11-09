@@ -4,7 +4,7 @@ from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.component import getUtility
-from zope.interface import implements, Interface
+from zope.interface import implements, Interface, Attribute
 from zope.schema import Datetime, TextLine
 from zope.security.interfaces import Unauthorized
 from zope.session.interfaces import ISession as IZopeSession
@@ -15,6 +15,7 @@ class ISession(IContainer):
     """
     name = TextLine(title=u'name')
     date = Datetime(title=u'date')
+    nicknames = Attribute(u'names of persons attending the session')
 
 
 class Session(grok.Container):
@@ -22,6 +23,10 @@ class Session(grok.Container):
     """
     implements(ISession)
     name = date = None
+
+    def __init__(self):
+        self.nicknames = set()
+        super(Session, self).__init__()
 
 
 class Index(formlib.DisplayForm):
@@ -75,18 +80,23 @@ class Register(grok.View):
     """view to register to a session
     """
     grok.context(Session)
+    registered = False
 
     def update(self):
         self.prompt = u'Please enter your nickname'
-        self.sessionnick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
-        if self.sessionnick:
-            self.prompt = u'Please confirm your nickname'
+        self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        if self.nick:
+            if self.nick in self.context.nicknames:
+                self.prompt = u'You are already in this session'
+                self.registered = True
+            else:
+                self.prompt = u'Please confirm your nickname'
 
         self.postednick = self.request.get('nickname')
         if self.postednick:
             self.register(self.postednick)
-            msg = (u'You have successfully registered'
-                   u' to the %s event!'
+            msg = (u'You have been added to'
+                   u' the %s event!'
                     % self.context.__name__)
             SessionMessageSource().send(msg)
             self.redirect(self.url(''))
@@ -102,5 +112,30 @@ class Register(grok.View):
             people.name = nick
             peoplelist[nick] = people
             IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
+            self.context.nicknames.add(nick)
+
+class Unregister(grok.View):
+    grok.context(Session)
+
+    def update(self):
+        nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        if nick in self.context.nicknames:
+            self.context.nicknames.remove(nick)
+            msg = (u'You have been removed from'
+                   u' the %s event!'
+                    % self.context.__name__)
+            SessionMessageSource().send(msg)
+            self.redirect(self.url(''))
+
+    def render(self):
+        pass
+
+
+class Registration(grok.View):
+    grok.context(Session)
+
+    def update(self):
+        self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+
 
 

@@ -6,6 +6,12 @@ Functional test for user registration
   >>> from zope.testbrowser import Browser
   >>> browser = Browser()
 
+Enable this before the wanted line to view server errors
+  >>> #browser.handleErrors = False
+
+Adding an application
+---------------------
+
 We authenticate as admin:
 
   >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
@@ -24,6 +30,9 @@ We can now visit our application:
   >>> browser.open('http://localhost:8080/barcamp/')
   >>> browser.headers['status']
   '200 Ok'
+
+Adding an event
+---------------
 
 We can add an event:
 
@@ -46,6 +55,9 @@ The event has a container of sessions (conferences):
   >>> browser.headers['status']
   '200 Ok'
 
+Adding a conference
+-------------------
+
 We can add a session:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/@@add')
@@ -55,19 +67,67 @@ We can add a session:
 
 Then visit the conference:
 
+  >>> browser.handleErrors = False
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok')
   >>> browser.headers['status']
   '200 Ok'
+
+Registering and unregistering to a conference
+---------------------------------------------
 
 Now we can register to this conference:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
   >>> browser.getControl(name='nickname').value = u'ccomb'
   >>> browser.getControl(name='register').click()
-  >>> 'successfully registered' in browser.contents
+  >>> 'been added' in browser.contents
   True
 
+We check that the user has been added:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/people/ccomb/')
+
 If I want to register again, it should tell we are already registered:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> 'already in this session' in browser.contents
+  True
+
+Then we can unregister from this conference:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/')
+  >>> browser.getControl(name='unregister').click()
+  >>> 'been removed from' in browser.contents
+  True
+  >>> browser.getControl(name='unregister')
+  Traceback (most recent call last):
+  ...
+  LookupError: name 'unregister'
+
+
+Reregistering, and registering again as different user
+-------------------------------------------------------
+
+We reregister as ccomb:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> browser.getControl(name='register').click()
+  >>> 'been added' in browser.contents
+  True
+
+Now we want to register as faide:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> print browser.contents
+  >>> browser.getLink(url='?new')
+  >>> browser.getControl(name='nickname').value = u'faide'
+  >>> browser.getControl(name='register').click()
+  >>> 'been added' in browser.contents
+  True
+
+
+
+
 
 
 

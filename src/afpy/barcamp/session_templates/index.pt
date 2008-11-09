@@ -10,6 +10,11 @@
 
 <h1 tal:content="context/name">event title</h1>
 
+<div tal:content="structure context/@@registration">
+registration
+</div>
+
+
   <div metal:define-macro="formbody">
 
     <h3 tal:condition="view/label"
