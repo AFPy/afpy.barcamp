@@ -14,7 +14,7 @@ class ISession(IContainer):
     """interface of a session
     """
     name = TextLine(title=u'name')
-    date = Datetime(title=u'date')
+    date = Datetime(title=u'date', required=False)
     nicknames = Attribute(u'names of persons attending the session')
 
 
@@ -76,15 +76,17 @@ class Add(formlib.AddForm):
         self.context[name] = obj
         self.redirect(self.url('index'))
 
-class Register(grok.View):
+class RegistrationPage(grok.View):
     """view to register to a session
     """
     grok.context(Session)
     registered = False
+    nick = None
 
     def update(self):
         self.prompt = u'Please enter your nickname'
-        self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        if 'new' not in self.request:
+            self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
         if self.nick:
             if self.nick in self.context.nicknames:
                 self.prompt = u'You are already in this session'
@@ -112,7 +114,7 @@ class Register(grok.View):
             people.name = nick
             peoplelist[nick] = people
             IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
-            self.context.nicknames.add(nick)
+        self.context.nicknames.add(nick)
 
 class Unregister(grok.View):
     grok.context(Session)

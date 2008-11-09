@@ -77,7 +77,7 @@ Registering and unregistering to a conference
 
 Now we can register to this conference:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
   >>> browser.getControl(name='nickname').value = u'ccomb'
   >>> browser.getControl(name='register').click()
   >>> 'been added' in browser.contents
@@ -89,7 +89,7 @@ We check that the user has been added:
 
 If I want to register again, it should tell we are already registered:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
   >>> 'already in this session' in browser.contents
   True
 
@@ -108,17 +108,19 @@ Then we can unregister from this conference:
 Reregistering, and registering again as different user
 -------------------------------------------------------
 
-We reregister as ccomb:
+We re-register as ccomb:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
   >>> browser.getControl(name='register').click()
   >>> 'been added' in browser.contents
   True
 
 Now we want to register as faide:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
-  >>> browser.getLink(url='?new')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
+  >>> browser.getLink(url='?new').click()
+  >>> browser.getControl(name='nickname').value == ''
+  True
   >>> browser.getControl(name='nickname').value = u'faide'
   >>> browser.getControl(name='register').click()
   >>> 'been added' in browser.contents

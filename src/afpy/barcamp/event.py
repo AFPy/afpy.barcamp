@@ -13,11 +13,10 @@ class IEvent(IContainer):
     """interface of an event
     """
     name = TextLine(title=u'name')
-    address = TextLine(title=u'address')
-    start_date = Datetime(title=u'start date')
-    end_date = Datetime(title=u'end date')
-    date_label = TextLine(title=u"date label",
-                          required=False)
+    address = TextLine(title=u'address', required=False)
+    start_date = Datetime(title=u'start date', required=False)
+    end_date = Datetime(title=u'end date', required=False)
+    date_label = TextLine(title=u"date label", required=False)
 
 
 class Event(grok.Container, grok.Site):
