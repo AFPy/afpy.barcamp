@@ -84,6 +84,36 @@ div#registration a, div#registration a:hover, div#registration a:visited {
   color: rgb(0, 10, 0);
 }
 
+/*
+ * admin actions
+ */
+
+div#admin-actions {
+  margin: 0.2em 0.5em;
+  text-align: right;
+}
+
+div#admin-actions a, div#admin-actions a:hover, div#admin-actions a:visited {
+  color: rgb(0, 10, 0);
+}
+
+div#admin-actions {
+  padding: 0.2em 1em;
+  float: right;
+}
+
+div#admin-actions ul {
+  margin: 0;
+  padding: 0.2em;
+  font-size: 1.1em;
+  list-style-type: none;
+  text-transform:lowercase;
+}
+
+div#admin-actions li {
+  float: left;
+  margin-left: 1em; 
+}
 
 /*
  * flashmessage area
