@@ -20,7 +20,9 @@
 
   </head>
 
-  <body tal:attributes="onload body_onload | nothing">
+  <body tal:attributes="onload body_onload | nothing"
+    tal:define="site python:modules['zope.app.component.hooks'].getSite();
+                base_url python:view.url(site)">
 
   <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
@@ -28,16 +30,19 @@
     <!-- use the hcalendar microformat to semantically tag the event -->
     <!-- http://microformats.org/wiki/hcalendar -->
     <h1><a class="summary" href="/"
-      tal:content="python:modules['zope.app.component.hooks'].getSite().name"
+           tal:content="python:site.name"
+           tal:attributes="href base_url"
         >End of the World Unconference</a></h1>
     <div class="date"><abbr class="dtstart" title="2012-07-28"
         >28, 29, 30th of july 2012</abbr></div>
     <div class="location">Paris, center of the world</div>
-    <p class="url">http://add_server_url_here</p>
+    <p class="url" tal:content="base_url">http://monconference.org</p>
   </div>
 
   <div id="navigation">
     <ul>
+      <li><a href="#" tal:attributes="href python:view.url(site['sessions'])"
+          i18n:translate="">All sessions</a></li>
       <li><a href="#" i18n:translate="">Program</a></li>
       <li><a href="#" i18n:translate="">People</a></li>
       <li><a href="#" i18n:translate="">Location</a></li>
