@@ -16,7 +16,8 @@ class IEvent(IContainer):
     address = TextLine(title=u'address')
     start_date = Datetime(title=u'start date')
     end_date = Datetime(title=u'end date')
-    date_label = TextLine(title=u"date label")
+    date_label = TextLine(title=u"date label",
+                          required=False)
 
 
 class Event(grok.Container, grok.Site):
