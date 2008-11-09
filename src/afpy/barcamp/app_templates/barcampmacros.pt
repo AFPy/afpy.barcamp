@@ -41,12 +41,20 @@
 
   <div id="navigation">
     <ul>
-      <li><a href="#" tal:attributes="href python:view.url(site['sessions'])"
+      <li><a href="#sessions"
+          tal:attributes="href python:view.url(site['sessions'])"
           i18n:translate="">All sessions</a></li>
-      <li><a href="#" i18n:translate="">Program</a></li>
-      <li><a href="#" i18n:translate="">People</a></li>
-      <li><a href="#" i18n:translate="">Location</a></li>
-      <li><a href="#" i18n:translate="">Sponsors</a></li>
+      <li><a href="#program"
+          i18n:translate="">Program</a></li>
+      <li><a href="#people"
+          tal:attributes="href python:view.url(site['people'])"
+          i18n:translate="">People</a></li>
+      <li><a href="#location"
+          i18n:translate="">Location</a></li>
+      <li><a href="#sponsors"
+          i18n:translate="">Sponsors</a></li>
+      <li><a href="#bookings"
+          i18n:translate="">Bookings</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>
