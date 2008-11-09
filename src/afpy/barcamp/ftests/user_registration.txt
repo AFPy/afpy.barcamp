@@ -118,7 +118,6 @@ We reregister as ccomb:
 Now we want to register as faide:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
-  >>> print browser.contents
   >>> browser.getLink(url='?new')
   >>> browser.getControl(name='nickname').value = u'faide'
   >>> browser.getControl(name='register').click()
