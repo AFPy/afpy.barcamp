@@ -72,6 +72,20 @@ div#navigation a, div#navigation a:hover, div#navigation a:visited {
 }
 
 /*
+ * registration actions
+ */
+
+div#registration {
+  margin: 0.5em;
+  text-align: right;
+}
+
+div#registration a, div#registration a:hover, div#registration a:visited {
+  color: rgb(0, 10, 0);
+}
+
+
+/*
  * flashmessage area
  */
 

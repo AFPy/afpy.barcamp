@@ -3,12 +3,11 @@
 <body>
 <div metal:fill-slot="body">
 
-<a href="@@register"
-   i18n:translate="">
-  register to this session
-</a>
+<div id="registration">
+  <a href="@@register" i18n:translate="">I would like to attend!</a>
+</div>
 
-<h1 tal:content="context/name">event title</h1>
+<h2 tal:content="context/name">event title</h2>
 
   <div metal:define-macro="formbody">
 
