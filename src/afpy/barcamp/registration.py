@@ -33,11 +33,13 @@ class RegistrationViewlet(grok.Viewlet):
     """
     grok.context(IRegistrable)
     grok.viewletmanager(ISideBar)
-    registered = False
+    registered = loggedin = False
     nick = None
 
     def update(self):
         self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        if self.nick:
+            self.loggedin = True
         if self.nick in self.context.nicknames:
             self.registered = True
 
@@ -51,19 +53,22 @@ class Registration(grok.View):
     grok.traversable('unregister')
 
     def update(self):
-        pass
+        if 'unregister' in self.request:
+            self.unregister()
+        if 'register' in self.request:
+            self.register()
 
     def render(self):
         pass
 
     def register(self):
+        nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
         # get the nick given in the form
-        self.postednick = self.request.get('nickname')
-        if not self.postednick:
-            return
+        postednick = self.request.get('nickname')
+        if postednick:
+            nick = postednick
         # retrieve or create the associated people
         peoplelist = getUtility(IPeopleContainer)
-        nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
         if nick in peoplelist:
             people = peoplelist[nick]
             if people.is_private():
@@ -75,7 +80,7 @@ class Registration(grok.View):
         # do the registration
         self.context.nicknames.add(nick)
         IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
-        msg = (u'You have been added to the %s event!' % self.context.name)
+        msg = (u'You have been added to %s!' % self.context.name)
         SessionMessageSource().send(msg)
         self.redirect(self.url(''))
 
@@ -83,7 +88,7 @@ class Registration(grok.View):
         nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
         if nick in self.context.nicknames:
             self.context.nicknames.remove(nick)
-            msg = (u'You have been removed from the %s event!' 
+            msg = (u'You have been removed from %s!' 
                    % self.context.name)
             SessionMessageSource().send(msg)
             self.redirect(self.url(''))

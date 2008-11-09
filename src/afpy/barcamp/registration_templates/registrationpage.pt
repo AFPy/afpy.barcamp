@@ -5,7 +5,7 @@
 
 <p tal:content="view/prompt">Please enter your nickname</p>
 
-<form action="@@registration/register"
+<form action="@@registration?register"
       tal:condition="not:view/registered"
       method="post">
 
@@ -26,7 +26,7 @@
 
 <form method="post"
       tal:condition="view/registered"
-      action="@@registration/unregister">
+      action="@@registration?unregister">
   <input type="submit"
          name="unregister"
          value="remove me from this session" />
