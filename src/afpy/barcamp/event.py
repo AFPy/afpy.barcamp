@@ -16,13 +16,14 @@ class IEvent(IContainer):
     address = TextLine(title=u'address')
     start_date = Datetime(title=u'start date')
     end_date = Datetime(title=u'end date')
+    date_label = TextLine(title=u"date label")
 
 
 class Event(grok.Container, grok.Site):
     """the event itself
     """
     implements(IEvent)
-    name = address = start_date = end_date = None
+    name = address = start_date = end_date = date_label = None
     grok.local_utility(SessionContainer,
                        public=True,
                        provides=ISessionContainer,
@@ -48,8 +49,6 @@ class EditEvent(formlib.EditForm):
     def apply(self, **data):
         self.applyData(self.context, **data)
         self.redirect(self.url('index'))
-
-
 
 
 

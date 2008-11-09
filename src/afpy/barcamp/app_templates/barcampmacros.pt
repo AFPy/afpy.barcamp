@@ -33,8 +33,11 @@
            tal:content="python:site.name"
            tal:attributes="href base_url"
         >End of the World Unconference</a></h1>
-    <div class="date"><abbr class="dtstart" title="2012-07-28"
-        >28, 29, 30th of july 2012</abbr></div>
+    <div class="date">
+      <p tal:content="site/date_label">28, 29, 30th of july 2012</p>
+      <p class="dtstart" tal:content="site/start_date">2012-07-28</p>
+      <p class="dtend" tal:content="site/end_date">2012-07-30</p>
+    </div>
     <div class="location">Paris, center of the world</div>
     <p class="url" tal:content="base_url">http://monconference.org</p>
   </div>

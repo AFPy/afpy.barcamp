@@ -35,8 +35,18 @@ div.vevent .date {
 
 div.vevent .location {
   text-align: right;
+  padding: 0.2em 0.3em;
   font-style: italic;
-  padding: 0.5em;
+}
+
+div.vevent .dtstart {
+  visibility: hidden;
+  display: none;
+}
+
+div.vevent .dtend {
+  visibility: hidden;
+  display: none;
 }
 
 div.vevent .url {
