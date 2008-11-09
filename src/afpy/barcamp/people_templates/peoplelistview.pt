@@ -5,10 +5,7 @@
 <body>
 <div metal:fill-slot="body">
 
-<h1>People list</h1>
-
-
-<a href="..">return to event</a>
+<h2 i18n:translate="">People</h2>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"
