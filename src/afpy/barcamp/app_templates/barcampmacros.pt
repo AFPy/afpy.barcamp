@@ -30,7 +30,7 @@
     <!-- use the hcalendar microformat to semantically tag the event -->
     <!-- http://microformats.org/wiki/hcalendar -->
     <h1><a class="summary" href="/"
-           tal:content="python:site.name"
+           tal:content="site/name"
            tal:attributes="href base_url"
         >End of the World Unconference</a></h1>
     <div class="date">
