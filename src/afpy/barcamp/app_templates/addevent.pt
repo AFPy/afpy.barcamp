@@ -1,4 +1,4 @@
-<html metal:use-macro="context/@@barcamptoplevelmacros/page">
+<html metal:use-macro="context/@@barcamptoplevelmacros/macros/page">
 <head>
 </head>
 

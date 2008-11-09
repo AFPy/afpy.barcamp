@@ -3,7 +3,7 @@ Functional test for user registration
 
 :Test-Layer: functional
 
-  >>> from zope.testbrowser import Browser
+  >>> from zope.testbrowser.testing import Browser
   >>> browser = Browser()
 
 Enable this before the wanted line to view server errors

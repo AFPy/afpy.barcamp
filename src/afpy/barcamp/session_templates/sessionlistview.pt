@@ -1,4 +1,4 @@
-<html metal:use-macro="context/@@barcampmacros/page"
+<html metal:use-macro="context/@@barcampmacros/macros/page"
       i18n:domain="afpy.barcamp">
 <head>
 </head>
