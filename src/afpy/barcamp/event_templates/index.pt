@@ -3,9 +3,17 @@
 <body>
 <div metal:fill-slot="body">
 
-<h1 tal:content="context/name">event title</h1>
-
-<a href="..">return to event list</a>
+  <div id="admin-actions">
+    <ul>
+      <li>
+        <a href="editevent" i18n:translate="">Edit</a>
+      </li>
+      <li>
+        <a href=".." i18n:translate="">All events</a>
+      </li>
+    </ul>
+  </div>
+  <div style="clear: both"></div>
 
   <div metal:define-macro="formbody">
 
@@ -33,22 +41,6 @@
     </div>
 
   </div>
-
-
-<a href="editevent">edit</a>
-
-<div>
-    <a href="sessions"
-       i18n:translate="">
-        Session list
-    </a> - 
-    <a href="people"
-       i18n:translate="">
-     People list
-    </a>
-
-</div>
-
 
 </div>
 </body>

@@ -20,40 +20,62 @@
 
   </head>
 
-  <body tal:attributes="onload body_onload | nothing">
+  <body tal:attributes="onload body_onload | nothing"
+    tal:define="site python:modules['zope.app.component.hooks'].getSite();
+                base_url python:view.url(site)">
+
+  <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
   <div id="banner" class="vevent">
     <!-- use the hcalendar microformat to semantically tag the event -->
     <!-- http://microformats.org/wiki/hcalendar -->
     <h1><a class="summary" href="/"
+           tal:content="python:site.name"
+           tal:attributes="href base_url"
         >End of the World Unconference</a></h1>
-    <div class="date">28, 29, 30th of july 2012</div>
+    <div class="date">
+      <p tal:content="site/date_label">28, 29, 30th of july 2012</p>
+      <p class="dtstart" tal:content="site/start_date">2012-07-28</p>
+      <p class="dtend" tal:content="site/end_date">2012-07-30</p>
+    </div>
     <div class="location">Paris, center of the world</div>
-    <p class="url">http://add_server_url_here</p>
+    <p class="url" tal:content="base_url">http://monconference.org</p>
   </div>
 
   <div id="navigation">
     <ul>
-      <li><a href="#" i18n:translate="">Program</a></li>
-      <li><a href="#" i18n:translate="">People</a></li>
-      <li><a href="#" i18n:translate="">Location</a></li>
-      <li><a href="#" i18n:translate="">Sponsors</a></li>
+      <li><a href="#sessions"
+          tal:attributes="href python:view.url(site['sessions'])"
+          i18n:translate="">All sessions</a></li>
+      <li><a href="#program"
+          i18n:translate="">Program</a></li>
+      <li><a href="#people"
+          tal:attributes="href python:view.url(site['people'])"
+          i18n:translate="">People</a></li>
+      <li><a href="#location"
+          i18n:translate="">Location</a></li>
+      <li><a href="#sponsors"
+          i18n:translate="">Sponsors</a></li>
+      <li><a href="#bookings"
+          i18n:translate="">Bookings</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>
 
-  <div id="flashmessage"
-       tal:define="source python:modules['z3c.flashmessage.sources'].SessionMessageSource()">
-      <tal:block repeat="msg source/list">
-      <p tal:define="p python:msg.prepare(source)"
-         tal:content="msg/message">
-          message to the user
-      </p>
-      </tal:block>
-  </div>
-
 
   <div id="content">
+    <div id="flashmessage"
+         tal:define="source python:modules['z3c.flashmessage.sources'].SessionMessageSource()">
+        <tal:block repeat="msg source/list">
+          <p><span tal:define="dummy python:msg.prepare(source)"
+            tal:content="msg/message"
+            tal:attributes="class msg/type"
+            i18n:translate="">
+              Information or error message with respect to the last error action
+          </span></p>
+        </tal:block>
+    </div>
+
     <metal:block define-slot="body" />
   </div>
 

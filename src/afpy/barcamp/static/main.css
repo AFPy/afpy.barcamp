@@ -35,8 +35,18 @@ div.vevent .date {
 
 div.vevent .location {
   text-align: right;
+  padding: 0.2em 0.3em;
   font-style: italic;
-  padding: 0.5em;
+}
+
+div.vevent .dtstart {
+  visibility: hidden;
+  display: none;
+}
+
+div.vevent .dtend {
+  visibility: hidden;
+  display: none;
 }
 
 div.vevent .url {
@@ -69,6 +79,73 @@ div#navigation li {
 
 div#navigation a, div#navigation a:hover, div#navigation a:visited {
   color: rgb(0, 10, 0);
+}
+
+/*
+ * registration actions
+ */
+
+div#registration {
+  margin: 0.5em;
+  text-align: right;
+}
+
+div#registration a, div#registration a:hover, div#registration a:visited {
+  color: rgb(0, 10, 0);
+}
+
+/*
+ * admin actions
+ */
+
+div#admin-actions {
+  margin: 0.2em 0.5em;
+  text-align: right;
+}
+
+div#admin-actions a, div#admin-actions a:hover, div#admin-actions a:visited {
+  color: rgb(0, 10, 0);
+}
+
+div#admin-actions {
+  padding: 0.2em 1em;
+  float: right;
+}
+
+div#admin-actions ul {
+  margin: 0;
+  padding: 0.2em;
+  font-size: 1.1em;
+  list-style-type: none;
+  text-transform:lowercase;
+}
+
+div#admin-actions li {
+  float: left;
+  margin-left: 1em; 
+}
+
+/*
+ * flashmessage area
+ */
+
+div#flashmessage p {
+  margin: 0.2em 0 1em 0;
+  text-align: center;
+}
+
+div#flashmessage p span {
+  padding: 0.3em;
+  border-style: solid;
+  border-width: 2px;
+
+  border-color: rgb(255, 150, 100);
+  background-color: rgb(255, 230, 200);
+}
+
+div#flashmessage p span.message {
+  border-color: rgb(100, 100, 255);
+  background-color: rgb(200, 200, 255);
 }
 
 /*
