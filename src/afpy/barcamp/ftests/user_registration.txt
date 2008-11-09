@@ -1,0 +1,76 @@
+Functional test for user registration
+=====================================
+
+:Test-Layer: functional
+
+  >>> from zope.testbrowser import Browser
+  >>> browser = Browser()
+
+We authenticate as admin:
+
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> browser.addHeader('Accept-Language', 'en-US')
+
+We create an application:
+
+  >>> browser.open('http://localhost:8080/applications/')
+  >>> browser.getControl(name='name').value = u'barcamp'
+  >>> browser.getControl(name='Add').click()
+  >>> 'barcamp' in browser.contents
+  True
+
+We can now visit our application:
+
+  >>> browser.open('http://localhost:8080/barcamp/')
+  >>> browser.headers['status']
+  '200 Ok'
+
+We can add an event:
+
+  >>> browser.open('http://localhost:8080/barcamp/@@addevent')
+  >>> browser.getControl(name='form.name').value = u'pycon fr'
+  >>> browser.getControl(name='form.address').value = u'pycon fr'
+  >>> browser.getControl(name='form.start_date').value = '2008-05-04'
+  >>> browser.getControl(name='form.end_date').value = '2008-05-07'
+  >>> browser.getControl('Add').click()
+
+Then we can visit our event:
+
+  >>> browser.getLink(text='pycon_fr').click()
+  >>> browser.headers['status']
+  '200 Ok'
+
+The event has a container of sessions (conferences):
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions')
+  >>> browser.headers['status']
+  '200 Ok'
+
+We can add a session:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/@@add')
+  >>> browser.getControl(name='form.name').value = u'about grok'
+  >>> browser.getControl(name='form.date').value = u'2008-05-06'
+  >>> browser.getControl('Add').click()
+
+Then visit the conference:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok')
+  >>> browser.headers['status']
+  '200 Ok'
+
+Now we can register to this conference:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@register')
+  >>> browser.getControl(name='nickname').value = u'ccomb'
+  >>> browser.getControl(name='register').click()
+  >>> 'successfully registered' in browser.contents
+  True
+
+If I want to register again, it should tell we are already registered:
+
+
+
+
+
+

@@ -14,7 +14,7 @@
            tal:attributes="value view/sessionnick"  />
 
     <input type="submit"
-       name="submit" />
+       name="register" />
     <a href="#"
        tal:attributes="href python:view.url('')"
        i18n:translate="">
