@@ -62,6 +62,10 @@
   </div>
   <div style="clear:both"></div>
 
+<div id="sidebar"
+     tal:content="structure provider:sidebar">
+  sidebar content
+</div>
 
   <div id="content">
     <div id="flashmessage"

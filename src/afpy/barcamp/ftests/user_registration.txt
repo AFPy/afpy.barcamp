@@ -110,14 +110,14 @@ Reregistering, and registering again as different user
 
 We re-register as ccomb:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/')
   >>> browser.getControl(name='register').click()
   >>> 'been added' in browser.contents
   True
 
-Now we want to register as faide:
+Now we want to register as faide. We can click on 'change user':
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/')
   >>> browser.getLink(url='?new').click()
   >>> browser.getControl(name='nickname').value == ''
   True
@@ -126,7 +126,11 @@ Now we want to register as faide:
   >>> 'been added' in browser.contents
   True
 
+Registering on the event itself
+-------------------------------
 
+We are not interested in a particular presentation,
+but we want to attend the event
 
 
 

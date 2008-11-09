@@ -3,10 +3,6 @@
 <body>
 <div metal:fill-slot="body">
 
-<div id="registration">
-  <a href="@@registrationpage" i18n:translate="">I would like to attend!</a>
-</div>
-
 <h2 tal:content="context/name">event title</h2>
 
 <div tal:content="structure context/@@registration">

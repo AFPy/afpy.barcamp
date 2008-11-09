@@ -5,7 +5,7 @@
 
 <p tal:content="view/prompt">Please enter your nickname</p>
 
-<form action=""
+<form action="@@registration?register"
       tal:condition="not:view/registered"
       method="post">
 
@@ -23,10 +23,18 @@
     </a>
 </form>
 
-<a href="?new"
-   tal:condition="view/registered">
-    change user
-</a>
+
+<form method="post"
+      tal:condition="view/registered"
+      action="@@registration?unregister">
+  <input type="submit"
+         name="unregister"
+         value="remove me from this session" />
+  <a href="?new"
+     tal:condition="view/registered">
+      change user
+  </a>
+</form>
 
 
 </div>

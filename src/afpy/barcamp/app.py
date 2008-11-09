@@ -1,5 +1,7 @@
 import grok
+from afpy.barcamp.interfaces import ISideBar
 from afpy.barcamp.event import IEvent, Event
+from zope.interface import implements
 from zope.app.container.browser.contents import Contents
 from zope.interface import Interface
 from grokcore import formlib
@@ -41,14 +43,14 @@ class BarcampMacros(grok.View):
     grok.context(Interface)
 
 
-
-
-
-
-
-
-
-
+class SideBar(grok.ViewletManager):
+    """a viewlet manager used to hold some viewlets.
+    It can be used as a sidebar
+    """
+    implements(ISideBar)
+    grok.name('sidebar')
+    grok.view(Interface)
+    grok.context(Interface)
 
 
 
