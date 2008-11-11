@@ -90,7 +90,7 @@ We check that the user has been added:
 If I want to register again, it should tell we are already registered:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions/about_grok/@@registrationpage')
-  >>> 'already in this session' in browser.contents
+  >>> 'already registered' in browser.contents
   True
 
 Then we can unregister from this conference:
@@ -131,11 +131,3 @@ Registering on the event itself
 
 We are not interested in a particular presentation,
 but we want to attend the event
-
-
-
-
-
-
-
-
