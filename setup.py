@@ -8,7 +8,7 @@ setup(name='afpy.barcamp',
       long_description="""\
 """,
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
-      classifiers=[], 
+      classifiers=[],
       keywords="",
       author="",
       author_email="",
@@ -28,5 +28,7 @@ setup(name='afpy.barcamp',
                         ],
       entry_points="""
       # Add entry points here
+      [paste.app_factory]
+      main = afpy.barcamp.startup:application_factory
       """,
       )
