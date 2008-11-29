@@ -23,6 +23,7 @@ class ISession(IContainer):
     name = TextLine(title=u'name')
     date = Datetime(title=u'date', required=False)
     description = Text(title=u'description', required=False)
+    author = TextLine(title=u'author')
     nicknames = Attribute(u'names of persons attending the session')
 
 
