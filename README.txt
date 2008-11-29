@@ -42,11 +42,18 @@ libraries, ...) and setup an inplace grok/zope instance::
 
 Have a coffee.
 
-Then you can start the server on the default port::
+Then you can start the default zserver on the default port::
 
   $ ./bin/zopectl fg
 
-Then server is available at http://localhost:8080/ .
+You can alternatively launch a paste server using::
+
+  $ ./bin/paster server debug.ini
+
+Using paste makes it possible to use an ``afpy.barcamp`` instance as a WSGI
+application.
+
+In both cases the application is available at http://localhost:8080/ .
 
 
 Launching the tests
