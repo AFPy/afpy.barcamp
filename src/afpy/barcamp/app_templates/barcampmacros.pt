@@ -52,12 +52,6 @@
       <li><a href="#people"
           tal:attributes="href python:view.url(site['people'])"
           i18n:translate="">People</a></li>
-      <li><a href="#location"
-          i18n:translate="">Location</a></li>
-      <li><a href="#sponsors"
-          i18n:translate="">Sponsors</a></li>
-      <li><a href="#bookings"
-          i18n:translate="">Bookings</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>
