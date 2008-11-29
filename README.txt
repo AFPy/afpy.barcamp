@@ -59,4 +59,7 @@ In both cases the application is available at http://localhost:8080/ .
 Launching the tests
 ===================
 
-TODO
+Use the default zope testrunner::
+
+  $ ./bin/test
+
