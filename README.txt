@@ -48,7 +48,7 @@ Then you can start the default zserver on the default port::
 
 You can alternatively launch a paste server using::
 
-  $ ./bin/paster server debug.ini
+  $ ./bin/paster serve debug.ini
 
 Using paste makes it possible to use an ``afpy.barcamp`` instance as a WSGI
 application.
