@@ -29,6 +29,7 @@ class Index(formlib.DisplayForm):
     """the view of the person
     """
     grok.context(People)
+    grok.require('zope.ManageContent')
 
 class IPeopleContainer(IContainer):
     pass
@@ -43,6 +44,7 @@ class PeopleListView(Contents, grok.View):
     """
     grok.name('index')
     grok.context(PeopleContainer)
+    grok.require('zope.ManageContent')
 
 
 class Add(formlib.AddForm):
@@ -50,6 +52,7 @@ class Add(formlib.AddForm):
     """
     grok.context(PeopleContainer)
     form_fields = grok.AutoFields(IPeople)
+    grok.require('zope.ManageContent')
 
     def setUpWidgets(self, ignore_request = False):
         super(Add, self).setUpWidgets(ignore_request)
@@ -69,3 +72,4 @@ class Edit(formlib.EditForm):
     """
     form_fields = grok.AutoFields(IPeople)
     grok.context(People)
+    grok.require('zope.ManageContent')
