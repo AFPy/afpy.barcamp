@@ -2,7 +2,7 @@
 The registration concept we have developped is working for any kind of resources
 Sessions and Events, the only condition is to implement IRegistrable. Once your
 resource implements IRegistrable it can use our registration component to
-provide the user/visitor regostration.
+provide the user/visitor registration.
 
 In our application it is important to understand that a visitor is not always
 logged-in and that we do not want to force all visitors to log-in. This is why
@@ -14,8 +14,9 @@ object associated with that nickname will be marked as private. If someone
 tries to use a nickname that is associated with a private people object then we
 will ask her for the good credentials.
 """
+
 # our own application imports
-from afpy.barcamp.app import ISideBar
+from afpy.barcamp.interfaces import ISideBar
 from afpy.barcamp.people import People, IPeopleContainer
 from afpy.barcamp.interfaces import IRegistrable
 

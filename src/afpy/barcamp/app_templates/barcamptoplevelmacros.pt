@@ -22,6 +22,16 @@
 
   <body tal:attributes="onload body_onload | nothing">
 
+<div id="logout" tal:condition="python:request.principal.id != 'zope.anybody'">
+  <span tal:content="request/principal/id">
+    user
+  </span>
+  <a tal:attributes="href string:logout?camefrom=${request/REQUEST_URI}"
+     i18n:translate="">
+        logout
+</a>
+</div>
+
   <div id="banner">
     <h1><a href="/" tal:attributes="href python:view.url('')"
         i18n:translate="">AFPy Barcamp - conference manager</a></h1>

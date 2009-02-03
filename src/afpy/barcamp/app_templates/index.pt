@@ -5,8 +5,6 @@
 <body>
 <div metal:fill-slot="body">
 
-<span tal:condition="python:request.principal.id != 'zope.anybody'"
-      tal:content="request/principal/id">user</span>
 
 <h2 i18n:translate="">All events</h2>
 

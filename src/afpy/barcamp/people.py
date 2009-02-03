@@ -7,7 +7,7 @@ import grok
 
 class IPeople(IContainer):
     """interface of a people"""
-    
+
     name = TextLine(title=u'name')
     password = Password(title=u'password')
 
@@ -16,7 +16,7 @@ class IPeople(IContainer):
 
 
 class People(grok.Container):
-    """the person that is supposed to make a presentationi
+    """the person that is supposed to make a presentation
     """
     name = password = None
     implements(IPeople)

@@ -1,12 +1,15 @@
+from afpy.barcamp.authentication import setup_authentication
+from zope.app.authentication.authentication import PluggableAuthentication
+from zope.app.security.interfaces import IAuthentication
+from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.people import PeopleContainer
-from grokcore import formlib
+from afpy.barcamp.session import ISessionContainer
 from afpy.barcamp.session import SessionContainer
+from grokcore import formlib
 from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
-from afpy.barcamp.people import IPeopleContainer
-from afpy.barcamp.session import ISessionContainer
 import grok
 
 class IEvent(IContainer):
@@ -24,6 +27,9 @@ class Event(grok.Container, grok.Site):
     """
     implements(IEvent)
     name = address = start_date = end_date = date_label = None
+    grok.local_utility(PluggableAuthentication,
+                       provides=IAuthentication,
+                       setup=setup_authentication)
     grok.local_utility(SessionContainer,
                        public=True,
                        provides=ISessionContainer,
