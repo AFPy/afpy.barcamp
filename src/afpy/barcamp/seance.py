@@ -2,67 +2,67 @@ from afpy.barcamp.registration import IRegistrable
 from zope.interface import implements
 from grokcore import formlib
 from zope.app.container.browser.contents import Contents
-from interfaces import ISession, ISessionContainer
-from zope.session.interfaces import ISession as IZopeSession
+from interfaces import ISeance, ISeanceContainer
+from zope.session.interfaces import ISession
 import grok
 
-class Session(grok.Container):
-    """the session itself
+class Seance(grok.Container):
+    """the seance itself
     """
-    implements(ISession, IRegistrable)
+    implements(ISeance, IRegistrable)
     name = date = None
 
     def __init__(self):
         self.nicknames = set()
-        super(Session, self).__init__()
+        super(Seance, self).__init__()
 
 
 class Index(formlib.DisplayForm):
-    """view of the session
+    """view of the seance
     """
-    form_fields = grok.AutoFields(ISession)
-    grok.context(Session)
+    form_fields = grok.AutoFields(ISeance)
+    grok.context(Seance)
 
 
 class Edit(formlib.EditForm):
-    """edit form for the session
+    """edit form for the seance
     """
-    form_fields = grok.AutoFields(ISession)
+    form_fields = grok.AutoFields(ISeance)
 
-    grok.context(Session)
+    grok.context(Seance)
 
 
-class SessionContainer(grok.Container):
-    """the container for sessions
+class SeanceContainer(grok.Container):
+    """the container for seances
     """
 
 
-class SessionListView(Contents, grok.View):
-    """view of the list of sessions
+class SeanceListView(Contents, grok.View):
+    """view of the list of seances
     """
     grok.name('index')
-    grok.context(SessionContainer)
+    grok.context(SeanceContainer)
 
 
 class Add(formlib.AddForm):
-    """add form for a session
+    """add form for a seance
     """
-    grok.context(SessionContainer)
-    form_fields = grok.AutoFields(ISession)
+    grok.context(SeanceContainer)
+    form_fields = grok.AutoFields(ISeance)
 
     def update(self):
         form = self.request.form
 
         if not form.get('form.author', '').strip():
-            form['form.author'] = IZopeSession(
+            form['form.author'] = ISession(
                     self.request)['afpy.barcamp'].get('nick')
 
         super(Add, self).update()
-        
-    @formlib.action('Add session')
+
+    @formlib.action('Add seance')
     def add(self, **data):
 
-        obj = Session()
+        obj = Seance()
         self.applyData(obj, **data)
 
         # TODO generate a correct blurb that removes accents

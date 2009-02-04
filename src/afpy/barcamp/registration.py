@@ -1,6 +1,6 @@
 """This module defines all the needed elements to handle registration.
 The registration concept we have developped is working for any kind of resources
-Sessions and Meetings, the only condition is to implement IRegistrable. Once your
+Seances and Meetings, the only condition is to implement IRegistrable. Once your
 resource implements IRegistrable it can use our registration component to
 provide the user/visitor registration.
 
@@ -25,14 +25,14 @@ from z3c.flashmessage.sources import SessionMessageSource
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.security.interfaces import Unauthorized
-from zope.session.interfaces import ISession as IZopeSession
+from zope.session.interfaces import ISession
 
 # grok
 import grok
 
 
 class RegistrationPage(grok.View):
-    """Page to register to a session or meeting, and used for the UI.
+    """Page to register to a seance or meeting, and used for the UI.
     """
     grok.context(IRegistrable)
     registered = False
@@ -45,7 +45,7 @@ class RegistrationPage(grok.View):
         if 'new' not in self.request:
             # new is not in the request, which means the user already has a
             # nick associated to his web-session. Let's fetch that...
-            self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+            self.nick = ISession(self.request)['afpy.barcamp'].get('nick')
 
         if self.nick:
             # if we found a nickname in the web-session we compare with
@@ -70,7 +70,7 @@ class RegistrationViewlet(grok.Viewlet):
     nick = None
 
     def update(self):
-        self.nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        self.nick = ISession(self.request)['afpy.barcamp'].get('nick')
         if self.nick:
             self.loggedin = True
 
@@ -97,7 +97,7 @@ class Registration(grok.View):
         pass
 
     def register(self):
-        nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        nick = ISession(self.request)['afpy.barcamp'].get('nick')
         # get the nick given in the form
         postednick = self.request.get('nickname')
 
@@ -118,13 +118,13 @@ class Registration(grok.View):
 
         # do the registration
         self.context.nicknames.add(nick)
-        IZopeSession(self.request)['afpy.barcamp']['nick'] = nick
+        ISession(self.request)['afpy.barcamp']['nick'] = nick
         msg = (u'You have been added to %s!' % self.context.name)
         SessionMessageSource().send(msg)
         self.redirect(self.url(''))
 
     def unregister(self):
-        nick = IZopeSession(self.request)['afpy.barcamp'].get('nick')
+        nick = ISession(self.request)['afpy.barcamp'].get('nick')
 
         if nick in self.context.nicknames:
             self.context.nicknames.remove(nick)

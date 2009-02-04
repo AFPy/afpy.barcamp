@@ -9,21 +9,21 @@ class ISideBar(Interface):
 
 
 class IRegistrable(Interface):
-    """marker interface to let sessions and meetings support registration
+    """marker interface to let seances and meetings support registration
     """
 
 
-class ISessionContainer(IContainer):
+class ISeanceContainer(IContainer):
     pass
 
 
-class ISession(IContainer):
-    """interface of a session
+class ISeance(IContainer):
+    """interface of a seance
     """
     name = TextLine(title=u'name')
     date = Datetime(title=u'date', required=False)
     description = Text(title=u'description', required=False)
     author = TextLine(title=u'author')
-    nicknames = Attribute(u'names of persons attending the session')
+    nicknames = Attribute(u'names of persons attending the seance')
 
 

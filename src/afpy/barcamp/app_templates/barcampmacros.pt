@@ -44,9 +44,9 @@
 
   <div id="navigation">
     <ul>
-      <li><a href="#sessions"
-          tal:attributes="href python:view.url(site['sessions'])"
-          i18n:translate="">All sessions</a></li>
+      <li><a href="#seances"
+          tal:attributes="href python:view.url(site['seances'])"
+          i18n:translate="">All seances</a></li>
       <li><a href="#program"
           i18n:translate="">Program</a></li>
       <li><a href="#people"

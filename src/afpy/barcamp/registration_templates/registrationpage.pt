@@ -29,7 +29,7 @@
       action="@@registration?unregister">
   <input type="submit"
          name="unregister"
-         value="remove me from this session" />
+         value="remove me from this seance" />
   <a href="?new"
      tal:condition="view/registered">
       change user

@@ -3,7 +3,7 @@ Afpy barcamp
 
 :Test-Layer: unit
 
-pycon2009/sessions/introduction-a-python/slides.pdf/@@comments
+pycon2009/seances/introduction-a-python/slides.pdf/@@comments
 pycon2009/people/ogrisel/photo
 
   >>> from datetime import date

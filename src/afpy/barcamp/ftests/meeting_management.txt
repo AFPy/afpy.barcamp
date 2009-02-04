@@ -87,9 +87,9 @@ Then we can visit our meeting:
   >>> browser.headers['status']
   '200 Ok'
 
-The meeting has a container of sessions (conferences):
+The meeting has a container of seances (conferences):
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances')
   >>> browser.headers['status']
   '200 Ok'
 

@@ -16,7 +16,7 @@
           action="@@registration?register">
       <input type="submit"
              name="register"
-             value="add me to this session" />
+             value="add me to this seance" />
     </form>
 
     <form method="post"
@@ -24,7 +24,7 @@
           action="@@registration?unregister">
       <input type="submit"
              name="unregister"
-             value="remove me from this session" />
+             value="remove me from this seance" />
     </form>
     <a href="@@registrationpage?new">
         change user

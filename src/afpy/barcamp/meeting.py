@@ -3,8 +3,8 @@ from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.security.interfaces import IAuthentication
 from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.people import PeopleContainer
-from afpy.barcamp.session import ISessionContainer
-from afpy.barcamp.session import SessionContainer
+from afpy.barcamp.seance import ISeanceContainer
+from afpy.barcamp.seance import SeanceContainer
 from grokcore import formlib
 from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
@@ -30,10 +30,10 @@ class Meeting(grok.Container, grok.Site):
     grok.local_utility(PluggableAuthentication,
                        provides=IAuthentication,
                        setup=setup_authentication)
-    grok.local_utility(SessionContainer,
+    grok.local_utility(SeanceContainer,
                        public=True,
-                       provides=ISessionContainer,
-                       name_in_container='sessions')
+                       provides=ISeanceContainer,
+                       name_in_container='seances')
     grok.local_utility(PeopleContainer,
                        public=True,
                        provides=IPeopleContainer,
