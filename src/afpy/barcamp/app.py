@@ -18,8 +18,12 @@ class AfpyBarcamp(grok.Application, grok.Container):
 
 
 class Index(Contents, grok.View):
-    grok.require('zope.ManageContent')
     pass # see app_templates/index.pt
+
+
+class Edit(Contents, grok.View):
+    grok.require('zope.ManageContent')
+    # see app_templates/edit.pt
 
 
 class AddEvent(formlib.AddForm):

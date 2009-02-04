@@ -23,10 +23,10 @@
   <body tal:attributes="onload body_onload | nothing">
 
 <div id="logout" tal:condition="python:request.principal.id != 'zope.anybody'">
-  <span tal:content="request/principal/id">
+  <span tal:content="request/principal/title">
     user
   </span>
-  <a tal:attributes="href string:logout?camefrom=${request/REQUEST_URI}"
+  <a tal:attributes="href string:logout?camefrom=${request/PATH_INFO | nothing}"
      i18n:translate="">
         logout
 </a>

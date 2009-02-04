@@ -46,7 +46,7 @@ class Index(formlib.DisplayForm):
     form_fields = grok.AutoFields(IEvent)
 
 
-class EditEvent(formlib.EditForm):
+class Edit(formlib.EditForm):
     """view to edit the event
     """
     form_fields = grok.AutoFields(IEvent)

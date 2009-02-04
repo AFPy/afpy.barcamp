@@ -45,7 +45,7 @@ We can add an event:
 
 Then we can visit our event:
 
-  >>> browser.getLink(text='pycon_fr').click()
+  >>> browser.getLink(text='pycon fr').click()
   >>> browser.headers['status']
   '200 Ok'
 

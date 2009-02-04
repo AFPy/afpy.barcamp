@@ -6,7 +6,7 @@
   <div id="admin-actions">
     <ul>
       <li>
-        <a href="editevent" i18n:translate="">Edit</a>
+        <a href="edit" i18n:translate="">Edit</a>
       </li>
       <li>
         <a href=".." i18n:translate="">All events</a>
