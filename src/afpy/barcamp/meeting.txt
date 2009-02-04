@@ -8,15 +8,15 @@ pycon2009/people/ogrisel/photo
 
   >>> from datetime import date
 
-Event
+Meeting
 -----
-We can create an event:
+We can create an meeting:
 
-  >>> from afpy.barcamp.event import Event
-  >>> pyconfr = Event()
+  >>> from afpy.barcamp.meeting import Meeting
+  >>> pyconfr = Meeting()
   >>> pyconfr.name = u'Pycon FR 2009'
 
-The event can store several informations:
+The meeting can store several informations:
 
   >>> pyconfr.address = u'La Villette'
   >>> pyconfr.start_date = date(2009, 6, 6)

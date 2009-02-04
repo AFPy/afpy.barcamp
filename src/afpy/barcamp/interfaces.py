@@ -9,7 +9,7 @@ class ISideBar(Interface):
 
 
 class IRegistrable(Interface):
-    """marker interface to let sessions and events support registration
+    """marker interface to let sessions and meetings support registration
     """
 
 

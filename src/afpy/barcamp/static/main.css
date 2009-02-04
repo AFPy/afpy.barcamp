@@ -25,31 +25,31 @@ div#banner h1 a {
 }
 
 /*
- * microformat vevent
+ * microformat vmeeting
  */
 
-div.vevent .date {
+div.vmeeting .date {
   text-align: right;
   padding: 0.2em 0.3em;
 }
 
-div.vevent .location {
+div.vmeeting .location {
   text-align: right;
   padding: 0.2em 0.3em;
   font-style: italic;
 }
 
-div.vevent .dtstart {
+div.vmeeting .dtstart {
   visibility: hidden;
   display: none;
 }
 
-div.vevent .dtend {
+div.vmeeting .dtend {
   visibility: hidden;
   display: none;
 }
 
-div.vevent .url {
+div.vmeeting .url {
   visibility: hidden;
   display: none;
 }

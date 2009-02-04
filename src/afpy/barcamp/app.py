@@ -1,5 +1,5 @@
 from afpy.barcamp.authentication import setup_toplevel_authentication
-from afpy.barcamp.event import IEvent, Event
+from afpy.barcamp.meeting import IMeeting, Meeting
 from afpy.barcamp.interfaces import ISideBar
 from grokcore import formlib
 from zope.app.authentication.authentication import PluggableAuthentication
@@ -26,17 +26,17 @@ class Edit(Contents, grok.View):
     # see app_templates/edit.pt
 
 
-class AddEvent(formlib.AddForm):
+class AddMeeting(formlib.AddForm):
     grok.require('zope.ManageContent')
     grok.context(AfpyBarcamp)
-    form_fields = grok.AutoFields(IEvent)
+    form_fields = grok.AutoFields(IMeeting)
 
     def setUpWidgets(self, ignore_request = False):
-        super(AddEvent, self).setUpWidgets(ignore_request)
+        super(AddMeeting, self).setUpWidgets(ignore_request)
 
-    @formlib.action('Add event')
+    @formlib.action('Add meeting')
     def add(self, **data):
-        obj = Event()
+        obj = Meeting()
         self.applyData(obj, **data)
         # TODO generate a correct blurb that removes accents
         name = data['name'].lower().replace(' ', '_')
@@ -45,13 +45,13 @@ class AddEvent(formlib.AddForm):
 
 
 class BarcampToplevelMacros(grok.View):
-    """The view providing the global macros for view upper than event level
+    """The view providing the global macros for view upper than meeting level
     """
     grok.context(Interface)
 
 
 class BarcampMacros(grok.View):
-    """The view providing the global macros for event under the event level
+    """The view providing the global macros for meeting under the meeting level
     """
     grok.context(Interface)
 

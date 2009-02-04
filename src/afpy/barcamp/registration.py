@@ -1,6 +1,6 @@
 """This module defines all the needed elements to handle registration.
 The registration concept we have developped is working for any kind of resources
-Sessions and Events, the only condition is to implement IRegistrable. Once your
+Sessions and Meetings, the only condition is to implement IRegistrable. Once your
 resource implements IRegistrable it can use our registration component to
 provide the user/visitor registration.
 
@@ -32,7 +32,7 @@ import grok
 
 
 class RegistrationPage(grok.View):
-    """Page to register to a session or event, and used for the UI.
+    """Page to register to a session or meeting, and used for the UI.
     """
     grok.context(IRegistrable)
     registered = False

@@ -9,7 +9,7 @@
         <a href="edit" i18n:translate="">Edit</a>
       </li>
       <li>
-        <a href=".." i18n:translate="">All events</a>
+        <a href=".." i18n:translate="">All meetings</a>
       </li>
     </ul>
   </div>

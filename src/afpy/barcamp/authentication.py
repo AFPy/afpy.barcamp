@@ -18,7 +18,7 @@ import grok
 
 def setup_toplevel_authentication(pau):
     """Set up pluggable authentication utility
-    at application level, so that we can manage events
+    at application level, so that we can manage meetings
 
     Sets up an IAuthenticatorPlugin and
     ICredentialsPlugin (for the authentication mechanism)
@@ -29,13 +29,13 @@ def setup_toplevel_authentication(pau):
 
 def setup_authentication(pau):
     """Set up pluggable authentication utility
-    at Event level, so that authentication is different for each Event.
+    at Meeting level, so that authentication is different for each Meeting.
 
     Sets up an IAuthenticatorPlugin and
     ICredentialsPlugin (for the authentication mechanism)
     """
     pau.credentialsPlugins = ['credentials']
-    pau.authenticatorPlugins = ['event_users']
+    pau.authenticatorPlugins = ['meeting_users']
 
 
 class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):

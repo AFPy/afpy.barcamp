@@ -31,25 +31,25 @@ We can now visit our application:
   >>> browser.headers['status']
   '200 Ok'
 
-Adding an event
+Adding an meeting
 ---------------
 
-We can add an event:
+We can add an meeting:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addevent')
+  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
   >>> browser.getControl(name='form.name').value = u'pycon fr'
   >>> browser.getControl(name='form.address').value = u'pycon fr'
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
   >>> browser.getControl(name='form.end_date').value = '2008-05-07'
   >>> browser.getControl('Add').click()
 
-Then we can visit our event:
+Then we can visit our meeting:
 
   >>> browser.getLink(text='pycon fr').click()
   >>> browser.headers['status']
   '200 Ok'
 
-The event has a container of sessions (conferences):
+The meeting has a container of sessions (conferences):
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions')
   >>> browser.headers['status']
@@ -126,8 +126,8 @@ Now we want to register as faide. We can click on 'change user':
   >>> 'been added' in browser.contents
   True
 
-Registering on the event itself
+Registering on the meeting itself
 -------------------------------
 
 We are not interested in a particular presentation,
-but we want to attend the event
+but we want to attend the meeting

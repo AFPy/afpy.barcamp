@@ -12,8 +12,8 @@ from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
 import grok
 
-class IEvent(IContainer):
-    """interface of an event
+class IMeeting(IContainer):
+    """interface of an meeting
     """
     name = TextLine(title=u'name')
     address = TextLine(title=u'address', required=False)
@@ -22,10 +22,10 @@ class IEvent(IContainer):
     date_label = TextLine(title=u"date label", required=False)
 
 
-class Event(grok.Container, grok.Site):
-    """the event itself
+class Meeting(grok.Container, grok.Site):
+    """the meeting itself
     """
-    implements(IEvent)
+    implements(IMeeting)
     name = address = start_date = end_date = date_label = None
     grok.local_utility(PluggableAuthentication,
                        provides=IAuthentication,
@@ -41,15 +41,15 @@ class Event(grok.Container, grok.Site):
 
 
 class Index(formlib.DisplayForm):
-    """view of the event
+    """view of the meeting
     """
-    form_fields = grok.AutoFields(IEvent)
+    form_fields = grok.AutoFields(IMeeting)
 
 
 class Edit(formlib.EditForm):
-    """view to edit the event
+    """view to edit the meeting
     """
-    form_fields = grok.AutoFields(IEvent)
+    form_fields = grok.AutoFields(IMeeting)
 
     @formlib.action('Apply')
     def apply(self, **data):

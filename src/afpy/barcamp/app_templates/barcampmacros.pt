@@ -26,8 +26,8 @@
 
   <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
-  <div id="banner" class="vevent">
-    <!-- use the hcalendar microformat to semantically tag the event -->
+  <div id="banner" class="vmeeting">
+    <!-- use the hcalendar microformat to semantically tag the meeting -->
     <!-- http://microformats.org/wiki/hcalendar -->
     <h1><a class="summary" href="/"
            tal:content="site/name"

@@ -6,24 +6,24 @@
 <div metal:fill-slot="body">
 
 
-<h2 i18n:translate="">All events</h2>
+<h2 i18n:translate="">All meetings</h2>
 
-<ul id="eventlist">
-  <li tal:repeat="event context/values">
+<ul id="meetinglist">
+  <li tal:repeat="meeting context/values">
     <a href="#"
-       tal:attributes="href event/@@absolute_url"
-       tal:content="event/name">
-    event
+       tal:attributes="href meeting/@@absolute_url"
+       tal:content="meeting/name">
+    meeting
     </a> -
-    <tal:block condition="python: event.start_date and not event.end_date">
+    <tal:block condition="python: meeting.start_date and not meeting.end_date">
       on <span class="start_date"
-               tal:content="python: request.locale.dates.getFormatter('date').format(event.start_date)">single date</span>
+               tal:content="python: request.locale.dates.getFormatter('date').format(meeting.start_date)">single date</span>
     </tal:block>
-    <tal:block condition="python: event.start_date and event.end_date and event.start_date != event.end_date">
+    <tal:block condition="python: meeting.start_date and meeting.end_date and meeting.start_date != meeting.end_date">
       from <span class="start_date"
-                 tal:content="python: request.locale.dates.getFormatter('date').format(event.start_date)">begin</span>
+                 tal:content="python: request.locale.dates.getFormatter('date').format(meeting.start_date)">begin</span>
       to <span class="end_date"
-               tal:content="python: request.locale.dates.getFormatter('date').format(event.end_date)">end</span>
+               tal:content="python: request.locale.dates.getFormatter('date').format(meeting.end_date)">end</span>
     </tal:block>
   </li>
 </ul>

@@ -1,7 +1,7 @@
 Functional test for toplevel administration
 ===========================================
 
-The toplevel administrator can manage the events (add, remove and edit)
+The toplevel administrator can manage the meetings (add, remove and edit)
 
 
 :Test-Layer: functional
@@ -51,11 +51,11 @@ Now we restart the browser to lose the http basic auth:
 We should have another account in the toplevel application:
 But we see that we are redirected to a login page:
 
-  >>> browser.open('http://localhost:8080/barcamp/%40%40addevent')
+  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
   >>> browser.headers['status']
   '200 Ok'
   >>> browser.url
-  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addevent'
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
 
 We can login:
 
@@ -66,28 +66,28 @@ We can login:
 We are redirected the the originating page:
 
   >>> browser.url
-  'http://localhost:8080/barcamp/@@addevent'
+  'http://localhost:8080/barcamp/@@addmeeting'
 
 
-Adding an event
+Adding an meeting
 ---------------
 
-Now we can add an event:
+Now we can add an meeting:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addevent')
+  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
   >>> browser.getControl(name='form.name').value = u'pycon fr'
   >>> browser.getControl(name='form.address').value = u'pycon fr'
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
   >>> browser.getControl(name='form.end_date').value = '2008-05-07'
   >>> browser.getControl('Add').click()
 
-Then we can visit our event:
+Then we can visit our meeting:
 
   >>> browser.getLink(text='pycon fr').click()
   >>> browser.headers['status']
   '200 Ok'
 
-The event has a container of sessions (conferences):
+The meeting has a container of sessions (conferences):
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/sessions')
   >>> browser.headers['status']
@@ -99,16 +99,16 @@ Logout
 
 We can logout from the admin account:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addevent')
+  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
   >>> browser.getLink(text='logout').click()
   >>> browser.url
-  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addevent'
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
 
 
-Listing the events
+Listing the meetings
 ------------------
 
-Everyone can see the list of events:
+Everyone can see the list of meetings:
 
   >>> browser.open('http://localhost:8080/barcamp/')
   >>> 'pycon fr' in browser.contents
