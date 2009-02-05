@@ -13,6 +13,27 @@ class IRegistrable(Interface):
     """
 
 
+class IRegistration(Interface):
+    """Interface to get or set the registration status
+    if a registrable object (meeting or seance)
+    """
+    def is_registered(nick):
+        """returns True if the nick is registered
+        for this object (meeting or seance)
+        """
+
+    def register(nick):
+        """register the nick for the meeting or seance
+        """
+
+    def unregister(nick):
+        """unregister the nick for the meeting or seance
+        """
+
+    def everybody():
+        """returns an iterable of registered people
+        """
+
 class ISeanceContainer(IContainer):
     pass
 
@@ -23,7 +44,7 @@ class ISeance(IContainer):
     name = TextLine(title=u'name')
     date = Datetime(title=u'date', required=False)
     description = Text(title=u'description', required=False)
-    author = TextLine(title=u'author')
+    authors = Attribute(u'names of persons leading the seance')
     nicknames = Attribute(u'names of persons attending the seance')
 
 

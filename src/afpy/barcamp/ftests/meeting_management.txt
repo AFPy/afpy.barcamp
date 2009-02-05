@@ -1,10 +1,8 @@
-Functional test for toplevel administration
-===========================================
+Functional test for meeting administration
+==========================================
+:Test-Layer: functional
 
 The toplevel administrator can manage the meetings (add, remove and edit)
-
-
-:Test-Layer: functional
 
   >>> from zope.testbrowser.testing import Browser
   >>> browser = Browser()
@@ -12,8 +10,8 @@ The toplevel administrator can manage the meetings (add, remove and edit)
 Enable this before the wanted line to view server errors
   >>> #browser.handleErrors = False
 
-Adding the application
-----------------------
+Adding the toplevel application
+-------------------------------
 
 We authenticate as admin:
 
@@ -69,8 +67,8 @@ We are redirected the the originating page:
   'http://localhost:8080/barcamp/@@addmeeting'
 
 
-Adding an meeting
----------------
+Adding a meeting
+----------------
 
 Now we can add an meeting:
 
@@ -93,6 +91,9 @@ The meeting has a container of seances (conferences):
   >>> browser.headers['status']
   '200 Ok'
 
+Editing and removing meetings
+-----------------------------
+TODO
 
 Logout
 ------
@@ -106,7 +107,7 @@ We can logout from the admin account:
 
 
 Listing the meetings
-------------------
+--------------------
 
 Everyone can see the list of meetings:
 

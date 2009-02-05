@@ -9,32 +9,18 @@ Functional test for user registration
 Enable this before the wanted line to view server errors
   >>> #browser.handleErrors = False
 
-Adding an application
----------------------
+Prerequisites
+-------------
 
-We authenticate as admin:
+We add the toplevel grok application:
 
   >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
   >>> browser.addHeader('Accept-Language', 'en-US')
-
-We create an application:
-
   >>> browser.open('http://localhost:8080/applications/')
   >>> browser.getControl(name='name').value = u'barcamp'
   >>> browser.getControl(name='Add').click()
-  >>> 'barcamp' in browser.contents
-  True
 
-We can now visit our application:
-
-  >>> browser.open('http://localhost:8080/barcamp/')
-  >>> browser.headers['status']
-  '200 Ok'
-
-Adding an meeting
----------------
-
-We can add an meeting:
+Then we add a meeting:
 
   >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
   >>> browser.getControl(name='form.name').value = u'pycon fr'
@@ -42,18 +28,6 @@ We can add an meeting:
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
   >>> browser.getControl(name='form.end_date').value = '2008-05-07'
   >>> browser.getControl('Add').click()
-
-Then we can visit our meeting:
-
-  >>> browser.getLink(text='pycon fr').click()
-  >>> browser.headers['status']
-  '200 Ok'
-
-The meeting has a container of seances (conferences):
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances')
-  >>> browser.headers['status']
-  '200 Ok'
 
 Adding a conference
 -------------------
@@ -92,6 +66,11 @@ If I want to register again, it should tell we are already registered:
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/@@registrationpage')
   >>> 'already registered' in browser.contents
   True
+
+We cannot edit the list of seances:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
+  'forbidden'
 
 Then we can unregister from this conference:
 

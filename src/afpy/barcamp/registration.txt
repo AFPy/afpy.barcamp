@@ -1,0 +1,66 @@
+unit test for registration
+==========================
+:Test-Layer: unit
+
+By registration, we mean registering to an event in the real life, ie attending
+a conference or a meeting. We want to track the people list in PyCon FR
+
+We create a dummy object (be it a meeting or seance):
+
+  >>> class Dummy(object)
+          pass
+
+We want this object to be registrable:
+
+  >>> classImplements(Dummy, IRegistrable)
+
+We create an instance of the object:
+
+  >>> dummy = Dummy()
+
+Ok, now we can get a registration adapter:
+
+  >>> registration = IRegistration(dummy)
+
+We don't have anybody registered:
+
+  >>> list(registration.everybody())
+  []
+
+We can check 'ccomb' is not registered:
+
+  >>> registration.is_registered('ccomb')
+  False
+
+We can register him:
+
+  >>> registration.register('ccomb')
+
+Ok, now ccomb is registered and is in the list:
+
+  >>> registration.is_registered('ccomb')
+  True
+  >>> list(registration.everybody())
+  ['ccomb']
+
+We can do the same with gawel:
+
+  >>> registration.register('gawel')
+
+gawel is also registered and is in the list:
+
+  >>> registration.is_registered('gawel')
+  True
+  >>> sorted(list(registration.everybody()))
+  ['ccomb', 'gawel']
+
+Then we unregister ccomb:
+
+  >>> registration.unregister('ccomb')
+
+ccomb is no more registered and is not in the list:
+
+  >>> registration.is_registered('ccomb')
+  False
+  >>> list(registration.everybody())
+  ['gawel']

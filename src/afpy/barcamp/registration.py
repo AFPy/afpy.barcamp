@@ -4,61 +4,41 @@ Seances and Meetings, the only condition is to implement IRegistrable. Once your
 resource implements IRegistrable it can use our registration component to
 provide the user/visitor registration.
 
-In our application it is important to understand that a visitor is not always
-logged-in and that we do not want to force all visitors to log-in. This is why
-we try to just use the session cookie of our visitors, to keep track of their
-nicknames (the thing we call nick in our code).
-
-Anyone is authorized to _claim_ a nickname as their own. In this case the people
-object associated with that nickname will be marked as private. If someone
-tries to use a nickname that is associated with a private people object then we
-will ask her for the good credentials.
 """
 
 # our own application imports
 from afpy.barcamp.interfaces import ISideBar
 from afpy.barcamp.people import People, IPeopleContainer
-from afpy.barcamp.interfaces import IRegistrable
+from afpy.barcamp.interfaces import IRegistrable, IRegistration
 
 # zope & co
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.security.interfaces import Unauthorized
+from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.session.interfaces import ISession
 
 # grok
 import grok
 
+class RegistrationPermission(grok.Permission):
+    grok.name('afpy.barcamp.register')
+    grok.title('Can register') # optional
+
 
 class RegistrationPage(grok.View):
     """Page to register to a seance or meeting, and used for the UI.
     """
+    grok.require('afpy.barcamp.register') # TODO zope.authenticated?
     grok.context(IRegistrable)
     registered = False
     nick = None
 
     def update(self):
-        # default prompt if we don't find an active nickname in the web-session
-        self.prompt = u'Please enter your nickname'
-
-        if 'new' not in self.request:
-            # new is not in the request, which means the user already has a
-            # nick associated to his web-session. Let's fetch that...
-            self.nick = ISession(self.request)['afpy.barcamp'].get('nick')
-
-        if self.nick:
-            # if we found a nickname in the web-session we compare with
-            # the registered users to see if the nick is present and warn
-            # the user if so...
-            if self.nick in self.context.nicknames:
-                self.prompt = u'You are already registered'
-                self.registered = True
-
-            else:
-                # we found a nickname and the user is not yet registered to this
-                # registerable element, we just ask for the nick confirmation.
-                self.prompt = u'Please confirm your nickname'
+        if IRegistration(self.context).is_registered(nick):
+            self.prompt = u'You are already registered'
+            self.registered = True
 
 
 class RegistrationViewlet(grok.Viewlet):
@@ -70,11 +50,8 @@ class RegistrationViewlet(grok.Viewlet):
     nick = None
 
     def update(self):
-        self.nick = ISession(self.request)['afpy.barcamp'].get('nick')
-        if self.nick:
-            self.loggedin = True
-
-        if self.nick in self.context.nicknames:
+        if IRegistration(self.context).is_registered(nick):
+            self.prompt = u'You are already registered'
             self.registered = True
 
 
@@ -87,6 +64,7 @@ class Registration(grok.View):
     grok.traversable('unregister')
 
     def update(self):
+        self.nick  = self.request.principal.id
         if 'unregister' in self.request:
             self.unregister()
 
@@ -97,37 +75,27 @@ class Registration(grok.View):
         pass
 
     def register(self):
-        nick = ISession(self.request)['afpy.barcamp'].get('nick')
-        # get the nick given in the form
-        postednick = self.request.get('nickname')
-
-        if postednick:
-            nick = postednick
-
-        # retrieve or create the associated people
-        peoplelist = getUtility(IPeopleContainer)
-        if nick in peoplelist:
-            people = peoplelist[nick]
-            if people.is_private():
-                raise Unauthorized('This profile is private. Please Log-In.')
-
-        else:
-            people = People()
-            people.name = nick
-            peoplelist[nick] = people
-
         # do the registration
-        self.context.nicknames.add(nick)
-        ISession(self.request)['afpy.barcamp']['nick'] = nick
+        IRegistration(self.context).register(self.nick)
+        # grant permission to add a seance
+        IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal('afpy.barcamp.addseance',
+                                                                               self.nick)
+        # store the nick in the session
+        # TODO should be removed since we use auth
+        ISession(self.request)['afpy.barcamp']['nick'] = self.nick
+        # Display a message for the next page
         msg = (u'You have been added to %s!' % self.context.name)
         SessionMessageSource().send(msg)
         self.redirect(self.url(''))
 
     def unregister(self):
-        nick = ISession(self.request)['afpy.barcamp'].get('nick')
-
-        if nick in self.context.nicknames:
-            self.context.nicknames.remove(nick)
+        if IRegistration(self.context).is_registered(self.nick):
+            # unregister the person
+            IRegistration(self.context).unregister(self.nick)
+            # remove the permission
+            IPrincipalPermissionManager(grok.getSite()).unsetPermissionForPrincipal('afpy.barcamp.addseance',
+                                                                                    self.nick)
+            # display a message on the next screen
             msg = (u'You have been removed from %s!'
                    % self.context.name)
             SessionMessageSource().send(msg)

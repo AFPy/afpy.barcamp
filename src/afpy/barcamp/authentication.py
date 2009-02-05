@@ -1,7 +1,10 @@
 """This module offers authentication for afpy.barcamp
 """
-from afpy.barcamp.people import IPeopleContainer
+from afpy.barcamp.people import IPeople, IPeopleContainer
+from zope.sendmail.interfaces import IMailDelivery
+from afpy.barcamp.people import People
 from md5 import md5
+from random import choice
 from zope import schema
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.interfaces import ICredentialsPlugin
@@ -24,7 +27,7 @@ def setup_toplevel_authentication(pau):
     ICredentialsPlugin (for the authentication mechanism)
     """
     pau.credentialsPlugins = ['credentials']
-    pau.authenticatorPlugins = ['toplevel_admin']
+    pau.authenticatorPlugins = ['app_admin']
 
 
 def setup_authentication(pau):
@@ -35,7 +38,7 @@ def setup_authentication(pau):
     ICredentialsPlugin (for the authentication mechanism)
     """
     pau.credentialsPlugins = ['credentials']
-    pau.authenticatorPlugins = ['meeting_users']
+    pau.authenticatorPlugins = ['meeting_admin']
 
 
 class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
@@ -64,9 +67,10 @@ class PrincipalInfo(object):
 
 class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
     """toplevel authentication plugin for the PluggableAuthentication
+    used at the application level, to manage meetings
     """
     grok.provides(IAuthenticatorPlugin)
-    grok.name('toplevel_admin')
+    grok.name('app_admin')
 
     def authenticateCredentials(self, credentials):
         if not isinstance(credentials, dict):
@@ -90,19 +94,25 @@ class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
 
 class UserAuthenticatorPlugin(grok.GlobalUtility):
     """authentication plugin for the PluggableAuthentication
+    used at the meeting, to manage seances
     """
     grok.provides(IAuthenticatorPlugin)
-    grok.name('users')
+    grok.name('meeting_admin')
 
     def authenticateCredentials(self, credentials):
         if not isinstance(credentials, dict):
             return None
-        if not ('login' in credentials and 'password' in credentials):
+        if not 'login' in credentials or not 'password' in credentials:
             return None
-        people = self.getPeople(credentials['login'])
+        username = credentials.get('login')
+        password = credentials.get('password')
+        if username is None or password is None:
+            return None
+        peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
+        people = peoplelist.get(username)
         if people is None:
             return None
-        if md5(people.password).digest() != md5(credentials['password']):
+        if md5(people.password or '').digest() != md5(credentials['password']):
             return None
         return PrincipalInfo(id=people.name,
                              title=people.name,
@@ -133,6 +143,9 @@ class Login(grok.Form):
 
     form_fields = grok.Fields(ILoginForm)
 
+    def update(self):
+        super(Login, self).update()
+
     @grok.action('login')
     def handle_login(self, **data):
         """login button and login action
@@ -153,5 +166,47 @@ class Logout(grok.View):
 
     def render(self):
         self.redirect(self.request.form.get('camefrom', ''))
+
+
+class SignIn(grok.Form):
+    """View for the sign-in form
+    """
+    grok.context(Interface)
+    grok.require('zope.Public')
+
+    form_fields = grok.Fields(IPeople).omit('password')
+
+    def update(self):
+        super(SignIn, self).update()
+
+    @grok.action('sign in')
+    def handle_signin(self, **data):
+        """signin button and signin action
+        """
+        # create the people
+        people = People()
+        self.applyData(people, **data)
+        # check the login is not taken
+        # TODO
+        # generate a nice but weak password
+        password = u''.join(
+            [choice(['z','r','t','p','q',
+                     's','d','f','g','h',
+                     'j','k','l','m','w',
+                     'x','c','v','b','n'])
+            + choice(['a','e','i','o','u','y'])
+            for i in range(4)])
+        people.password = md5(password).digest()
+        email = u'''You can connect to %s
+
+        With the following informations:
+
+        login : %s
+        password : %s''' % (grok.getSite().__name__,
+                            people.name,
+                            password)
+        mailer = getUtility(IMailDelivery, 'afpy.barcamp')
+        mailer.send('contact@afpy.org', people.email, email)
+        self.redirect('login?check_your_mail')
 
 

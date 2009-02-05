@@ -1,0 +1,126 @@
+Functional test for seance management
+=====================================
+:Test-Layer: functional
+
+The toplevel administrator can manage the meetings (add, remove and edit)
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+
+Enable this before the wanted line to view server errors
+  >>> #browser.handleErrors = False
+
+Prerequisites
+-------------
+
+We first add the toplevel application as grok admin:
+
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> browser.addHeader('Accept-Language', 'en-US')
+  >>> browser.open('http://localhost:8080/applications/')
+  >>> browser.getControl(name='name').value = u'barcamp'
+  >>> browser.getControl(name='Add').click()
+  >>> browser.open('http://localhost:8080/barcamp/')
+
+Then we add a meeting as application admin and logout:
+
+  >>> del browser
+  >>> browser = Browser()
+  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
+  >>> browser.getControl(name='form.login').value = u'admin'
+  >>> browser.getControl(name='form.password').value = u'barcamp'
+  >>> browser.getControl(name='form.actions.login').click()
+  >>> browser.getControl(name='form.name').value = u'pycon fr'
+  >>> browser.getControl(name='form.address').value = u'pycon fr'
+  >>> browser.getControl(name='form.start_date').value = '2008-05-04'
+  >>> browser.getControl(name='form.end_date').value = '2008-05-07'
+  >>> browser.getControl('Add').click()
+  >>> browser.getLink(text='logout').click()
+
+Adding a seance
+---------------
+
+Of course, to be able to add a seance, we need to attend the meeting,
+so we are redirected to the registration page:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
+  >>> '<a href="@@registrationpage">' in browser.contents
+  True
+  >>> browser.url
+  'http://localhost:8080/barcamp/pycon_fr/@@registrationpage'
+
+So we register to the meeting:
+
+  >>> browser.handleErrors = False
+  >>> browser.getLink(url='@@registrationpage').click()
+  >>> browser.getControl(name='nickname').value = u'ccomb'
+  >>> browser.getControl(name='register').click()
+
+Then we can propose a seance:
+
+  >>> browser.getLink(url='seances/@@add').click()
+  >>> browser.getControl(name='form.name').value = u'about grok'
+  >>> browser.getControl(name='form.date').value = u'2008-05-06'
+  >>> browser.getControl('Add').click()
+
+Then we can visit the seance:
+
+  >>> browser.handleErrors = False
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  >>> browser.headers['status']
+  '200 Ok'
+  >>> 'about grok' in browser.contents
+  True
+
+We cannot edit the list of seances:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
+  'forbidden'
+
+Since we are an author, we cannot register or unregister to this seance:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  'you are an author'
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  'you are an author'
+
+But we can release the seance, so that there is no more author.
+
+  >>> browser.getControl(name='release').click()
+  >>> 'you are no more an author' in browser.contents
+  True
+  >>> browser.getControl(name='release')
+  Traceback (most recent call last):
+  ...
+  LookupError: name 'release'
+
+Then we can be an author again:
+
+  >>> browser.getControl(name='claim').click()
+  >>> 'you are an author' in browser.contents
+  True
+  >>> browser.getControl(name='claim')
+  Traceback (most recent call last):
+  ...
+  LookupError: name 'claim'
+
+We can become ogrisel, then become another author as ogrisel: 
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
+  >>> browser.getLink(url='?new').click()
+  >>> browser.getControl(name='nickname').value == ''
+  True
+  >>> browser.getControl(name='nickname').value = u'ogrisel'
+  >>> browser.getControl(name='claim').click()
+  >>> 'been added' in browser.contents
+  True
+
+Listing the seances
+-------------------
+
+Everyone can see the list of seances:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances')
+  >>> 'about grok' in browser.contents
+  True
+

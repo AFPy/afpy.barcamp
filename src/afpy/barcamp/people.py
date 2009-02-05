@@ -8,11 +8,11 @@ import grok
 class IPeople(IContainer):
     """interface of a people"""
 
-    name = TextLine(title=u'name')
+    name = TextLine(title=u'login')
+    firstname = TextLine(title=u'firstname')
+    lastname = TextLine(title=u'lastname')
+    email = TextLine(title=u'e-mail')
     password = Password(title=u'password')
-
-    def is_private( ):
-        pass
 
 
 class People(grok.Container):
@@ -21,9 +21,6 @@ class People(grok.Container):
     name = password = None
     implements(IPeople)
 
-    def is_private(self):
-        return self.password is not None
-
 
 class Index(formlib.DisplayForm):
     """the view of the person
@@ -31,13 +28,16 @@ class Index(formlib.DisplayForm):
     grok.context(People)
     grok.require('zope.ManageContent')
 
+
 class IPeopleContainer(IContainer):
     pass
+
 
 class PeopleContainer(grok.Container):
     """the cotainer for people
     """
     implements(IPeopleContainer)
+
 
 class PeopleListView(Contents, grok.View):
     """view for the list of people
