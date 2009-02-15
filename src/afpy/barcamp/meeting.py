@@ -1,13 +1,16 @@
 from afpy.barcamp.authentication import setup_authentication
-from zope.app.authentication.authentication import PluggableAuthentication
-from zope.app.security.interfaces import IAuthentication
+from afpy.barcamp.interfaces import IRegistration
 from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.people import PeopleContainer
+from afpy.barcamp.registration import IRegistrable
 from afpy.barcamp.seance import ISeanceContainer
 from afpy.barcamp.seance import SeanceContainer
 from grokcore import formlib
+from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
+from zope.app.security.interfaces import IAuthentication
+from zope.component import adapts
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine
 import grok
@@ -25,7 +28,7 @@ class IMeeting(IContainer):
 class Meeting(grok.Container, grok.Site):
     """the meeting itself
     """
-    implements(IMeeting)
+    implements(IMeeting, IRegistrable)
     name = address = start_date = end_date = date_label = None
     grok.local_utility(PluggableAuthentication,
                        provides=IAuthentication,
@@ -49,6 +52,7 @@ class Index(formlib.DisplayForm):
 class Edit(formlib.EditForm):
     """view to edit the meeting
     """
+    grok.require('zope.ManageContent')
     form_fields = grok.AutoFields(IMeeting)
 
     @formlib.action('Apply')
