@@ -42,11 +42,6 @@
     <metal:block define-slot="body" />
   </div>
 
-  <div id="footer">
-    <p i18n:translate="">powered by <a href="https://hg.afpy.org/afpy.barcamp"
-        >afpy.barcamp</a></p>
-  </div>
-
   </body>
 
 </html>
