@@ -10,6 +10,9 @@ The toplevel administrator can manage the meetings (add, remove and edit)
 Enable this before the wanted line to view server errors
   >>> #browser.handleErrors = False
 
+Enable this before the line you want to interact with:
+  >>> #import interlude; interlude.interact(locals())
+
 Prerequisites
 -------------
 
@@ -37,32 +40,46 @@ Then we add a meeting as application admin and logout:
   >>> browser.getControl('Add').click()
   >>> browser.getLink(text='logout').click()
 
+We manually add a new person. The new person is added
+into the people list, but is not yet registered on the meeting:
+
+  >>> from afpy.barcamp.people import People
+  >>> root = getRootFolder()
+  >>> speaker1 = People()
+  >>> speaker1.name = 'speaker1'
+  >>> from md5 import md5
+  >>> speaker1.password = md5('secret').digest()
+  >>> pyconfr = root['barcamp']['pycon_fr']
+  >>> pyconfr['people'][speaker1.name] = speaker1
+  >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+  >>> import grok
+  >>> IPrincipalPermissionManager(pyconfr)\
+  ...       .grantPermissionToPrincipal('afpy.barcamp.addseance', speaker1.name)
+
 Adding a seance
 ---------------
 
 Of course, to be able to add a seance, we need to attend the meeting,
-so we are redirected to the registration page:
+so we are redirected to the login page:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
   >>> browser.url
   'http://localhost:8080/barcamp/pycon_fr/@@login?camefrom=%2Fbarcamp%2Fpycon_fr%2Fseances%2Fadd'
 
-So we register to the meeting:
+So we login as the new attendee:
 
-  >>> browser.getLink(url='@@registrationpage').click()
-  >>> browser.getControl(name='nickname').value = u'ccomb'
-  >>> browser.getControl(name='register').click()
+  >>> browser.getControl(name='form.login').value = u'speaker1'
+  >>> browser.getControl(name='form.password').value = u'secret'
+  >>> browser.getControl(name='form.actions.login').click()
 
 Then we can propose a seance:
 
-  >>> browser.getLink(url='seances/@@add').click()
   >>> browser.getControl(name='form.name').value = u'about grok'
-  >>> browser.getControl(name='form.date').value = u'2008-05-06'
+  >>> # TODO test future seances fields
   >>> browser.getControl('Add').click()
 
 Then we can visit the seance:
 
-  >>> browser.handleErrors = False
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
   >>> browser.headers['status']
   '200 Ok'
@@ -72,45 +89,9 @@ Then we can visit the seance:
 We cannot edit the list of seances:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
-  'forbidden'
-
-Since we are an author, we cannot register or unregister to this seance:
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
-  'you are an author'
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
-  'you are an author'
-
-But we can release the seance, so that there is no more author.
-
-  >>> browser.getControl(name='release').click()
-  >>> 'you are no more an author' in browser.contents
+  >>> 'id="form.login"' in browser.contents
   True
-  >>> browser.getControl(name='release')
-  Traceback (most recent call last):
-  ...
-  LookupError: name 'release'
 
-Then we can be an author again:
-
-  >>> browser.getControl(name='claim').click()
-  >>> 'you are an author' in browser.contents
-  True
-  >>> browser.getControl(name='claim')
-  Traceback (most recent call last):
-  ...
-  LookupError: name 'claim'
-
-We can become ogrisel, then become another author as ogrisel: 
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
-  >>> browser.getLink(url='?new').click()
-  >>> browser.getControl(name='nickname').value == ''
-  True
-  >>> browser.getControl(name='nickname').value = u'ogrisel'
-  >>> browser.getControl(name='claim').click()
-  >>> 'been added' in browser.contents
-  True
 
 Listing the seances
 -------------------

@@ -52,6 +52,7 @@ class Index(formlib.DisplayForm):
 class Edit(formlib.EditForm):
     """view to edit the meeting
     """
+    grok.require('zope.ManageContent')
     form_fields = grok.AutoFields(IMeeting)
 
     @formlib.action('Apply')

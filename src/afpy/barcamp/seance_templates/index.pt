@@ -5,7 +5,7 @@
 
 <h2 tal:content="context/name">meeting title</h2>
 
-<div tal:content="structure context/@@registration">
+<div tal:content="structure context/@@register">
 registration
 </div>
 

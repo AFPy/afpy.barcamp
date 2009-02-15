@@ -1,5 +1,5 @@
-Functional test for user registration
-=====================================
+Functional test for user attendance
+===================================
 
 :Test-Layer: functional
 
@@ -36,7 +36,7 @@ We can add a seance:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@add')
   >>> browser.getControl(name='form.name').value = u'about grok'
-  >>> browser.getControl(name='form.date').value = u'2008-05-06'
+  >>> browser.getControl(name='form.start_date').value = u'2008-05-06'
   >>> browser.getControl('Add').click()
 
 Then visit the conference:
@@ -46,12 +46,28 @@ Then visit the conference:
   >>> browser.headers['status']
   '200 Ok'
 
+We manually add a new person. The new person is added
+into the people list, but is not yet registered on the meeting:
+
+  >>> from afpy.barcamp.people import People
+  >>> root = getRootFolder()
+  >>> attendee1 = People()
+  >>> attendee1.name = 'attendee1'
+  >>> from md5 import md5
+  >>> attendee1.password = md5('secret').digest()
+  >>> pyconfr = root['barcamp']['pycon_fr']
+  >>> pyconfr['people'][attendee1.name] = attendee1
+  >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+  >>> import grok
+  >>> IPrincipalPermissionManager(pyconfr)\
+  ...       .grantPermissionToPrincipal('afpy.barcamp.addseance', attendee1.name)
+
 Registering and unregistering to a conference
 ---------------------------------------------
 
-Now we can register to this conference:
+Now we can register to this seance:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/@@registrationpage')
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/@@register?register')
   >>> browser.getControl(name='nickname').value = u'ccomb'
   >>> browser.getControl(name='register').click()
   >>> 'been added' in browser.contents

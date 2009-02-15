@@ -77,7 +77,7 @@ class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
             return None
         if not ('login' in credentials and 'password' in credentials):
             return None
-        # hardcoded admin account
+        # hardcoded admin account TODO Arghhh
         if credentials['login'] != 'admin' and credentials['password'] != 'barcamp':
             return None
         # grant permission to the hardcoded admin
@@ -225,12 +225,14 @@ class SignIn(grok.Form):
                             people.name,
                             password)
         mailer = getUtility(IMailDelivery, 'afpy.barcamp')
-        mailer.send('contact@afpy.org', people.email, email)
+        if 'nomail' not in self.request:
+            mailer.send('contact@afpy.org', people.email, email)
         # create the user
         peoplelist[people.name] = people
         # grant him some permission to add a seance
-        IPrincipalPermissionManager(grok.getSite())\
-            .grantPermissionToPrincipal('afpy.barcamp.addseance', people.name)
+        pm = IPrincipalPermissionManager(grok.getSite())
+        pm.grantPermissionToPrincipal('afpy.barcamp.addseance', people.name)
+        pm.grantPermissionToPrincipal('afpy.barcamp.can_attend', people.name)
         self.redirect('confirmation')
 
 

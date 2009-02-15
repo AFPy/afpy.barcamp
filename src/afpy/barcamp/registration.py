@@ -26,6 +26,9 @@ class RegistrationPermission(grok.Permission):
     grok.name('afpy.barcamp.register')
     grok.title('Can register') # optional
 
+class RegistrationPermission(grok.Permission):
+    grok.name('afpy.barcamp.can_attend')
+    grok.title('Can attend') # optional
 
 class Registration(grok.Adapter):
     """generic adapter for registration.
@@ -59,15 +62,20 @@ class RegistrationViewlet(grok.Viewlet):
     """
     grok.context(IRegistrable)
     grok.viewletmanager(ISideBar)
-    registered = loggedin = False
+    registered = is_member = False
     nick = None
     prompt = None
 
     def update(self):
         self.nick  = self.request.principal.id
+        if (self.request.principal.id != 'admin'
+          and self.request.principal.id != 'zope.anybody'):
+            self.is_member = True
         if IRegistration(self.context).is_registered(self.nick):
             self.prompt = u'You are already registered'
             self.registered = True
+        self.addme_label = u'Add me to this %s' % self.context.__class__.__name__
+        self.removeme_label = u'Remove me to this %s' % self.context.__class__.__name__
 
 
 class Register(grok.View):
@@ -75,6 +83,7 @@ class Register(grok.View):
     but is independent from any rendering or template
     """
     grok.context(IRegistrable)
+    grok.require('afpy.barcamp.can_attend')
     grok.traversable('register') # allows to access @@registration/register
     grok.traversable('unregister')
 
@@ -92,9 +101,7 @@ class Register(grok.View):
     def register(self):
         # do the registration
         IRegistration(self.context).register(self.nick)
-        # grant permission to add a seance
-        IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal('afpy.barcamp.addseance',
-                                                                               self.nick)
+
         # store the nick in the session
         # TODO should be removed since we use auth
         ISession(self.request)['afpy.barcamp']['nick'] = self.nick
@@ -107,9 +114,7 @@ class Register(grok.View):
         if IRegistration(self.context).is_registered(self.nick):
             # unregister the person
             IRegistration(self.context).unregister(self.nick)
-            # remove the permission
-            IPrincipalPermissionManager(grok.getSite()).unsetPermissionForPrincipal('afpy.barcamp.addseance',
-                                                                                    self.nick)
+
             # display a message on the next screen
             msg = (u'You have been removed from %s!'
                    % self.context.name)

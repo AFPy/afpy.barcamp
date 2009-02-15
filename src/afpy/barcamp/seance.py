@@ -1,9 +1,13 @@
-from afpy.barcamp.registration import IRegistrable
 from afpy.barcamp.interfaces import IRegistration
-from zope.interface import implements
+from zope.component import getUtility
+from afpy.barcamp.people import IPeopleContainer
+from afpy.barcamp.registration import IRegistrable
 from grokcore import formlib
-from zope.app.container.browser.contents import Contents
 from interfaces import ISeance, ISeanceContainer
+from z3c.flashmessage.sources import SessionMessageSource
+from zope.app.container.browser.contents import Contents
+from zope.interface import implements
+from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.session.interfaces import ISession
 import grok
 
@@ -50,6 +54,7 @@ class SeanceListEdit(Contents, grok.View):
     """
     grok.name('edit')
     grok.context(SeanceContainer)
+    grok.require('zope.ManageContent')
 
 
 class AddSeancePermission(grok.Permission):
@@ -78,6 +83,13 @@ class Add(formlib.AddForm):
 
     @formlib.action('Add seance')
     def add(self, **data):
+        nick = self.request.principal.id
+        peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
+
+        if nick not in peoplelist:
+            msg = (u'Please first register')
+            SessionMessageSource().send(msg)
+            self.redirect(self.url(''))
 
         obj = Seance()
         self.applyData(obj, **data)
@@ -85,6 +97,9 @@ class Add(formlib.AddForm):
         # TODO generate a correct blurb that removes accents
         name = data['name'].lower().replace(' ', '_')
         self.context[name] = obj
+        IPrincipalPermissionManager(obj)\
+            .grantPermissionToPrincipal('zope.ManageContent',
+                                        self.request.principal.id)
         self.redirect(self.url('index'))
 
 
