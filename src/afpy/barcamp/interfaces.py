@@ -1,7 +1,7 @@
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface
 from zope.interface import Attribute
-from zope.schema import Datetime, TextLine, Text, Timedelta
+from zope.schema import Datetime, TextLine, Text, Int
 
 class ISideBar(Interface):
     """marker interface of the sidebar
@@ -43,7 +43,7 @@ class ISeance(IContainer):
     """
     name = TextLine(title=u'name')
     start_date = Datetime(title=u'Date and time', required=False)
-    duration = Timedelta(title=u'Duration in minutes', required=False)
+    duration = Int(title=u'Duration in minutes', required=False)
     description = Text(title=u'description', required=False)
     authors = Attribute(u'names of persons leading the seance')
 
