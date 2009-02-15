@@ -1,7 +1,6 @@
 body {
   padding: 0;
   margin: 0;
-  background-color: rgb(200, 255, 200);
 }
 
 /*
@@ -10,12 +9,11 @@ body {
 
 div#banner {
   padding: 0.5em 1em;
-  background-color: rgb(200, 255, 200);
-  color: rgb(0, 10, 0);
+  color: white;
 }
 
 div#banner a, div#banner a:hover, div#banner a:visited {
-  color: rgb(0, 10, 0);
+  color: white;
 }
 
 div#banner h1 a {
@@ -78,7 +76,7 @@ div#navigation li {
 }
 
 div#navigation a, div#navigation a:hover, div#navigation a:visited {
-  color: rgb(0, 10, 0);
+  color: white;
 }
 
 /*
@@ -160,12 +158,6 @@ div#content {
 /*
  * footer
  */
-
-div#footer {
-  padding: 0.5em 1em;
-  background-color: rgb(200, 255, 200);
-  color: rgb(0, 10, 0);
-}
 
 div#footer a, div#footer a:hover, div#footer a:visited {
   color: rgb(0, 10, 0);
