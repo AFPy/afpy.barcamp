@@ -44,14 +44,11 @@ Of course, to be able to add a seance, we need to attend the meeting,
 so we are redirected to the registration page:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
-  >>> '<a href="@@registrationpage">' in browser.contents
-  True
   >>> browser.url
-  'http://localhost:8080/barcamp/pycon_fr/@@registrationpage'
+  'http://localhost:8080/barcamp/pycon_fr/@@login?camefrom=%2Fbarcamp%2Fpycon_fr%2Fseances%2Fadd'
 
 So we register to the meeting:
 
-  >>> browser.handleErrors = False
   >>> browser.getLink(url='@@registrationpage').click()
   >>> browser.getControl(name='nickname').value = u'ccomb'
   >>> browser.getControl(name='register').click()

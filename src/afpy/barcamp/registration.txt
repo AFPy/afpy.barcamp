@@ -3,20 +3,29 @@ unit test for registration
 :Test-Layer: unit
 
 By registration, we mean registering to an event in the real life, ie attending
-a conference or a meeting. We want to track the people list in PyCon FR
+a conference or a dummy. We want to track the people list in PyCon FR
 
-We create a dummy object (be it a meeting or seance):
+We try with a dummy object:
 
-  >>> class Dummy(object)
-          pass
+  >>> class Dummy(object):
+  ...     pass
 
-We want this object to be registrable:
-
-  >>> classImplements(Dummy, IRegistrable)
 
 We create an instance of the object:
 
   >>> dummy = Dummy()
+
+We declare our object is registrable:
+
+  >>> from afpy.barcamp.interfaces import IRegistrable, IRegistration
+  >>> from zope.interface import classImplements
+  >>> classImplements(Dummy, IRegistrable)
+
+We declare our adapter:
+
+  >>> from zope.component import provideAdapter
+  >>> from afpy.barcamp.registration import Registration
+  >>> provideAdapter(Registration, (IRegistrable,), IRegistration)
 
 Ok, now we can get a registration adapter:
 
@@ -64,3 +73,6 @@ ccomb is no more registered and is not in the list:
   False
   >>> list(registration.everybody())
   ['gawel']
+
+
+

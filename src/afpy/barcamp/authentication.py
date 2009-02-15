@@ -112,7 +112,7 @@ class UserAuthenticatorPlugin(grok.GlobalUtility):
         people = peoplelist.get(username)
         if people is None:
             return None
-        if md5(people.password or '').digest() != md5(credentials['password']):
+        if people.password != md5(password).digest():
             return None
         return PrincipalInfo(id=people.name,
                              title=people.name,
@@ -150,7 +150,7 @@ class Login(grok.Form):
     def handle_login(self, **data):
         """login button and login action
         """
-        self.redirect(self.request.form.get('camefrom', ''))
+        self.redirect(self.request.form.get('camefrom', '..'))
 
 
 class Logout(grok.View):
@@ -166,6 +166,13 @@ class Logout(grok.View):
 
     def render(self):
         self.redirect(self.request.form.get('camefrom', ''))
+
+
+class Confirmation(grok.View):
+    """confirmation page after sign-in
+    """
+    grok.context(Interface)
+    grok.require('zope.Public')
 
 
 class SignIn(grok.Form):
@@ -187,7 +194,12 @@ class SignIn(grok.Form):
         people = People()
         self.applyData(people, **data)
         # check the login is not taken
-        # TODO
+        peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
+        if people.name in peoplelist:
+
+            self.redirect('signin')
+
+
         # generate a nice but weak password
         password = u''.join(
             [choice(['z','r','t','p','q',
@@ -197,16 +209,28 @@ class SignIn(grok.Form):
             + choice(['a','e','i','o','u','y'])
             for i in range(4)])
         people.password = md5(password).digest()
-        email = u'''You can connect to %s
+        # send an email with the password
+        email = u'''Subject: your account for %s
 
-        With the following informations:
+        Dear %s %s,
+
+        thanks for your account!
+        You can connect to %s with the following informations:
 
         login : %s
         password : %s''' % (grok.getSite().__name__,
+                            people.firstname,
+                            people.lastname,
+                            grok.getSite().__name__,
                             people.name,
                             password)
         mailer = getUtility(IMailDelivery, 'afpy.barcamp')
         mailer.send('contact@afpy.org', people.email, email)
-        self.redirect('login?check_your_mail')
+        # create the user
+        peoplelist[people.name] = people
+        # grant him some permission to add a seance
+        IPrincipalPermissionManager(grok.getSite())\
+            .grantPermissionToPrincipal('afpy.barcamp.addseance', people.name)
+        self.redirect('confirmation')
 
 

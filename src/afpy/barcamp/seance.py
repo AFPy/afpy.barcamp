@@ -11,32 +11,11 @@ class Seance(grok.Container):
     """the seance itself
     """
     implements(ISeance, IRegistrable)
-    name = date = None
-
-    def __init__(self):
-        self.nicknames = set()
-        super(Seance, self).__init__()
-
-
-class SeanceRegistration(grok.Adapter):
-    grok.provides(IRegistration)
-    grok.context(ISeance)
-
-    def __init__(self, context):
-        self.context = context
-
-    def is_registered(self, nick):
-        return nick in self.context.nicknames
-
-    def register(self, nick):
-        self.context.nicknames.add(nick)
-
-    def unregister(self, nick):
-        if not self.is_registered(nick):
-            self.context.remove(nick)
-
-    def everybody(self):
-        return self.context.nicknames
+    name = None
+    start_date = None
+    duration = None
+    description = None
+    authors = None
 
 
 class Index(formlib.DisplayForm):
@@ -83,15 +62,13 @@ class Add(formlib.AddForm):
     """
     grok.require('afpy.barcamp.addseance')
     grok.context(SeanceContainer)
-    form_fields = grok.AutoFields(ISeance)
+    form_fields = grok.AutoFields(ISeance).omit('start_date')
 
     def update(self):
         form = self.request.form
 
-        # we must be registered on the meeting (which is the nearest Site)
-        if not IRegistration(grok.getSite()).is_registered(self.request.principal.id):
-            self.redirect(self.url(self.context.__parent__)
-                          + '/@@registrationpage')
+        # we automatically register for the meeting (which is the nearest Site)
+        IRegistration(grok.getSite()).register(self.request.principal.id)
 
         if not form.get('form.author', '').strip():
             form['form.author'] = \

@@ -27,18 +27,31 @@ class RegistrationPermission(grok.Permission):
     grok.title('Can register') # optional
 
 
-class RegistrationPage(grok.View):
-    """Page to register to a seance or meeting, and used for the UI.
+class Registration(grok.Adapter):
+    """generic adapter for registration.
+    Used for meetings and seances
     """
-    grok.require('afpy.barcamp.register') # TODO zope.authenticated?
+    grok.provides(IRegistration)
     grok.context(IRegistrable)
-    registered = False
-    nick = None
 
-    def update(self):
-        if IRegistration(self.context).is_registered(nick):
-            self.prompt = u'You are already registered'
-            self.registered = True
+    def __init__(self, context):
+        self.context = context
+        if not hasattr(self.context, '_nicknames'):
+            self.context._nicknames = set()
+
+    def is_registered(self, nick):
+        #FIXME use annotations instead
+        return nick in self.context._nicknames
+
+    def register(self, nick):
+        self.context._nicknames.add(nick)
+
+    def unregister(self, nick):
+        if self.is_registered(nick):
+            self.context._nicknames.remove(nick)
+
+    def everybody(self):
+        return self.context._nicknames
 
 
 class RegistrationViewlet(grok.Viewlet):
@@ -48,14 +61,16 @@ class RegistrationViewlet(grok.Viewlet):
     grok.viewletmanager(ISideBar)
     registered = loggedin = False
     nick = None
+    prompt = None
 
     def update(self):
-        if IRegistration(self.context).is_registered(nick):
+        self.nick  = self.request.principal.id
+        if IRegistration(self.context).is_registered(self.nick):
             self.prompt = u'You are already registered'
             self.registered = True
 
 
-class Registration(grok.View):
+class Register(grok.View):
     """view that really does the (un)registration
     but is independent from any rendering or template
     """

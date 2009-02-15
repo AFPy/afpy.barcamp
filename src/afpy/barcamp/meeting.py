@@ -42,31 +42,6 @@ class Meeting(grok.Container, grok.Site):
                        provides=IPeopleContainer,
                        name_in_container='people')
 
-    def __init__(self):
-        self.nicknames = set()
-        super(Meeting, self).__init__()
-
-
-class MeetingRegistration(grok.Adapter):
-    grok.provides(IRegistration)
-    grok.context(IMeeting)
-
-    def __init__(self, context):
-        self.context = context
-
-    def is_registered(self, nick):
-        return nick in self.context.nicknames
-
-    def register(self, nick):
-        self.context.nicknames.add(nick)
-
-    def unregister(self, nick):
-        if not self.is_registered(nick):
-            self.context.remove(nick)
-
-    def everybody(self):
-        return self.context.nicknames
-
 
 class Index(formlib.DisplayForm):
     """view of the meeting

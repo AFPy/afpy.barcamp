@@ -14,15 +14,15 @@
        tal:content="seance/name">
     seance
     </a> -
-    <tal:block condition="python: seance.start_date and not seance.end_date">
+    <tal:block condition="python: seance.start_date and not seance.duration">
       on <span class="start_date"
                tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
     </tal:block>
-    <tal:block condition="python: seance.start_date and seance.end_date and seance.start_date != seance.end_date">
+    <tal:block condition="python: seance.start_date and seance.duration">
       from <span class="start_date"
                  tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">begin</span>
-      to <span class="end_date"
-               tal:content="python: request.locale.dates.getFormatter('date').format(seance.end_date)">end</span>
+      to <span class="duration"
+               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
     </tal:block>
   </li>
 </ul>
