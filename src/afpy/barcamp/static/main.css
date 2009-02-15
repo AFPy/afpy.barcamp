@@ -9,11 +9,11 @@ body {
 
 div#banner {
   padding: 0.5em 1em;
-  color: white;
 }
 
 div#banner a, div#banner a:hover, div#banner a:visited {
-  color: white;
+  color: gray;
+  font-weight: bold;
 }
 
 div#banner h1 a {
@@ -76,7 +76,8 @@ div#navigation li {
 }
 
 div#navigation a, div#navigation a:hover, div#navigation a:visited {
-  color: white;
+  color: gray;
+  font-weight: bold;
 }
 
 /*
