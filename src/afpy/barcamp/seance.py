@@ -20,6 +20,7 @@ class Seance(grok.Container):
     duration = None
     description = None
     authors = None
+    status = None
 
 
 class Index(formlib.DisplayForm):
@@ -67,7 +68,7 @@ class Add(formlib.AddForm):
     """
     grok.require('afpy.barcamp.addseance')
     grok.context(SeanceContainer)
-    form_fields = grok.AutoFields(ISeance).omit('start_date')
+    form_fields = grok.AutoFields(ISeance).omit('start_date', 'status')
 
     def update(self):
         form = self.request.form
