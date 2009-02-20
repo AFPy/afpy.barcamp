@@ -1,5 +1,4 @@
 <metal:block define-macro="page"><metal:block define-slot="doctype"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"></metal:block>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
     xml:lang="en"
     lang="en"
@@ -26,8 +25,8 @@
 
   <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
-  <div id="banner" class="vevent">
-    <!-- use the hcalendar microformat to semantically tag the event -->
+  <div id="banner" class="vmeeting">
+    <!-- use the hcalendar microformat to semantically tag the meeting -->
     <!-- http://microformats.org/wiki/hcalendar -->
     <h1><a class="summary" href="/"
            tal:content="site/name"
@@ -44,9 +43,9 @@
 
   <div id="navigation">
     <ul>
-      <li><a href="#sessions"
-          tal:attributes="href python:view.url(site['sessions'])"
-          i18n:translate="">All sessions</a></li>
+      <li><a href="#seances"
+          tal:attributes="href python:view.url(site['seances'])"
+          i18n:translate="">All seances</a></li>
       <li><a href="#program"
           i18n:translate="">Program</a></li>
       <li><a href="#people"

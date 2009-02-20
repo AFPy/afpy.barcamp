@@ -1,34 +1,29 @@
 <div id="registration">
-  <a href="@@registrationpage"
-     tal:condition="python: not viewlet.registered and not viewlet.loggedin"
-     i18n:translate="">
-    I would like to attend!
-  </a>
 
-<tal:block condition="viewlet/loggedin">
+<tal:block condition="viewlet/is_member">
     You are
     <span id="username"
           tal:content="viewlet/nick">
         username
-    </span>
-    <form method="post"
-          tal:condition="not:viewlet/registered"
-          action="@@registration?register">
-      <input type="submit"
-             name="register"
-             value="add me to this session" />
-    </form>
-
-    <form method="post"
-          tal:condition="viewlet/registered"
-          action="@@registration?unregister">
-      <input type="submit"
-             name="unregister"
-             value="remove me from this session" />
-    </form>
-    <a href="@@registrationpage?new">
-        change user
-    </a>
+    </span> (<a href="logout">logout</a>)
 </tal:block>
+
+<form method="post"
+      tal:condition="not:viewlet/registered"
+      action="@@register?register">
+  <input type="submit"
+         name="register"
+         tal:attributes="value viewlet/addme_label"
+         value="add me" />
+</form>
+
+<form method="post"
+      tal:condition="viewlet/registered"
+      action="@@register?unregister">
+  <input type="submit"
+         name="unregister"
+         tal:attributes="value viewlet/removeme_label"
+         value="remove me" />
+</form>
 
 </div>

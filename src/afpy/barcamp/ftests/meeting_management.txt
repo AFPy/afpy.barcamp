@@ -1,0 +1,117 @@
+Functional test for meeting administration
+==========================================
+:Test-Layer: functional
+
+The toplevel administrator can manage the meetings (add, remove and edit)
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+
+Enable this before the wanted line to view server errors
+  >>> #browser.handleErrors = False
+
+Adding the toplevel application
+-------------------------------
+
+We authenticate as admin:
+
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> browser.addHeader('Accept-Language', 'en-US')
+
+We create an application:
+
+  >>> browser.open('http://localhost:8080/applications/')
+  >>> browser.getControl(name='name').value = u'barcamp'
+  >>> browser.getControl(name='Add').click()
+  >>> 'barcamp' in browser.contents
+  True
+
+We can now visit our application:
+
+  >>> browser.open('http://localhost:8080/barcamp/')
+  >>> browser.headers['status']
+  '200 Ok'
+
+Login as toplevel administrator
+-------------------------------
+
+Now we restart the browser to lose the http basic auth:
+
+  >>> del browser
+  >>> browser = Browser()
+  >>> browser.open('http://localhost:8080/')
+  Traceback (most recent call last):
+  ...
+  httperror_seek_wrapper: HTTP Error 401: Unauthorized
+  >>> browser.headers['status']
+  '401 Unauthorized'
+
+We should have another account in the toplevel application:
+But we see that we are redirected to a login page:
+
+  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
+  >>> browser.headers['status']
+  '200 Ok'
+  >>> browser.url
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
+
+We can login:
+
+  >>> browser.getControl(name='form.login').value = u'admin'
+  >>> browser.getControl(name='form.password').value = u'barcamp'
+  >>> browser.getControl(name='form.actions.login').click()
+
+We are redirected the the originating page:
+
+  >>> browser.url
+  'http://localhost:8080/barcamp/@@addmeeting'
+
+
+Adding a meeting
+----------------
+
+Now we can add an meeting:
+
+  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
+  >>> browser.getControl(name='form.name').value = u'pycon fr'
+  >>> browser.getControl(name='form.address').value = u'pycon fr'
+  >>> browser.getControl(name='form.start_date').value = '2008-05-04'
+  >>> browser.getControl(name='form.end_date').value = '2008-05-07'
+  >>> browser.getControl('Add').click()
+
+Then we can visit our meeting:
+
+  >>> browser.getLink(text='pycon fr').click()
+  >>> browser.headers['status']
+  '200 Ok'
+
+The meeting has a container of seances (conferences):
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances')
+  >>> browser.headers['status']
+  '200 Ok'
+
+Editing and removing meetings
+-----------------------------
+TODO
+
+Logout
+------
+
+We can logout from the admin account:
+
+  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
+  >>> browser.getLink(text='logout').click()
+  >>> browser.url
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
+
+
+Listing the meetings
+--------------------
+
+Everyone can see the list of meetings:
+
+  >>> browser.open('http://localhost:8080/barcamp/')
+  >>> 'pycon fr' in browser.contents
+  True
+

@@ -4,12 +4,12 @@ Afpy barcamp
 :Test-Layer: unit
 
 
-Session
+Seance
 -------
-We can create a session:
+We can create a seance:
 
-  >>> from afpy.barcamp.session import Session
-  >>> grokintro = Session()
+  >>> from afpy.barcamp.seance import Seance
+  >>> grokintro = Seance()
   >>> grokintro.name = u'Introduction to Grok'
   >>> grokintro.author = u'faide'
 

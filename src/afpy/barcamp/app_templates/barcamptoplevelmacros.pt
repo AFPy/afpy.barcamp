@@ -1,5 +1,4 @@
 <metal:block define-macro="page"><metal:block define-slot="doctype"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"></metal:block>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
     xml:lang="en"
     lang="en"
@@ -22,6 +21,16 @@
 
   <body tal:attributes="onload body_onload | nothing">
 
+<div id="logout" tal:condition="python:request.principal.id != 'zope.anybody'">
+  <span tal:content="request/principal/title">
+    user
+  </span>
+  <a tal:attributes="href string:logout?camefrom=${request/PATH_INFO | nothing}"
+     i18n:translate="">
+        logout
+</a>
+</div>
+
   <div id="banner">
     <h1><a href="/" tal:attributes="href python:view.url('')"
         i18n:translate="">AFPy Barcamp - conference manager</a></h1>
@@ -30,11 +39,6 @@
 
   <div id="content">
     <metal:block define-slot="body" />
-  </div>
-
-  <div id="footer">
-    <p i18n:translate="">powered by <a href="https://hg.afpy.org/afpy.barcamp"
-        >afpy.barcamp</a></p>
   </div>
 
   </body>

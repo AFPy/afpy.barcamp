@@ -1,0 +1,104 @@
+Functional test for seance management
+=====================================
+:Test-Layer: functional
+
+The toplevel administrator can manage the meetings (add, remove and edit)
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+
+Enable this before the wanted line to view server errors
+  >>> #browser.handleErrors = False
+
+Enable this before the line you want to interact with:
+  >>> #import interlude; interlude.interact(locals())
+
+Prerequisites
+-------------
+
+We first add the toplevel application as grok admin:
+
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> browser.addHeader('Accept-Language', 'en-US')
+  >>> browser.open('http://localhost:8080/applications/')
+  >>> browser.getControl(name='name').value = u'barcamp'
+  >>> browser.getControl(name='Add').click()
+  >>> browser.open('http://localhost:8080/barcamp/')
+
+Then we add a meeting as application admin and logout:
+
+  >>> del browser
+  >>> browser = Browser()
+  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
+  >>> browser.getControl(name='form.login').value = u'admin'
+  >>> browser.getControl(name='form.password').value = u'barcamp'
+  >>> browser.getControl(name='form.actions.login').click()
+  >>> browser.getControl(name='form.name').value = u'pycon fr'
+  >>> browser.getControl(name='form.address').value = u'pycon fr'
+  >>> browser.getControl(name='form.start_date').value = '2008-05-04'
+  >>> browser.getControl(name='form.end_date').value = '2008-05-07'
+  >>> browser.getControl('Add').click()
+  >>> browser.getLink(text='logout').click()
+
+We manually add a new person. The new person is added
+into the people list, but is not yet registered on the meeting:
+
+  >>> from afpy.barcamp.people import People
+  >>> root = getRootFolder()
+  >>> speaker1 = People()
+  >>> speaker1.name = 'speaker1'
+  >>> from md5 import md5
+  >>> speaker1.password = md5('secret').digest()
+  >>> pyconfr = root['barcamp']['pycon_fr']
+  >>> pyconfr['people'][speaker1.name] = speaker1
+  >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+  >>> import grok
+  >>> IPrincipalPermissionManager(pyconfr)\
+  ...       .grantPermissionToPrincipal('afpy.barcamp.addseance', speaker1.name)
+
+Adding a seance
+---------------
+
+Of course, to be able to add a seance, we need to attend the meeting,
+so we are redirected to the login page:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
+  >>> browser.url
+  'http://localhost:8080/barcamp/pycon_fr/@@login?camefrom=%2Fbarcamp%2Fpycon_fr%2Fseances%2Fadd'
+
+So we login as the new attendee:
+
+  >>> browser.getControl(name='form.login').value = u'speaker1'
+  >>> browser.getControl(name='form.password').value = u'secret'
+  >>> browser.getControl(name='form.actions.login').click()
+
+Then we can propose a seance:
+
+  >>> browser.getControl(name='form.name').value = u'about grok'
+  >>> # TODO test future seances fields
+  >>> browser.getControl('Add').click()
+
+Then we can visit the seance:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  >>> browser.headers['status']
+  '200 Ok'
+  >>> 'about grok' in browser.contents
+  True
+
+We cannot edit the list of seances:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
+  >>> 'id="form.login"' in browser.contents
+  True
+
+
+Listing the seances
+-------------------
+
+Everyone can see the list of seances:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances')
+  >>> 'about grok' in browser.contents
+  True
+

@@ -1,7 +1,6 @@
 body {
   padding: 0;
   margin: 0;
-  background-color: rgb(200, 255, 200);
 }
 
 /*
@@ -10,12 +9,11 @@ body {
 
 div#banner {
   padding: 0.5em 1em;
-  background-color: rgb(200, 255, 200);
-  color: rgb(0, 10, 0);
 }
 
 div#banner a, div#banner a:hover, div#banner a:visited {
-  color: rgb(0, 10, 0);
+  color: gray;
+  font-weight: bold;
 }
 
 div#banner h1 a {
@@ -25,31 +23,31 @@ div#banner h1 a {
 }
 
 /*
- * microformat vevent
+ * microformat vmeeting
  */
 
-div.vevent .date {
+div.vmeeting .date {
   text-align: right;
   padding: 0.2em 0.3em;
 }
 
-div.vevent .location {
+div.vmeeting .location {
   text-align: right;
   padding: 0.2em 0.3em;
   font-style: italic;
 }
 
-div.vevent .dtstart {
+div.vmeeting .dtstart {
   visibility: hidden;
   display: none;
 }
 
-div.vevent .dtend {
+div.vmeeting .dtend {
   visibility: hidden;
   display: none;
 }
 
-div.vevent .url {
+div.vmeeting .url {
   visibility: hidden;
   display: none;
 }
@@ -78,7 +76,8 @@ div#navigation li {
 }
 
 div#navigation a, div#navigation a:hover, div#navigation a:visited {
-  color: rgb(0, 10, 0);
+  color: gray;
+  font-weight: bold;
 }
 
 /*
@@ -155,20 +154,6 @@ div#flashmessage p span.message {
 div#content {
   background-color: white;
   padding: 1em;
-}
-
-/*
- * footer
- */
-
-div#footer {
-  padding: 0.5em 1em;
-  background-color: rgb(200, 255, 200);
-  color: rgb(0, 10, 0);
-}
-
-div#footer a, div#footer a:hover, div#footer a:visited {
-  color: rgb(0, 10, 0);
 }
 
 /*

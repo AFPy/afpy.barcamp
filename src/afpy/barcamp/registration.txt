@@ -1,0 +1,78 @@
+unit test for registration
+==========================
+:Test-Layer: unit
+
+By registration, we mean registering to an event in the real life, ie attending
+a conference or a dummy. We want to track the people list in PyCon FR
+
+We try with a dummy object:
+
+  >>> class Dummy(object):
+  ...     pass
+
+
+We create an instance of the object:
+
+  >>> dummy = Dummy()
+
+We declare our object is registrable:
+
+  >>> from afpy.barcamp.interfaces import IRegistrable, IRegistration
+  >>> from zope.interface import classImplements
+  >>> classImplements(Dummy, IRegistrable)
+
+We declare our adapter:
+
+  >>> from zope.component import provideAdapter
+  >>> from afpy.barcamp.registration import Registration
+  >>> provideAdapter(Registration, (IRegistrable,), IRegistration)
+
+Ok, now we can get a registration adapter:
+
+  >>> registration = IRegistration(dummy)
+
+We don't have anybody registered:
+
+  >>> list(registration.everybody())
+  []
+
+We can check 'ccomb' is not registered:
+
+  >>> registration.is_registered('ccomb')
+  False
+
+We can register him:
+
+  >>> registration.register('ccomb')
+
+Ok, now ccomb is registered and is in the list:
+
+  >>> registration.is_registered('ccomb')
+  True
+  >>> list(registration.everybody())
+  ['ccomb']
+
+We can do the same with gawel:
+
+  >>> registration.register('gawel')
+
+gawel is also registered and is in the list:
+
+  >>> registration.is_registered('gawel')
+  True
+  >>> sorted(list(registration.everybody()))
+  ['ccomb', 'gawel']
+
+Then we unregister ccomb:
+
+  >>> registration.unregister('ccomb')
+
+ccomb is no more registered and is not in the list:
+
+  >>> registration.is_registered('ccomb')
+  False
+  >>> list(registration.everybody())
+  ['gawel']
+
+
+

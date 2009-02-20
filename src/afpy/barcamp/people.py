@@ -7,12 +7,12 @@ import grok
 
 class IPeople(IContainer):
     """interface of a people"""
-    
-    name = TextLine(title=u'name')
-    password = Password(title=u'password')
 
-    def is_private( ):
-        pass
+    name = TextLine(title=u'login')
+    firstname = TextLine(title=u'firstname')
+    lastname = TextLine(title=u'lastname')
+    email = TextLine(title=u'e-mail')
+    password = Password(title=u'password')
 
 
 class People(grok.Container):
@@ -21,28 +21,30 @@ class People(grok.Container):
     name = password = None
     implements(IPeople)
 
-    def is_private(self):
-        return self.password is not None
-
 
 class Index(formlib.DisplayForm):
     """the view of the person
     """
     grok.context(People)
+    grok.require('zope.ManageContent')
+
 
 class IPeopleContainer(IContainer):
     pass
+
 
 class PeopleContainer(grok.Container):
     """the container for people
     """
     implements(IPeopleContainer)
 
+
 class PeopleListView(Contents, grok.View):
     """view for the list of people
     """
     grok.name('index')
     grok.context(PeopleContainer)
+    grok.require('zope.ManageContent')
 
 
 class Add(formlib.AddForm):
@@ -50,6 +52,7 @@ class Add(formlib.AddForm):
     """
     grok.context(PeopleContainer)
     form_fields = grok.AutoFields(IPeople)
+    grok.require('zope.ManageContent')
 
     def setUpWidgets(self, ignore_request = False):
         super(Add, self).setUpWidgets(ignore_request)
@@ -69,3 +72,4 @@ class Edit(formlib.EditForm):
     """
     form_fields = grok.AutoFields(IPeople)
     grok.context(People)
+    grok.require('zope.ManageContent')

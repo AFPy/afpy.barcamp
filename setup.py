@@ -25,6 +25,7 @@ setup(name='afpy.barcamp',
                         'z3c.testsetup',
                         # Add extra requirements here
                         'z3c.flashmessage >= 1.0',
+                        'zope.sendmail',
                         ],
       entry_points="""
       # Add entry points here

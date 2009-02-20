@@ -1,0 +1,34 @@
+<html metal:use-macro="context/@@barcampmacros/macros/page"
+      i18n:domain="afpy.barcamp">
+<head>
+</head>
+<body>
+<div metal:fill-slot="body">
+
+<h2 i18n:translate="">All seances</h2>
+
+<ul id="seancelist">
+  <li tal:repeat="seance context/values">
+    <a href="#"
+       tal:attributes="href seance/@@absolute_url"
+       tal:content="seance/name">
+    seance
+    </a> -
+    <tal:block condition="python: seance.start_date and not seance.duration">
+      on <span class="start_date"
+               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
+    </tal:block>
+    <tal:block condition="python: seance.start_date and seance.duration">
+      from <span class="start_date"
+                 tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">begin</span>
+      to <span class="duration"
+               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
+    </tal:block>
+  </li>
+</ul>
+
+<a href="add">add a seance</a>
+
+</div>
+</body>
+</html>

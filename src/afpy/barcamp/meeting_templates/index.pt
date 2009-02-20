@@ -3,11 +3,17 @@
 <body>
 <div metal:fill-slot="body">
 
-<h2 tal:content="context/name">event title</h2>
-
-<div tal:content="structure context/@@registration">
-registration
-</div>
+  <div id="admin-actions">
+    <ul>
+      <li>
+        <a href="edit" i18n:translate="">Edit</a>
+      </li>
+      <li>
+        <a href=".." i18n:translate="">All meetings</a>
+      </li>
+    </ul>
+  </div>
+  <div style="clear: both"></div>
 
   <div metal:define-macro="formbody">
 
@@ -36,17 +42,7 @@ registration
 
   </div>
 
-
-<a href="edit">edit</a>
-
-<div>
-    <a href=".."
-       i18n:translate="">
-        Session list
-    </a> 
-
-</div>
-
+<a href="seances/@@add">Propose a seance!</a>
 
 </div>
 </body>

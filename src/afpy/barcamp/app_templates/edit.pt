@@ -1,11 +1,12 @@
-<html metal:use-macro="context/@@barcampmacros/macros/page"
+<html metal:use-macro="context/@@barcamptoplevelmacros/macros/page"
       i18n:domain="afpy.barcamp">
 <head>
 </head>
 <body>
 <div metal:fill-slot="body">
 
-<h2 i18n:translate="">All sessions</h2>
+
+<h2 i18n:translate="">All meetings</h2>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"
@@ -187,7 +188,7 @@
         //-->
     </script>
 
-<a href="add">add a session</a>
+<a href="addmeeting">add an meeting</a>
 
 </div>
 </body>

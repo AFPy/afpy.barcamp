@@ -1,12 +1,9 @@
-<html metal:use-macro="context/@@barcampmacros/macros/page">
+<html metal:use-macro="context/@@barcamptoplevelmacros/macros/page"
+      i18n:domain="afpy.barcamp">
 <head>
 </head>
-
-<body metal:fill-slot="body">
-
-<h1 tal:content="context/name">meeting title</h1>
-
-<a href="..">return to list</a>
+<body>
+<div metal:fill-slot="body">
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
@@ -67,9 +64,13 @@
              tal:replace="structure action/render"
              />
     </span>
-    <a href=".">cancel</a>
   </div>
+  <input tal:condition="request/camefrom | nothing" type="hidden"
+       name="camefrom" tal:attributes="value request/form/camefrom | nothing" />
+
 </form>
 
+</div>
 </body>
 </html>
+
