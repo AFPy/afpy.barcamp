@@ -16,7 +16,7 @@ class IPeople(IContainer):
 
 
 class People(grok.Container):
-    """the person that is supposed to make a presentationi
+    """the person that is supposed to make a presentation
     """
     name = password = None
     implements(IPeople)
@@ -34,7 +34,7 @@ class IPeopleContainer(IContainer):
     pass
 
 class PeopleContainer(grok.Container):
-    """the cotainer for people
+    """the container for people
     """
     implements(IPeopleContainer)
 
