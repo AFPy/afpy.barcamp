@@ -37,17 +37,6 @@ registration
   </div>
 
 
-<a href="edit">edit</a>
-
-<div>
-    <a href=".."
-       i18n:translate="">
-        Seance list
-    </a>
-
-</div>
-
-
 </div>
 </body>
 </html>

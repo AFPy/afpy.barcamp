@@ -4,8 +4,8 @@ body {
 }
 
 /*
- * top level banner
- */
+ *  * top level banner
+ *   */
 
 div#banner {
   padding: 0.5em 1em;
@@ -23,8 +23,8 @@ div#banner h1 a {
 }
 
 /*
- * microformat vmeeting
- */
+ *  * microformat vmeeting
+ *   */
 
 div.vmeeting .date {
   text-align: right;
@@ -53,8 +53,8 @@ div.vmeeting .url {
 }
 
 /*
- * navigation menu
- */
+ *  * navigation menu
+ *   */
 
 div#navigation {
   font-family: "Trebuchet MS",sans-serif;
@@ -81,8 +81,8 @@ div#navigation a, div#navigation a:hover, div#navigation a:visited {
 }
 
 /*
- * registration actions
- */
+ *  * registration actions
+ *   */
 
 div#registration {
   margin: 0.5em;
@@ -94,39 +94,42 @@ div#registration a, div#registration a:hover, div#registration a:visited {
 }
 
 /*
- * admin actions
- */
+ *  * context actions menu
+ *   */
 
-div#admin-actions {
-  margin: 0.2em 0.5em;
-  text-align: right;
+div#actions {
+  margin: 0em 0em;
+  text-align: left;
+  border-top: solid 1px #aaa;
+  border-bottom: solid 1px #aaa;
+  margin-bottom: 1em;
 }
 
-div#admin-actions a, div#admin-actions a:hover, div#admin-actions a:visited {
+div#actions a, div#actions a:hover, div#actions a:visited {
   color: rgb(0, 10, 0);
 }
 
-div#admin-actions {
-  padding: 0.2em 1em;
-  float: right;
+div#actions {
+  padding: 0.2em 0em;
+  float: left;
 }
 
-div#admin-actions ul {
+div#actions ul {
   margin: 0;
   padding: 0.2em;
-  font-size: 1.1em;
+  font-size: 0.8em;
   list-style-type: none;
   text-transform:lowercase;
 }
 
-div#admin-actions li {
+div#actions li {
   float: left;
-  margin-left: 1em; 
+  margin-right: 1em; 
 }
 
 /*
- * flashmessage area
- */
+ *  * flashmessage area
+ *   */
 
 div#flashmessage p {
   margin: 0.2em 0 1em 0;
@@ -148,8 +151,8 @@ div#flashmessage p span.message {
 }
 
 /*
- * main content area
- */
+ *  * main content area
+ *   */
 
 div#content {
   background-color: white;
@@ -157,8 +160,8 @@ div#content {
 }
 
 /*
- * global styling rules
- */
+ *  * global styling rules
+ *   */
 
 div.label {
     float:left;
@@ -166,8 +169,14 @@ div.label {
     margin-right: 1em;
     min-width: 9em;
 }
+div.field {
+min-height: 1em;
+}
 
 div.row {
-    clear:left;
     background: #eee;
+    border: dotted 1px #ccc;
+    margin: 1px;
 }
+
+

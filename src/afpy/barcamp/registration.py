@@ -75,7 +75,7 @@ class RegistrationViewlet(grok.Viewlet):
             self.prompt = u'You are already registered'
             self.registered = True
         self.addme_label = u'Add me to this %s' % self.context.__class__.__name__
-        self.removeme_label = u'Remove me to this %s' % self.context.__class__.__name__
+        self.removeme_label = u'Remove me from this %s' % self.context.__class__.__name__
 
 
 class Register(grok.View):

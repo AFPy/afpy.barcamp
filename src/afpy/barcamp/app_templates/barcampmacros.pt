@@ -23,6 +23,27 @@
     tal:define="site python:modules['zope.app.component.hooks'].getSite();
                 base_url python:view.url(site)">
 
+<div id="logout" tal:condition="python:request.principal.id != 'zope.anybody'">
+  <span tal:content="request/principal/title">
+    user
+  </span>
+  <a tal:attributes="href string:logout?camefrom=${request/PATH_INFO | nothing}"
+     i18n:translate="">
+        logout
+  </a>
+</div>
+<div id="login" tal:condition="python:request.principal.id == 'zope.anybody'">
+  <span i18n:translate="">
+    You are not connected. You can
+  </span>
+  <a tal:attributes="href string:login?camefrom=${request/PATH_INFO | nothing}"
+     i18n:translate="">
+        login
+  </a>
+</div>
+
+<a href=".." i18n:translate="">Other meetings</a>
+
   <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
   <div id="banner" class="vmeeting">
@@ -33,24 +54,47 @@
            tal:attributes="href base_url"
         >End of the World Unconference</a></h1>
     <div class="date">
-      <p tal:content="site/date_label">28, 29, 30th of july 2012</p>
-      <p class="dtstart" tal:content="site/start_date">2012-07-28</p>
-      <p class="dtend" tal:content="site/end_date">2012-07-30</p>
+      <p tal:content="site/headline">The meeting of the year. In may 2009</p>
+      <!-- date -->
+      <p id="date">
+      <tal:block condition="python: site.start_date and not site.end_date">
+      on
+      <span class="start_date"
+            tal:content="python: request.locale.dates.getFormatter('date').format(site.start_date)">
+        single date
+      </span>
+      </tal:block>
+      <tal:block condition="python: site.start_date and site.end_date and site.start_date != site.end_date">
+      from
+      <span class="start_date"
+            tal:content="python: request.locale.dates.getFormatter('date').format(site.start_date)">begin</span>
+      to
+      <span class="end_date"
+            tal:content="python: request.locale.dates.getFormatter('date').format(site.end_date)">
+        end
+     </span>
+      </tal:block> 
+      </p>
     </div>
-    <div class="location">Paris, center of the world</div>
     <p class="url" tal:content="base_url">http://monconference.org</p>
   </div>
 
   <div id="navigation">
     <ul>
-      <li><a href="#seances"
-          tal:attributes="href python:view.url(site['seances'])"
-          i18n:translate="">All seances</a></li>
-      <li><a href="#program"
-          i18n:translate="">Program</a></li>
-      <li><a href="#people"
-          tal:attributes="href python:view.url(site['people'])"
-          i18n:translate="">People</a></li>
+      <li tal:repeat="item site/seances/@@view_get_menu/navigation">
+        <a href="#seances"
+           tal:attributes="href site/seances/@@absolute_url"
+           tal:content="item/title"
+           i18n:translate="">Proposed Seances</a></li>
+      <li>
+        <a href="#program"
+           tal:attributes="href python:view.url(site)"
+           i18n:translate="">Program</a></li>
+      <li tal:repeat="item site/people/@@view_get_menu/navigation">
+        <a href="#people"
+           tal:attributes="href site/people/@@absolute_url"
+           tal:content="item/title"
+           i18n:translate="">People</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>
@@ -73,8 +117,33 @@
         </tal:block>
     </div>
 
+  <div id="actions">
+    <ul>
+      <li tal:repeat="item context/@@view_get_menu/actions">
+      <a href="#action"
+         tal:attributes="href item/action"
+         tal:content="item/title">menu item</a>
+      </li>
+    </ul>
+  </div>
+  <div style="clear: both"></div>
+
     <metal:block define-slot="body" />
   </div>
+
+
+<script type="text/javascript">
+<!--
+tags = document.getElementsByTagName('input')
+for (elem in tags) {
+  if (tags[elem].type == 'text') {
+    tags[elem].focus()
+    break
+  }
+}
+-->
+</script>
+
 
   </body>
 

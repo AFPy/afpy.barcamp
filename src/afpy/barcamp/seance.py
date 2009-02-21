@@ -7,8 +7,9 @@ from interfaces import ISeance, ISeanceContainer
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
 from zope.interface import implements
-from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.session.interfaces import ISession
+import megrok.menu
 import grok
 
 class Seance(grok.Container):
@@ -20,22 +21,36 @@ class Seance(grok.Container):
     duration = None
     description = None
     authors = None
-    status = None
+    status = 'proposed'
+
+    def __init__(self):
+        super(Seance, self).__init__()
+        if self.authors is None:
+            self.authors = set()
 
 
 class Index(formlib.DisplayForm):
     """view of the seance
     """
-    form_fields = grok.AutoFields(ISeance)
-    grok.context(Seance)
+    form_fields = grok.AutoFields(ISeance).omit('name')
+    grok.context(ISeance)
+    megrok.menu.menuitem('actions')
+    grok.title(u'View')
+
+
+class EditPermission(grok.Permission):
+    grok.name('afpy.barcamp.editseance')
+    grok.title('Edit a seance') # optional
 
 
 class Edit(formlib.EditForm):
     """edit form for the seance
     """
     form_fields = grok.AutoFields(ISeance)
-
-    grok.context(Seance)
+    grok.require('afpy.barcamp.editseance')
+    grok.context(ISeance)
+    grok.title(u'Edit')
+    megrok.menu.menuitem('actions')
 
 
 class SeanceContainer(grok.Container):
@@ -43,14 +58,25 @@ class SeanceContainer(grok.Container):
     """
 
 
-class SeanceListView(Contents, grok.View):
+class ListPermission(grok.Permission):
+    """can only see some pages when authenticated
+    ex: the list of proposed seances
+    """
+    grok.name('afpy.barcamp.seances.list')
+    grok.title('View the list of seances') # optional
+
+
+class ListView(Contents, grok.View):
     """view of the list of seances
     """
     grok.name('index')
     grok.context(SeanceContainer)
+    grok.require('afpy.barcamp.seances.list')
+    megrok.menu.menuitem('navigation')
+    grok.title(u'Proposed seances')
 
 
-class SeanceListEdit(Contents, grok.View):
+class ListEdit(Contents, grok.View):
     """view of the list of seances
     """
     grok.name('edit')
@@ -58,7 +84,7 @@ class SeanceListEdit(Contents, grok.View):
     grok.require('zope.ManageContent')
 
 
-class AddSeancePermission(grok.Permission):
+class AddPermission(grok.Permission):
     grok.name('afpy.barcamp.addseance')
     grok.title('Add a seance') # optional
 
@@ -95,13 +121,33 @@ class Add(formlib.AddForm):
         obj = Seance()
         self.applyData(obj, **data)
 
-        # TODO generate a correct blurb that removes accents
+        # add the author
+        obj.authors.add(self.request.principal.id)
+
+        # TODO generate a correct slug that removes accents
         name = data['name'].lower().replace(' ', '_')
         self.context[name] = obj
-        IPrincipalPermissionManager(obj)\
-            .grantPermissionToPrincipal('zope.ManageContent',
-                                        self.request.principal.id)
-        self.redirect(self.url('index'))
+        # assign a local role, just for this seance
+        IPrincipalRoleManager(obj
+                         ).assignRoleToPrincipal('afpy.barcamp.SeanceLeader',
+                                                 self.request.principal.id)
+
+        self.redirect(self.url(obj)+ '/@@added')
+
+
+class Added(grok.View):
+    """Confirmation page after a seance is proposed
+    """
+    grok.name('added')
+    grok.context(ISeance)
+
+class SeanceLeaderRole(grok.Role):
+    """role assigned to speakers on their own seances
+    """
+    grok.name('afpy.barcamp.SeanceLeader')
+    grok.title('Leader of a seance') # optional
+    grok.permissions(
+        'afpy.barcamp.editseance')
 
 
 

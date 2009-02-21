@@ -5,6 +5,8 @@
 <body>
 <div metal:fill-slot="body">
 
+If you don't have a password, <a href="@@signin">create an account</a>
+
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
 
@@ -69,8 +71,6 @@
        name="camefrom" tal:attributes="value request/form/camefrom | nothing" />
 
 </form>
-
-If you don't have a password, <a href="@@signin">create an account</a>
 
 </div>
 </body>

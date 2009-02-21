@@ -49,11 +49,11 @@ Now we restart the browser to lose the http basic auth:
 We should have another account in the toplevel application:
 But we see that we are redirected to a login page:
 
-  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
+  >>> browser.open('http://localhost:8080/barcamp/%40%40add')
   >>> browser.headers['status']
   '200 Ok'
   >>> browser.url
-  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40add'
 
 We can login:
 
@@ -64,7 +64,7 @@ We can login:
 We are redirected the the originating page:
 
   >>> browser.url
-  'http://localhost:8080/barcamp/@@addmeeting'
+  'http://localhost:8080/barcamp/@@add'
 
 
 Adding a meeting
@@ -72,7 +72,7 @@ Adding a meeting
 
 Now we can add an meeting:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
+  >>> browser.open('http://localhost:8080/barcamp/@@add')
   >>> browser.getControl(name='form.name').value = u'pycon fr'
   >>> browser.getControl(name='form.address').value = u'pycon fr'
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
@@ -100,10 +100,10 @@ Logout
 
 We can logout from the admin account:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
+  >>> browser.open('http://localhost:8080/barcamp/@@add')
   >>> browser.getLink(text='logout').click()
   >>> browser.url
-  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40addmeeting'
+  'http://localhost:8080/barcamp/@@login?camefrom=%2Fbarcamp%2F%40%40add'
 
 
 Listing the meetings

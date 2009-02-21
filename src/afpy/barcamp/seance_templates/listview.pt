@@ -8,12 +8,17 @@
 <h2 i18n:translate="">All seances</h2>
 
 <ul id="seancelist">
-  <li tal:repeat="seance context/values">
+  <tal:block repeat="seance context/values">
+  <li tal:condition="python:seance.status == 'proposed' or
+                            seance.status == 'confirmed'">
     <a href="#"
        tal:attributes="href seance/@@absolute_url"
        tal:content="seance/name">
     seance
-    </a> -
+    </a>
+    -
+    (<span tal:content="seance/status">confirmed</span>)
+    -
     <tal:block condition="python: seance.start_date and not seance.duration">
       on <span class="start_date"
                tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
@@ -25,9 +30,10 @@
                tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
     </tal:block>
   </li>
+  </tal:block>
 </ul>
 
-<a href="add">add a seance</a>
+<a href="add">Propose a seance!</a>
 
 </div>
 </body>

@@ -19,13 +19,14 @@ setup(name='afpy.barcamp',
       namespace_packages=['afpy'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools',
+      install_requires=['setuptools>=0.6c9',
                         'grok',
                         'grokui.admin',
                         'z3c.testsetup',
                         # Add extra requirements here
                         'z3c.flashmessage >= 1.0',
                         'zope.sendmail',
+                        'megrok.menu',
                         ],
       entry_points="""
       # Add entry points here

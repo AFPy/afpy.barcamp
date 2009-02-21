@@ -1,13 +1,5 @@
 <div id="registration">
 
-<tal:block condition="viewlet/is_member">
-    You are
-    <span id="username"
-          tal:content="viewlet/nick">
-        username
-    </span> (<a href="logout">logout</a>)
-</tal:block>
-
 <form method="post"
       tal:condition="not:viewlet/registered"
       action="@@register?register">

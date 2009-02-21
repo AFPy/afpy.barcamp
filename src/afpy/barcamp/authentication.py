@@ -3,19 +3,20 @@
 from afpy.barcamp.people import IPeople, IPeopleContainer
 from zope.sendmail.interfaces import IMailDelivery
 from afpy.barcamp.people import People
-from md5 import md5
 from random import choice
 from zope import schema
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.interfaces import ICredentialsPlugin
 from zope.app.authentication.interfaces import IPrincipalInfo
 from zope.app.authentication.session import SessionCredentialsPlugin
+from zope.app.authentication.generic import NoChallengeCredentialsPlugin
 from zope.app.security.interfaces import IAuthentication
 from zope.app.security.interfaces import ILogout
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.securitypolicy.interfaces import IPrincipalPermissionManager
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 import grok
 
 
@@ -26,8 +27,9 @@ def setup_toplevel_authentication(pau):
     Sets up an IAuthenticatorPlugin and
     ICredentialsPlugin (for the authentication mechanism)
     """
-    pau.credentialsPlugins = ['credentials']
-    pau.authenticatorPlugins = ['app_admin']
+    pau.credentialsPlugins = ('nochallenge', 'credentials')
+    # authenticate only on toplevel
+    pau.authenticatorPlugins = ('app_admin',)
 
 
 def setup_authentication(pau):
@@ -37,8 +39,16 @@ def setup_authentication(pau):
     Sets up an IAuthenticatorPlugin and
     ICredentialsPlugin (for the authentication mechanism)
     """
-    pau.credentialsPlugins = ['credentials']
-    pau.authenticatorPlugins = ['meeting_admin']
+    pau.credentialsPlugins = ('nochallenge', 'credentials')
+    # authenticate first on toplevel, then on the people list
+    pau.authenticatorPlugins = ('app_admin', 'meeting_admin')
+
+
+class NochallengeIfAuthenticated(grok.GlobalUtility, NoChallengeCredentialsPlugin):
+    """prevent from challenging again if the user is already authenticated
+    """
+    grok.provides(ICredentialsPlugin)
+    grok.name('nochallenge')
 
 
 class MySessionCredentialsPlugin(grok.GlobalUtility, SessionCredentialsPlugin):
@@ -82,6 +92,9 @@ class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
             return None
         # grant permission to the hardcoded admin
         IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('zope.ManageContent', 'admin')
+        IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal('afpy.barcamp.managemeetings', 'admin')
+        IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('afpy.barcamp.editseance', 'admin')
+        IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('afpy.barcamp.seances.list', 'admin')
         return PrincipalInfo(id='admin',
                              title='admin',
                              description='admin')
@@ -104,27 +117,27 @@ class UserAuthenticatorPlugin(grok.GlobalUtility):
             return None
         if not 'login' in credentials or not 'password' in credentials:
             return None
-        username = credentials.get('login')
+        login = credentials.get('login')
         password = credentials.get('password')
-        if username is None or password is None:
+        if login is None or password is None:
             return None
         peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
-        people = peoplelist.get(username)
+        people = peoplelist.get(login)
         if people is None:
             return None
-        if people.password != md5(password).digest():
+        if not people.check_password(password):
             return None
-        return PrincipalInfo(id=people.name,
-                             title=people.name,
-                             description=people.name)
+        return PrincipalInfo(id=people.login,
+                             title=people.login,
+                             description=people.login)
 
     def principalInfo(self, id):
         people = self.getPeople(id)
         if people is None:
             return None
-        return PrincipalInfo(id=people.name,
-                             title=people.name,
-                             description=people.name)
+        return PrincipalInfo(id=people.login,
+                             title=people.login,
+                             description=people.login)
 
     def getPeople(self, id):
         return getUtility(IPeopleContainer, context=grok.getSite()).get(id)
@@ -139,7 +152,6 @@ class Login(grok.Form):
     """View for the login form
     """
     grok.context(Interface)
-    grok.require('zope.Public')
 
     form_fields = grok.Fields(ILoginForm)
 
@@ -157,7 +169,6 @@ class Logout(grok.View):
     """View for logout
     """
     grok.context(Interface)
-    grok.require('zope.Public')
 
     def update(self):
         if not IUnauthenticatedPrincipal.providedBy(self.request.principal):
@@ -165,21 +176,28 @@ class Logout(grok.View):
             ILogout(auth).logout(self.request)
 
     def render(self):
-        self.redirect(self.request.form.get('camefrom', ''))
+        self.redirect(self.request.form.get('camefrom', '..'))
 
 
 class Confirmation(grok.View):
     """confirmation page after sign-in
     """
     grok.context(Interface)
-    grok.require('zope.Public')
+
+
+class MemberRole(grok.Role):
+    grok.name('afpy.barcamp.Member')
+    grok.title('Member of the meeting') # optional
+    grok.permissions(
+        'afpy.barcamp.seances.list',
+        'afpy.barcamp.addseance',
+        'afpy.barcamp.can_attend')
 
 
 class SignIn(grok.Form):
     """View for the sign-in form
     """
     grok.context(Interface)
-    grok.require('zope.Public')
 
     form_fields = grok.Fields(IPeople).omit('password')
 
@@ -195,12 +213,11 @@ class SignIn(grok.Form):
         self.applyData(people, **data)
         # check the login is not taken
         peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
-        if people.name in peoplelist:
+        if people.login in peoplelist:
 
             self.redirect('signin')
 
-
-        # generate a nice but weak password
+        # generate a weak but nice password
         password = u''.join(
             [choice(['z','r','t','p','q',
                      's','d','f','g','h',
@@ -208,7 +225,8 @@ class SignIn(grok.Form):
                      'x','c','v','b','n'])
             + choice(['a','e','i','o','u','y'])
             for i in range(4)])
-        people.password = md5(password).digest()
+        people.password = password
+
         # send an email with the password
         email = u'''Subject: your account for %s
 
@@ -218,21 +236,23 @@ class SignIn(grok.Form):
         You can connect to %s with the following informations:
 
         login : %s
-        password : %s''' % (grok.getSite().__name__,
+        password : %s''' % (grok.getSite().name,
                             people.firstname,
                             people.lastname,
-                            grok.getSite().__name__,
-                            people.name,
+                            grok.getSite().name,
+                            people.login,
                             password)
         mailer = getUtility(IMailDelivery, 'afpy.barcamp')
         if 'nomail' not in self.request:
             mailer.send('contact@afpy.org', people.email, email)
-        # create the user
-        peoplelist[people.name] = people
-        # grant him some permission to add a seance
-        pm = IPrincipalPermissionManager(grok.getSite())
-        pm.grantPermissionToPrincipal('afpy.barcamp.addseance', people.name)
-        pm.grantPermissionToPrincipal('afpy.barcamp.can_attend', people.name)
+
+        # add the user
+        peoplelist[people.login] = people
+
+        # grant him the Member role
+        prm = IPrincipalRoleManager(grok.getSite())
+        prm.assignRoleToPrincipal('afpy.barcamp.Member', people.login)
+
         self.redirect('confirmation')
 
 

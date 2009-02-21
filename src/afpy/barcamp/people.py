@@ -1,14 +1,17 @@
 from grokcore import formlib
+from md5 import md5
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, implements
 from zope.schema import TextLine, Password
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
+import megrok.menu
 import grok
 
 class IPeople(IContainer):
     """interface of a people"""
 
-    name = TextLine(title=u'login')
+    login = TextLine(title=u'login')
     firstname = TextLine(title=u'firstname')
     lastname = TextLine(title=u'lastname')
     email = TextLine(title=u'e-mail')
@@ -16,17 +19,38 @@ class IPeople(IContainer):
 
 
 class People(grok.Container):
-    """the person that is supposed to make a presentation
+    """a person (attendee or speaker)
     """
-    name = password = None
+    login = _password = None
     implements(IPeople)
 
+    def _set_password(self, password):
+        """store a hash of the password
+        """
+        self._password = md5(password).digest()
+
+    def _get_password(self):
+        """shouldn't be used
+        """
+        return self._password
+
+    password = property(_get_password, _set_password)
+
+    def check_password(self, password):
+        """compare the hashes of the passwords
+        return True if the password is ok.
+        """
+        if self.password == md5(password).digest():
+            return True
+        return False
 
 class Index(formlib.DisplayForm):
     """the view of the person
     """
     grok.context(People)
     grok.require('zope.ManageContent')
+    megrok.menu.menuitem('actions')
+    grok.title(u'View')
 
 
 class IPeopleContainer(IContainer):
@@ -45,6 +69,8 @@ class PeopleListView(Contents, grok.View):
     grok.name('index')
     grok.context(PeopleContainer)
     grok.require('zope.ManageContent')
+    megrok.menu.menuitem('navigation')
+    grok.title(u'People')
 
 
 class Add(formlib.AddForm):
@@ -53,6 +79,9 @@ class Add(formlib.AddForm):
     grok.context(PeopleContainer)
     form_fields = grok.AutoFields(IPeople)
     grok.require('zope.ManageContent')
+    prefix = "people" # to avoid conflit with session credentials
+    megrok.menu.menuitem('actions')
+    grok.title(u'Add a person')
 
     def setUpWidgets(self, ignore_request = False):
         super(Add, self).setUpWidgets(ignore_request)
@@ -61,9 +90,16 @@ class Add(formlib.AddForm):
     def add(self, **data):
         obj = People()
         self.applyData(obj, **data)
-        # TODO generate a correct blurb that removes accents
-        name = data['name'].lower().replace(' ', '_')
-        self.context[name] = obj
+
+        # TODO generate a correct slug that removes accents
+        login = data['login'].lower().replace(' ', '_')
+        self.context[login] = obj
+
+        # grant him the Member role
+        # TODO in a IObjectAddedEvent instead
+        prm = IPrincipalRoleManager(grok.getSite())
+        prm.assignRoleToPrincipal('afpy.barcamp.Member', obj.login)
+
         self.redirect(self.url('index'))
 
 
@@ -73,3 +109,6 @@ class Edit(formlib.EditForm):
     form_fields = grok.AutoFields(IPeople)
     grok.context(People)
     grok.require('zope.ManageContent')
+    megrok.menu.menuitem('actions')
+    grok.title(u'Edit')
+

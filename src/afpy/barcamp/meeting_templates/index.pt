@@ -3,37 +3,8 @@
 <body>
 <div metal:fill-slot="body">
 
-  <div id="admin-actions">
-    <ul>
-      <li>
-        <a href="edit" i18n:translate="">Modifier</a>
-      </li>
-      <li>
-        <a href=".." i18n:translate="">Tous les événements</a>
-      </li>
-    </ul>
-  </div>
-  <div style="clear: both"></div>
 
   <div id="meeting">
-<!-- date -->
-<div id="date">
-<tal:block condition="python: context.start_date and not context.end_date">
-on <span class="start_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.start_date)">single
-date</span>
-</tal:block>
-<tal:block condition="python: context.start_date and context.end_date and
-context.start_date != context.end_date">
-from <span class="start_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.start_date)">begin</span>
-to <span class="end_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.end_date)">end</span>
-</tal:block> 
-</div>
 
 <div id="address" tal:content="context/address">
 address
@@ -46,28 +17,36 @@ address
 </div>
 
 
-<h2 i18n:translate="">Seances</h2>
+<h2 i18n:translate="">Confirmed seances</h2>
 
 <ul id="seancelist">
-  <li tal:repeat="seance context/seances/values">
-  <tal:block condition="python:seance.status!='proposed'">
+  <tal:block repeat="seance context/seances/values">
+  <li tal:condition="python:seance.status == 'confirmed'">
     <a href="#"
        tal:attributes="href seance/@@absolute_url"
        tal:content="seance/name">
     seance
-    </a> -
+    </a>
     <tal:block condition="python: seance.start_date and not seance.duration">
+    -
       on <span class="start_date"
                tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
     </tal:block>
     <tal:block condition="python: seance.start_date and seance.duration">
+    -
       from <span class="start_date"
                  tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">begin</span>
       to <span class="duration"
                tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
     </tal:block>
-  </tal:block>
+    - <span i18n:translate="">Author:</span>
+    <tal:block repeat="author seance/authors">
+    <span tal:define="people python:site['people'].get(author)"
+          tal:condition="people"
+          tal:content="string: ${people/firstname} ${people/lastname}">author</span>
+    </tal:block>
   </li>
+  </tal:block>
 </ul>
 
 <div><a href="seances/@@add">Propose a seance!</a></div>

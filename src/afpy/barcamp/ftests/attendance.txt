@@ -22,7 +22,7 @@ We add the toplevel grok application:
 
 Then we add a meeting:
 
-  >>> browser.open('http://localhost:8080/barcamp/@@addmeeting')
+  >>> browser.open('http://localhost:8080/barcamp/@@add')
   >>> browser.getControl(name='form.name').value = u'pycon fr'
   >>> browser.getControl(name='form.address').value = u'pycon fr'
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
@@ -36,7 +36,6 @@ We can add a seance:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@add')
   >>> browser.getControl(name='form.name').value = u'about grok'
-  >>> browser.getControl(name='form.start_date').value = u'2008-05-06'
   >>> browser.getControl('Add').click()
 
 Then visit the conference:
@@ -46,83 +45,55 @@ Then visit the conference:
   >>> browser.headers['status']
   '200 Ok'
 
-We manually add a new person. The new person is added
+We add a new person. The new person is added
 into the people list, but is not yet registered on the meeting:
 
-  >>> from afpy.barcamp.people import People
-  >>> root = getRootFolder()
-  >>> attendee1 = People()
-  >>> attendee1.name = 'attendee1'
-  >>> from md5 import md5
-  >>> attendee1.password = md5('secret').digest()
-  >>> pyconfr = root['barcamp']['pycon_fr']
-  >>> pyconfr['people'][attendee1.name] = attendee1
-  >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
-  >>> import grok
-  >>> IPrincipalPermissionManager(pyconfr)\
-  ...       .grantPermissionToPrincipal('afpy.barcamp.addseance', attendee1.name)
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/people/add')
+  >>> browser.getControl(name='people.login').value = u'ccomb'
+  >>> browser.getControl(name='people.firstname').value = u'ccomb'
+  >>> browser.getControl(name='people.lastname').value = u'ccomb'
+  >>> browser.getControl(name='people.email').value = u'ccomb@somewhere'
+  >>> browser.getControl(name='people.password').value = u'ccombsecret'
+  >>> browser.getControl('Add this person').click()
+
+Now we logout and return to the conference
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/logout')
+  >>> del browser
+  >>> browser = Browser()
+
 
 Registering and unregistering to a conference
 ---------------------------------------------
 
-Now we can register to this seance:
+Now we can register to this seance, and when doing so we need to login:
 
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/@@register?register')
-  >>> browser.getControl(name='nickname').value = u'ccomb'
-  >>> browser.getControl(name='register').click()
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  >>> browser.getControl('Add me to this Seance').click()
+  >>> browser.getControl(name='form.login').value = u'ccomb'
+  >>> browser.getControl(name='form.password').value = u'ccombsecret'
+  >>> browser.getControl('login').click()
   >>> 'been added' in browser.contents
-  True
-
-We check that the user has been added:
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/people/ccomb/')
-
-If I want to register again, it should tell we are already registered:
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/@@registrationpage')
-  >>> 'already registered' in browser.contents
   True
 
 We cannot edit the list of seances:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
-  'forbidden'
+  Traceback (most recent call last):
+  ...
+  httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 Then we can unregister from this conference:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
-  >>> browser.getControl(name='unregister').click()
+  >>> browser.getControl('Remove me from this Seance').click()
   >>> 'been removed from' in browser.contents
   True
-  >>> browser.getControl(name='unregister')
-  Traceback (most recent call last):
-  ...
-  LookupError: name 'unregister'
 
-
-Reregistering, and registering again as different user
--------------------------------------------------------
-
-We re-register as ccomb:
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
-  >>> browser.getControl(name='register').click()
-  >>> 'been added' in browser.contents
-  True
-
-Now we want to register as faide. We can click on 'change user':
-
-  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
-  >>> browser.getLink(url='?new').click()
-  >>> browser.getControl(name='nickname').value == ''
-  True
-  >>> browser.getControl(name='nickname').value = u'faide'
-  >>> browser.getControl(name='register').click()
-  >>> 'been added' in browser.contents
-  True
 
 Registering on the meeting itself
 -------------------------------
 
 We are not interested in a particular presentation,
 but we want to attend the meeting
+
