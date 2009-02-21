@@ -46,7 +46,7 @@ address
 </div>
 
 
-<h2 i18n:translate="">Séances</h2>
+<h2 i18n:translate="">Seances</h2>
 
 <ul id="seancelist">
   <li tal:repeat="seance context/seances/values">
@@ -70,7 +70,7 @@ address
   </li>
 </ul>
 
-<div><a href="seances/@@add">Proposez une séance !</a></div>
+<div><a href="seances/@@add">Propose a seance!</a></div>
 
 </div>
 </body>
