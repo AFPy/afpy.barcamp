@@ -5,7 +5,7 @@
     <span id="username"
           tal:content="viewlet/nick">
         username
-    </span> (<a href="logout">logout</a>)
+    </span> (<a href="logout">se déconnecter</a>)
 </tal:block>
 
 <form method="post"

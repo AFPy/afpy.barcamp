@@ -33,12 +33,12 @@
   </div>
 
 
-<a href="edit">edit</a>
+<a href="edit">modifier</a>
 
 <div>
     <a href=".."
        i18n:translate="">
-     People list
+     Liste des personnes
     </a>
 
 </div>

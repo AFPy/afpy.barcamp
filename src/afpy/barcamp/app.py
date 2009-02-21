@@ -34,7 +34,7 @@ class AddMeeting(formlib.AddForm):
     def setUpWidgets(self, ignore_request = False):
         super(AddMeeting, self).setUpWidgets(ignore_request)
 
-    @formlib.action('Add meeting')
+    @formlib.action(u'Ajouter un événement')
     def add(self, **data):
         obj = Meeting()
         self.applyData(obj, **data)

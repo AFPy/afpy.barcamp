@@ -37,12 +37,12 @@ registration
   </div>
 
 
-<a href="edit">edit</a>
+<a href="edit">modifier</a>
 
 <div>
     <a href=".."
        i18n:translate="">
-        Seance list
+        Liste des séances
     </a>
 
 </div>

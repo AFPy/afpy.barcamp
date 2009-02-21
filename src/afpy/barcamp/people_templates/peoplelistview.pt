@@ -5,7 +5,7 @@
 <body>
 <div metal:fill-slot="body">
 
-<h2 i18n:translate="">People</h2>
+<h2 i18n:translate="">Personne</h2>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"
@@ -187,7 +187,7 @@
         //-->
     </script>
 
-<a href="add">add a person</a>
+<a href="add">ajouter une personns</a>
 
 </div>
 </body>

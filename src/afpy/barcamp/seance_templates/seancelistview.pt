@@ -5,7 +5,7 @@
 <body>
 <div metal:fill-slot="body">
 
-<h2 i18n:translate="">All seances</h2>
+<h2 i18n:translate="">Toutes les séances</h2>
 
 <ul id="seancelist">
   <li tal:repeat="seance context/values">
@@ -27,7 +27,7 @@
   </li>
 </ul>
 
-<a href="add">add a seance</a>
+<a href="add">ajouter une séance</a>
 
 </div>
 </body>

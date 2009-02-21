@@ -6,7 +6,7 @@
 
 <h1 tal:content="context/name">meeting title</h1>
 
-<a href="..">return to list</a>
+<a href="..">retour à la liste</a>
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
@@ -67,7 +67,7 @@
              tal:replace="structure action/render"
              />
     </span>
-    <a href=".">cancel</a>
+    <a href=".">annuler</a>
   </div>
 </form>
 
