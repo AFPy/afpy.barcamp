@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: afpy.barcamp 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sun Feb 22 23:45:45 2009\n"
-"PO-Revision-Date: 2009-02-22 23:46+0100\n"
+"PO-Revision-Date: 2009-02-22 23:52+0100\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <contact@afpy.org>\n"
 "MIME-Version: 1.0\n"
@@ -357,7 +357,7 @@ msgstr "Auteur :"
 #: src/afpy/barcamp/meeting_templates/index.pt:59
 #: src/afpy/barcamp/seance_templates/listview.pt:47
 msgid "Propose a seance!"
-msgstr "Proposer une séance !"
+msgstr "Proposer une session !"
 
 #: src/afpy/barcamp/people.py:21
 msgid "Login"
@@ -428,15 +428,15 @@ msgstr "Veuillez d'abord vous inscrire"
 
 #: src/afpy/barcamp/seance.py:158
 msgid "Leader of a seance"
-msgstr "Leader de la séance"
+msgstr "Leader de la session"
 
 #: src/afpy/barcamp/seance.py:53
 msgid "Edit a seance"
-msgstr "Modifier la séance"
+msgstr "Modifier la session"
 
 #: src/afpy/barcamp/seance.py:76
 msgid "View the list of seances"
-msgstr "Voir la liste des séances"
+msgstr "Voir la liste des sessions"
 
 #: src/afpy/barcamp/seance.py:86
 msgid "Proposed seances"
