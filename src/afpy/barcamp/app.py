@@ -6,6 +6,7 @@ from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.browser.contents import Contents
 from zope.app.security.interfaces import IAuthentication
 from zope.interface import Interface, implements
+import megrok.menu
 import grok
 
 
@@ -18,11 +19,14 @@ class AfpyBarcamp(grok.Application, grok.Container):
 
 
 class Index(Contents, grok.View):
-    pass # see app_templates/index.pt
+    megrok.menu.menuitem('actions')
+    grok.title(u'View')
 
 
 class Edit(Contents, grok.View):
     grok.require('zope.ManageContent')
+    megrok.menu.menuitem('actions')
+    grok.title(u'Edit')
     # see app_templates/edit.pt
 
 

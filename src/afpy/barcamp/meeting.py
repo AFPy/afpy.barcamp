@@ -77,7 +77,10 @@ class Add(formlib.AddForm):
         obj = Meeting()
         self.applyData(obj, **data)
         # TODO generate a correct slug that removes accents
-        name = data['name'].lower().replace(' ', '_')
+        if '__name__' not in data:
+            name = data['name'].lower().replace(' ', '_')
+        else:
+            name = data['__name__']
         self.context[name] = obj
         self.redirect(self.url('index'))
 
