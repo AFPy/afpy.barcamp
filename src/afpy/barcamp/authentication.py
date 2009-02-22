@@ -3,8 +3,8 @@
 from afpy.barcamp.people import IPeople, IPeopleContainer
 from afpy.barcamp.people import People
 from random import choice
-from zope import schema
 from z3c.flashmessage.sources import SessionMessageSource
+from zope import schema
 from zope.app.authentication.generic import NoChallengeCredentialsPlugin
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.interfaces import ICredentialsPlugin
@@ -20,6 +20,9 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.sendmail.interfaces import IMailDelivery
 from zope.traversing.browser.absoluteurl import absoluteURL
 import grok
+from zope.i18n import translate
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 
 def setup_toplevel_authentication(pau):
@@ -98,13 +101,13 @@ class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
         IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('afpy.barcamp.editseance', 'admin')
         IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('afpy.barcamp.seances.list', 'admin')
         return PrincipalInfo(id='admin',
-                             title='admin',
-                             description='admin')
+                             title=_(u'admin'),
+                             description=_(u'admin'))
 
     def principalInfo(self, id):
         return PrincipalInfo(id='admin',
-                             title='admin',
-                             description='admin')
+                             title=_(u'admin'),
+                             description=_(u'admin'))
 
 
 class UserAuthenticatorPlugin(grok.GlobalUtility):
@@ -146,8 +149,8 @@ class UserAuthenticatorPlugin(grok.GlobalUtility):
 
 
 class ILoginForm(Interface):
-    login = schema.BytesLine(title=u'Username', required=True)
-    password = schema.Password(title=u'Password', required=True)
+    login = schema.BytesLine(title=_(u'Username'), required=True)
+    password = schema.Password(title=_(u'Password'), required=True)
 
 
 class Login(grok.Form):
@@ -189,7 +192,7 @@ class Confirmation(grok.View):
 
 class MemberRole(grok.Role):
     grok.name('afpy.barcamp.Member')
-    grok.title('Member of the meeting') # optional
+    grok.title(_(u'Member of the meeting')) # optional
     grok.permissions(
         'afpy.barcamp.seances.list',
         'afpy.barcamp.addseance',
@@ -208,7 +211,7 @@ class SignIn(grok.Form):
         self.peoplelist = queryUtility(IPeopleContainer, context=grok.getSite()) 
         if self.peoplelist is None:
             # there is no people container at the toplevel
-            SessionMessageSource().send(u'Please choose the meeting first')
+            SessionMessageSource().send(_(u'Please choose the meeting first'))
             self.redirect('index')
 
     @grok.action('sign in')
@@ -235,7 +238,7 @@ class SignIn(grok.Form):
 
         # send an email with the password
         site = grok.getSite()
-        email = u'''Content-Type: text/plain; charset=UTF-8
+        email = _(u'''Content-Type: text/plain; charset=UTF-8
 Subject: your account for %s
 
 Dear %s %s,
@@ -246,7 +249,10 @@ You can connect to %s with the following informations:
 %s
 
      login : %s
-     password : %s''' % (site.name,
+     password : %s''')
+
+        email = translate(email, context=self.request) % (
+                            site.name,
                             people.firstname,
                             people.lastname,
                             site.name,

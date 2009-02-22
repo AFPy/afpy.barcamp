@@ -17,16 +17,18 @@ from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine, Text
 import grok
 import megrok.menu
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 class IMeeting(IContainer, IContained):
     """interface of an meeting
     """
-    name = TextLine(title=u'Display name')
-    address = TextLine(title=u'address', required=False)
-    start_date = Datetime(title=u'start date', required=False)
-    end_date = Datetime(title=u'end date', required=False)
-    headline = TextLine(title=u'headline', required=False)
-    description = Text(title=u"description", required=False)
+    name = TextLine(title=_(u'Display name'))
+    address = TextLine(title=_(u'Address'), required=False)
+    start_date = Datetime(title=_(u'Start date'), required=False)
+    end_date = Datetime(title=_(u'End date'), required=False)
+    headline = TextLine(title=_(u'Headline'), required=False)
+    description = Text(title=_(u'Description'), required=False)
 
 
 class Meeting(grok.Container, grok.Site):
@@ -54,7 +56,7 @@ class Meeting(grok.Container, grok.Site):
 
 class ManageMeetingsPermission(grok.Permission):
     grok.name('afpy.barcamp.managemeetings')
-    grok.title('Manage Meetings') # optional
+    grok.title(_(u'Manage Meetings')) # optional
 
 
 class Index(formlib.DisplayForm):
@@ -62,7 +64,7 @@ class Index(formlib.DisplayForm):
     """
     form_fields = grok.AutoFields(IMeeting)
     megrok.menu.menuitem(menu='actions')
-    grok.title(u'View')
+    grok.title(_(u'View'))
 
     def update(self):
         super(Index, self).update()
@@ -73,16 +75,16 @@ class Add(formlib.AddForm):
     grok.context(AfpyBarcamp)
     form_fields = grok.AutoFields(IMeeting)
     megrok.menu.menuitem(menu='actions')
-    grok.title(u'Add a meeting')
+    grok.title(_(u'Add a meeting'))
 
     def update(self):
-        self.form_fields['__name__'].field.title = u'URL name'
+        self.form_fields['__name__'].field.title = _(u'URL name')
         super(Add, self).update()
 
     def setUpWidgets(self, ignore_request = False):
         super(Add, self).setUpWidgets(ignore_request)
 
-    @formlib.action('Add meeting')
+    @formlib.action(_(u'Add meeting'))
     def add(self, **data):
         obj = Meeting()
         self.applyData(obj, **data)
@@ -101,9 +103,9 @@ class Edit(formlib.EditForm):
     grok.require('afpy.barcamp.managemeetings')
     form_fields = grok.AutoFields(IMeeting)
     megrok.menu.menuitem(menu='actions')
-    grok.title(u'Edit')
+    grok.title(_(u'Edit'))
 
-    @formlib.action('Apply')
+    @formlib.action(_(u'Apply'))
     def apply(self, **data):
         self.applyData(self.context, **data)
         self.redirect(self.url('index'))

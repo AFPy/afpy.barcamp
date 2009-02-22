@@ -187,7 +187,7 @@
         //-->
     </script>
 
-<a href="add">add a seance</a>
+<a i18n:translate="" href="add">Add a seance</a>
 
 </div>
 </body>

@@ -1,5 +1,4 @@
 from afpy.barcamp.interfaces import IRegistration
-from zope.component import getUtility
 from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.registration import IRegistrable
 from datetime import timedelta
@@ -7,11 +6,14 @@ from grokcore import formlib
 from interfaces import ISeance, ISeanceContainer
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
+from zope.component import getUtility
 from zope.interface import implements
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.session.interfaces import ISession
-import megrok.menu
 import grok
+import megrok.menu
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 class Seance(grok.Container):
     """the seance itself
@@ -43,12 +45,12 @@ class Index(formlib.DisplayForm):
     form_fields = grok.AutoFields(ISeance).omit('name')
     grok.context(ISeance)
     megrok.menu.menuitem('actions')
-    grok.title(u'View')
+    grok.title(_(u'View'))
 
 
 class EditPermission(grok.Permission):
     grok.name('afpy.barcamp.editseance')
-    grok.title('Edit a seance') # optional
+    grok.title(_(u'Edit a seance')) # optional
 
 
 class Edit(formlib.EditForm):
@@ -57,7 +59,7 @@ class Edit(formlib.EditForm):
     form_fields = grok.AutoFields(ISeance)
     grok.require('afpy.barcamp.editseance')
     grok.context(ISeance)
-    grok.title(u'Edit')
+    grok.title(_(u'Edit'))
     megrok.menu.menuitem('actions')
 
 
@@ -71,7 +73,7 @@ class ListPermission(grok.Permission):
     ex: the list of proposed seances
     """
     grok.name('afpy.barcamp.seances.list')
-    grok.title('View the list of seances') # optional
+    grok.title(_(u'View the list of seances')) # optional
 
 
 class ListView(Contents, grok.View):
@@ -81,7 +83,7 @@ class ListView(Contents, grok.View):
     grok.context(SeanceContainer)
     grok.require('afpy.barcamp.seances.list')
     megrok.menu.menuitem('navigation')
-    grok.title(u'Proposed seances')
+    grok.title(_(u'Proposed seances'))
 
 
 class ListEdit(Contents, grok.View):
@@ -94,7 +96,7 @@ class ListEdit(Contents, grok.View):
 
 class AddPermission(grok.Permission):
     grok.name('afpy.barcamp.addseance')
-    grok.title('Add a seance') # optional
+    grok.title(_(u'Add a seance')) # optional
 
 
 class Add(formlib.AddForm):
@@ -116,13 +118,13 @@ class Add(formlib.AddForm):
 
         super(Add, self).update()
 
-    @formlib.action('Add seance')
+    @formlib.action(_(u'Add seance'))
     def add(self, **data):
         nick = self.request.principal.id
         peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
 
         if nick not in peoplelist:
-            msg = (u'Please first register')
+            msg = _(u'Please first register')
             SessionMessageSource().send(msg)
             self.redirect(self.url(''))
 
@@ -153,7 +155,7 @@ class SeanceLeaderRole(grok.Role):
     """role assigned to speakers on their own seances
     """
     grok.name('afpy.barcamp.SeanceLeader')
-    grok.title('Leader of a seance') # optional
+    grok.title(_(u'Leader of a seance')) # optional
     grok.permissions(
         'afpy.barcamp.editseance')
 

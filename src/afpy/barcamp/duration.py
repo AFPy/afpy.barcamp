@@ -8,8 +8,8 @@ from zope.interface import implements
 from zope.schema import Datetime, TextLine, Text, Int, Choice
 import grok
 import megrok.menu
-
-
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 class IDurations(IContainer):
     """interface of the container of durations
@@ -19,8 +19,8 @@ class IDurations(IContainer):
 class IDuration(Interface):
     """interface of a duration
     """
-    value = Int(title=u'Duration in minutes')
-    title = TextLine(title=u'title')
+    value = Int(title=_(u'Duration in minutes'))
+    title = TextLine(title=_(u'Title'))
 
 
 class Durations(grok.Container):
@@ -56,7 +56,7 @@ class Add(formlib.AddForm):
     form_fields = grok.AutoFields(IDuration)
     grok.require('zope.ManageContent')
     megrok.menu.menuitem('actions')
-    grok.title(u'Add a duration')
+    grok.title(_(u'Add a duration'))
 
     @formlib.action('Add')
     def add(self, **data):
@@ -75,7 +75,7 @@ class Index(formlib.DisplayForm):
     grok.require('zope.ManageContent')
     grok.context(IDuration)
     megrok.menu.menuitem('actions')
-    grok.title(u'View')
+    grok.title(_(u'View'))
 
 
 class Edit(formlib.EditForm):
@@ -85,7 +85,7 @@ class Edit(formlib.EditForm):
     grok.context(Duration)
     grok.require('zope.ManageContent')
     megrok.menu.menuitem('actions')
-    grok.title(u'Edit')
+    grok.title(_(u'Edit'))
 
 class DurationSource(BasicSourceFactory):
     """source for the durations
@@ -108,6 +108,6 @@ class ListView(Contents, grok.View):
     grok.context(IDurations)
     grok.require('zope.ManageContent')
     megrok.menu.menuitem('navigation')
-    grok.title(u'Durations')
+    grok.title(_(u'Durations'))
 
 

@@ -1,0 +1,486 @@
+# Copyright (c) 2009 AFPY
+# All Rights Reserved.
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+# Christophe Combelles <ccomb@free.fr>, 2009.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: afpy.barcamp 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Sun Feb 22 23:45:45 2009\n"
+"PO-Revision-Date: 2009-02-22 23:46+0100\n"
+"Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
+"Language-Team: French <contact@afpy.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bitPlural-Forms: nplurals=2; plural=(n > 1);"
+
+#: src/afpy/barcamp/app.py:24 src/afpy/barcamp/duration.py:78
+#: src/afpy/barcamp/meeting.py:67 src/afpy/barcamp/people.py:61
+#: src/afpy/barcamp/seance.py:48
+msgid "View"
+msgstr "Voir"
+
+#: src/afpy/barcamp/app.py:30 src/afpy/barcamp/duration.py:88
+#: src/afpy/barcamp/meeting.py:106 src/afpy/barcamp/seance.py:62
+msgid "Edit"
+msgstr "Modifier"
+
+#: src/afpy/barcamp/app.py:60
+msgid "Navigation menu"
+msgstr "Menu de navigation"
+
+#: src/afpy/barcamp/app.py:68
+msgid "Actions menu"
+msgstr "Menu d'actions"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:30
+#: src/afpy/barcamp/app_templates/barcamptoplevelmacros.pt:28
+msgid "logout"
+msgstr "se déconnecter"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:36
+#: src/afpy/barcamp/app_templates/barcamptoplevelmacros.pt:34
+msgid "You are not connected. You can"
+msgstr "Vous n'êtes pas identifié. Vous pouvez vous "
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:39
+#: src/afpy/barcamp/app_templates/barcamptoplevelmacros.pt:37
+#: src/afpy/barcamp/authentication_templates/confirmation.pt:11
+msgid "login"
+msgstr "connecter"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:45
+msgid "Other meetings"
+msgstr "Autres événements"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:63
+#: src/afpy/barcamp/meeting_templates/index.pt:32
+#: src/afpy/barcamp/seance_templates/listview.pt:24
+msgid "on ${start_date}"
+msgstr "le ${start_date}"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:76
+#: src/afpy/barcamp/meeting_templates/index.pt:44
+#: src/afpy/barcamp/seance_templates/listview.pt:37
+msgid "from ${start_date} to ${end_date}"
+msgstr "Du ${start_date} au ${end_date}"
+
+#: src/afpy/barcamp/app_templates/barcampmacros.pt:95
+msgid "Program"
+msgstr "Programme"
+
+#: src/afpy/barcamp/app_templates/barcamptoplevelmacros.pt:44
+msgid "AFPy Barcamp - conference manager"
+msgstr "AFPy Barcamp - gestionnaire de conférences"
+
+#. Default: "Rename"
+#: src/afpy/barcamp/app_templates/edit.pt:128
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:127
+#: src/afpy/barcamp/seance_templates/listedit.pt:127
+#: src/afpy/barcamp/duration_templates/listview.pt:127
+msgid "container-rename-button"
+msgstr "Renommer"
+
+#. Default: "Cut"
+#: src/afpy/barcamp/app_templates/edit.pt:132
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:131
+#: src/afpy/barcamp/seance_templates/listedit.pt:131
+#: src/afpy/barcamp/duration_templates/listview.pt:131
+msgid "container-cut-button"
+msgstr "Couper"
+
+#. Default: "Copy"
+#: src/afpy/barcamp/app_templates/edit.pt:136
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:135
+#: src/afpy/barcamp/seance_templates/listedit.pt:135
+#: src/afpy/barcamp/duration_templates/listview.pt:135
+msgid "container-copy-button"
+msgstr "Copier"
+
+#. Default: "Paste"
+#: src/afpy/barcamp/app_templates/edit.pt:140
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:139
+#: src/afpy/barcamp/seance_templates/listedit.pt:139
+#: src/afpy/barcamp/duration_templates/listview.pt:139
+msgid "container-paste-button"
+msgstr "Coller"
+
+#. Default: "Apply"
+#: src/afpy/barcamp/app_templates/edit.pt:175
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:174
+#: src/afpy/barcamp/seance_templates/listedit.pt:174
+#: src/afpy/barcamp/duration_templates/listview.pt:174
+msgid "container-apply-button"
+msgstr "Valider"
+
+#. Default: "Cancel"
+#: src/afpy/barcamp/app_templates/edit.pt:178
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:177
+#: src/afpy/barcamp/seance_templates/listedit.pt:177
+#: src/afpy/barcamp/duration_templates/listview.pt:177
+msgid "container-cancel-button"
+msgstr "Annuler"
+
+#: src/afpy/barcamp/app_templates/edit.pt:31
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:30
+#: src/afpy/barcamp/seance_templates/listedit.pt:30
+#: src/afpy/barcamp/duration_templates/listview.pt:30
+msgid "Content listing"
+msgstr "Liste"
+
+#: src/afpy/barcamp/app_templates/edit.pt:37
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:36
+#: src/afpy/barcamp/seance_templates/listedit.pt:36
+#: src/afpy/barcamp/duration_templates/listview.pt:36
+msgid "Name"
+msgstr "Nom"
+
+#: src/afpy/barcamp/app_templates/edit.pt:39
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:38
+#: src/afpy/barcamp/seance_templates/listedit.pt:38
+#: src/afpy/barcamp/duration_templates/listview.pt:38
+msgid "Size"
+msgstr "Taille"
+
+#: src/afpy/barcamp/app_templates/edit.pt:40
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:39
+#: src/afpy/barcamp/seance_templates/listedit.pt:39
+#: src/afpy/barcamp/duration_templates/listview.pt:39
+msgid "Created"
+msgstr "Créé"
+
+#: src/afpy/barcamp/app_templates/edit.pt:41
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:40
+#: src/afpy/barcamp/seance_templates/listedit.pt:40
+#: src/afpy/barcamp/duration_templates/listview.pt:40
+msgid "Modified"
+msgstr "Modifié"
+
+#: src/afpy/barcamp/app_templates/edit.pt:9
+#: src/afpy/barcamp/app_templates/index.pt:9
+msgid "All meetings"
+msgstr "Tous les événements"
+
+#: src/afpy/barcamp/authentication.py:104
+#: src/afpy/barcamp/authentication.py:105
+#: src/afpy/barcamp/authentication.py:109
+#: src/afpy/barcamp/authentication.py:110
+msgid "admin"
+msgstr "admin"
+
+#: src/afpy/barcamp/authentication.py:152
+msgid "Username"
+msgstr "Nom utilisateur"
+
+#: src/afpy/barcamp/authentication.py:153 src/afpy/barcamp/people.py:25
+msgid "Password"
+msgstr "Mot de passe"
+
+#: src/afpy/barcamp/authentication.py:195
+msgid "Member of the meeting"
+msgstr "Participant"
+
+#: src/afpy/barcamp/authentication.py:214
+msgid "Please choose the meeting first"
+msgstr "Veuillez d'abord choisir l'événement"
+
+#: src/afpy/barcamp/authentication.py:241
+msgid ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Subject: your account for %s\n"
+"\n"
+"Dear %s %s,\n"
+"\n"
+"Thanks for your account!\n"
+"You can connect to %s with the following informations:\n"
+"\n"
+"%s\n"
+"\n"
+"     login : %s\n"
+"     password : %s"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Subject: Votre compte pour %s\n"
+"\n"
+"Cher %s %s,\n"
+"\n"
+"Merci pour votre inscription !\n"
+"Vous pouvez vous connecter à %s avec les informations suivantes :\n"
+"\n"
+"%s\n"
+"\n"
+"     nom utilisateur : %s\n"
+"     mot de passe : %s"
+
+#: src/afpy/barcamp/authentication_templates/confirmation.pt:10
+msgid "Please check your e-mail, then"
+msgstr "Veuillez vérifier votre courriel, puis vous revenez vous "
+
+#: src/afpy/barcamp/authentication_templates/confirmation.pt:8
+msgid "Thank you for creating an account."
+msgstr "Merci pour votre inscription."
+
+#: src/afpy/barcamp/authentication_templates/login.pt:9
+msgid "create an account"
+msgstr "créer un compte"
+
+#: src/afpy/barcamp/authentication_templates/login.pt:9
+msgid "If you don't have a password, ${create-an-account}"
+msgstr "Si vous n'avez pas de mot de passe, ${create-an-account}"
+
+#: src/afpy/barcamp/duration.py:111
+msgid "Durations"
+msgstr "Durées"
+
+#: src/afpy/barcamp/duration.py:22
+msgid "Duration in minutes"
+msgstr "Durée en minutes"
+
+#: src/afpy/barcamp/duration.py:23 src/afpy/barcamp/app_templates/edit.pt:38
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:37
+#: src/afpy/barcamp/seance_templates/listedit.pt:37
+#: src/afpy/barcamp/duration_templates/listview.pt:37
+msgid "Title"
+msgstr "Titre"
+
+#: src/afpy/barcamp/duration.py:59
+msgid "Add a duration"
+msgstr "Ajouter une durée"
+
+#: src/afpy/barcamp/duration_templates/add.pt:8
+msgid "Please enter a new duration for seances"
+msgstr "Veuillez entrer une nouvelle durée possible pour les conférences"
+
+#: src/afpy/barcamp/interfaces.py:46
+msgid "Title of the seance"
+msgstr "Titre de la session"
+
+#: src/afpy/barcamp/interfaces.py:47
+msgid "Date and time"
+msgstr "Date et heure"
+
+#: src/afpy/barcamp/interfaces.py:48
+msgid "Type"
+msgstr "Type"
+
+#: src/afpy/barcamp/interfaces.py:49 src/afpy/barcamp/meeting.py:31
+msgid "Description"
+msgstr "Description"
+
+#: src/afpy/barcamp/interfaces.py:50
+msgid "Name of persones leading the seance"
+msgstr "Nom des personnes dirigeant la session"
+
+#: src/afpy/barcamp/interfaces.py:51
+msgid "Statut"
+msgstr "Statut"
+
+#: src/afpy/barcamp/meeting.py:108
+msgid "Apply"
+msgstr "Appliquer"
+
+#: src/afpy/barcamp/meeting.py:26
+msgid "Display name"
+msgstr "Nom affiché"
+
+#: src/afpy/barcamp/meeting.py:27
+msgid "Address"
+msgstr "Adresse"
+
+#: src/afpy/barcamp/meeting.py:28
+msgid "Start date"
+msgstr "Date de début"
+
+#: src/afpy/barcamp/meeting.py:29
+msgid "End date"
+msgstr "Date de fin"
+
+#: src/afpy/barcamp/meeting.py:30
+msgid "Headline"
+msgstr "Headline"
+
+#: src/afpy/barcamp/meeting.py:59
+msgid "Manage Meetings"
+msgstr "Gérer les événements"
+
+#: src/afpy/barcamp/meeting.py:78
+msgid "Add a meeting"
+msgstr "Ajouter un événement"
+
+#: src/afpy/barcamp/meeting.py:81
+msgid "URL name"
+msgstr "Nom dans l'URL"
+
+#: src/afpy/barcamp/meeting.py:87
+msgid "Add meeting"
+msgstr "Ajouter un événement"
+
+#: src/afpy/barcamp/meeting_templates/add.pt:12
+#: src/afpy/barcamp/meeting_templates/add.pt:20
+#: src/afpy/barcamp/meeting_templates/add.pt:39
+#: src/afpy/barcamp/meeting_templates/add.pt:45
+msgid "${DYNAMIC_CONTENT}"
+msgstr "${DYNAMIC_CONTENT}"
+
+#: src/afpy/barcamp/meeting_templates/edit.pt:10
+#: src/afpy/barcamp/people_templates/edit.pt:10
+#: src/afpy/barcamp/seance_templates/edit.pt:10
+#: src/afpy/barcamp/duration_templates/edit.pt:10
+msgid "return to list"
+msgstr "Retourner à la liste"
+
+#: src/afpy/barcamp/meeting_templates/edit.pt:71
+#: src/afpy/barcamp/people_templates/add.pt:71
+#: src/afpy/barcamp/people_templates/edit.pt:71
+#: src/afpy/barcamp/seance_templates/add.pt:73
+#: src/afpy/barcamp/seance_templates/edit.pt:71
+#: src/afpy/barcamp/duration_templates/edit.pt:71
+#: src/afpy/barcamp/duration_templates/add.pt:71
+msgid "cancel"
+msgstr "annuler"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:20
+msgid "Confirmed seances"
+msgstr "Sessions confirmées"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:49
+msgid "Author:"
+msgstr "Auteur :"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:59
+#: src/afpy/barcamp/seance_templates/listview.pt:47
+msgid "Propose a seance!"
+msgstr "Proposer une séance !"
+
+#: src/afpy/barcamp/people.py:21
+msgid "Login"
+msgstr "Nom utilisateur"
+
+#: src/afpy/barcamp/people.py:22
+msgid "Firstname"
+msgstr "Prénom"
+
+#: src/afpy/barcamp/people.py:23
+msgid "Lastname"
+msgstr "Nom"
+
+#: src/afpy/barcamp/people.py:24
+msgid "E-mail"
+msgstr "Courriel"
+
+#: src/afpy/barcamp/people_templates/add.pt:8
+msgid "Please enter your details. A password will be sent to you by e-mail."
+msgstr ""
+"Veuillez entrer vos informations. Un mot de passe vous sera envoyé par "
+"courriel."
+
+#: src/afpy/barcamp/people_templates/index.pt:37
+msgid "Return to list"
+msgstr "Retour à la liste"
+
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:8
+#: src/afpy/barcamp/duration_templates/listview.pt:8
+msgid "People"
+msgstr "Participants"
+
+#: src/afpy/barcamp/registration.py:106
+msgid "You have been added to: %s"
+msgstr "Vous avez été inscrit à : %s"
+
+#: src/afpy/barcamp/registration.py:116
+msgid "You have been removed from: %s"
+msgstr "Vous avez été désinscrit de : %s"
+
+#: src/afpy/barcamp/registration.py:24
+msgid "Can register"
+msgstr "Peut s'inscrire"
+
+#: src/afpy/barcamp/registration.py:28
+msgid "Can attend"
+msgstr "Peut être présent"
+
+#: src/afpy/barcamp/registration.py:72
+msgid "You are already registered"
+msgstr "Vous êtes déjà inscrit"
+
+#: src/afpy/barcamp/registration.py:74
+msgid "I want to attend!"
+msgstr "Je veux être présent !"
+
+#: src/afpy/barcamp/registration.py:75
+msgid "I don't want to attend"
+msgstr "Je ne veux plus être présent"
+
+#: src/afpy/barcamp/seance.py:121
+msgid "Add seance"
+msgstr "Ajouter une session"
+
+#: src/afpy/barcamp/seance.py:127
+msgid "Please first register"
+msgstr "Veuillez d'abord vous inscrire"
+
+#: src/afpy/barcamp/seance.py:158
+msgid "Leader of a seance"
+msgstr "Leader de la séance"
+
+#: src/afpy/barcamp/seance.py:53
+msgid "Edit a seance"
+msgstr "Modifier la séance"
+
+#: src/afpy/barcamp/seance.py:76
+msgid "View the list of seances"
+msgstr "Voir la liste des séances"
+
+#: src/afpy/barcamp/seance.py:86
+msgid "Proposed seances"
+msgstr "Sessions proposées"
+
+#: src/afpy/barcamp/seance.py:99
+#: src/afpy/barcamp/seance_templates/listedit.pt:190
+msgid "Add a seance"
+msgstr "Ajouter une session"
+
+#: src/afpy/barcamp/seance_templates/add.pt:8
+msgid ""
+"Please enter the detail of the seance you want to lead. You will be able to "
+"edit it after validation. Your seance will be reviewed by the organization "
+"team and you will be contacted about it."
+msgstr ""
+"Veuillez entrer le détail de la session que vous voulez diriger. Vous "
+"pourrez ensuite la modifier. Votre session sera revue par l'équipe "
+"d'organisation et vous serez contacté à ce sujet."
+
+#: src/afpy/barcamp/seance_templates/added.pt:13
+msgid "edit your proposal"
+msgstr "modifier votre proposition"
+
+#: src/afpy/barcamp/seance_templates/added.pt:15
+msgid "You may ${edit-your-proposal} or return to the ${list-of-proposals}."
+msgstr ""
+"Vous pouvez ${edit-your-proposal} ou retourner à la ${list-of-proposals}."
+
+#: src/afpy/barcamp/seance_templates/added.pt:15
+msgid "Thank you for proposing a seance for ${meeting}! <p>x</p>"
+msgstr "Merci d'avoir proposé une session pour ${meeting} ! <p>x</p>"
+
+#: src/afpy/barcamp/seance_templates/added.pt:15
+msgid "list of proposals"
+msgstr "liste des propositions"
+
+#: src/afpy/barcamp/seance_templates/listedit.pt:8
+#: src/afpy/barcamp/seance_templates/listview.pt:8
+msgid "All seances"
+msgstr "Toutes les sessions"
+
+#~ msgid "Add me to this %s"
+#~ msgstr "Je veux assister à cette %s"
+
+#~ msgid "Remove me from this %s"
+#~ msgstr "Je ne veux plus assister à cette %s"

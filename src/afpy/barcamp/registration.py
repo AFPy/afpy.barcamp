@@ -1,34 +1,31 @@
 """This module defines all the needed elements to handle registration.
-The registration concept we have developped is working for any kind of resources
 Seances and Meetings, the only condition is to implement IRegistrable. Once your
-resource implements IRegistrable it can use our registration component to
+The registration concept we have developped is working for any kind of resources
 provide the user/visitor registration.
-
+resource implements IRegistrable it can use our registration component to
 """
-
-# our own application imports
+from afpy.barcamp.interfaces import IRegistrable, IRegistration
 from afpy.barcamp.interfaces import ISideBar
 from afpy.barcamp.people import People, IPeopleContainer
-from afpy.barcamp.interfaces import IRegistrable, IRegistration
-
-# zope & co
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.security.interfaces import Unauthorized
 from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.session.interfaces import ISession
-
-# grok
 import grok
+from zope.i18n import translate
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
+
 
 class RegistrationPermission(grok.Permission):
     grok.name('afpy.barcamp.register')
-    grok.title('Can register') # optional
+    grok.title(_(u'Can register')) # optional
 
 class RegistrationPermission(grok.Permission):
     grok.name('afpy.barcamp.can_attend')
-    grok.title('Can attend') # optional
+    grok.title(_(u'Can attend')) # optional
 
 class Registration(grok.Adapter):
     """generic adapter for registration.
@@ -72,10 +69,10 @@ class RegistrationViewlet(grok.Viewlet):
           and self.request.principal.id != 'zope.anybody'):
             self.is_member = True
         if IRegistration(self.context).is_registered(self.nick):
-            self.prompt = u'You are already registered'
+            self.prompt = _(u'You are already registered')
             self.registered = True
-        self.addme_label = u'Add me to this %s' % self.context.__class__.__name__
-        self.removeme_label = u'Remove me from this %s' % self.context.__class__.__name__
+        self.addme_label = _(u'I want to attend!')
+        self.removeme_label = _(u'I don\'t want to attend')
 
 
 class Register(grok.View):
@@ -106,8 +103,8 @@ class Register(grok.View):
         # TODO should be removed since we use auth
         ISession(self.request)['afpy.barcamp']['nick'] = self.nick
         # Display a message for the next page
-        msg = (u'You have been added to %s!' % self.context.name)
-        SessionMessageSource().send(msg)
+        msg = _(u'You have been added to: %s')
+        SessionMessageSource().send(translate(msg, context=self.request) % self.context.name)
         self.redirect(self.url(''))
 
     def unregister(self):
@@ -116,7 +113,6 @@ class Register(grok.View):
             IRegistration(self.context).unregister(self.nick)
 
             # display a message on the next screen
-            msg = (u'You have been removed from %s!'
-                   % self.context.name)
-            SessionMessageSource().send(msg)
+            msg = _(u'You have been removed from: %s')
+            SessionMessageSource().send(translate(msg, context=self.request) % self.context.name)
             self.redirect(self.url(''))

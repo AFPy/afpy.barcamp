@@ -1,4 +1,5 @@
-<html metal:use-macro="context/@@barcampmacros/macros/page">
+<html metal:use-macro="context/@@barcampmacros/macros/page"
+      i18n:domain="afpy.barcamp">
 <head>
 </head>
 
@@ -6,12 +7,13 @@
 
 <div id="explain" i18n:translate="">
   Thank you for proposing a seance for 
-  <i tal:content="site/name">Pycon Fr 2009</i>!
-  <br/>
+  <i i18n:name="meeting" tal:content="site/name">Pycon Fr 2009</i>!
+  <p i18n:translate="">
   You may
-  <a href="edit" i18n:translate="">edit you proposal</a>
+  <a i18n:name="edit-your-proposal" href="edit" i18n:translate="">edit your proposal</a>
   or return to the
-  <a href=".." i18n:translate="">list of proposals</a>.
+  <a i18n:name="list-of-proposals" href=".." i18n:translate="">list of proposals</a>.
+  </p>
 </div>
 
 </body>
