@@ -162,7 +162,7 @@ class Login(grok.Form):
     def handle_login(self, **data):
         """login button and login action
         """
-        self.redirect(self.request.form.get('camefrom', '..'))
+        self.redirect(self.request.form.get('camefrom', 'index'))
 
 
 class Logout(grok.View):
@@ -176,7 +176,7 @@ class Logout(grok.View):
             ILogout(auth).logout(self.request)
 
     def render(self):
-        self.redirect(self.request.form.get('camefrom', '..'))
+        self.redirect(self.request.form.get('camefrom', 'index'))
 
 
 class Confirmation(grok.View):
