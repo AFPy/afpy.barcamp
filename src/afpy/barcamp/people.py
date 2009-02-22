@@ -9,8 +9,8 @@ import megrok.menu
 import grok
 
 class IPeople(IContainer):
-    """interface of a people"""
-
+    """interface of a person
+    """
     login = TextLine(title=u'login')
     firstname = TextLine(title=u'firstname')
     lastname = TextLine(title=u'lastname')

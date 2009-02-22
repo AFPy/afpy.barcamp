@@ -4,6 +4,7 @@ from afpy.barcamp.people import IPeople, IPeopleContainer
 from afpy.barcamp.people import People
 from random import choice
 from zope import schema
+from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.authentication.generic import NoChallengeCredentialsPlugin
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.interfaces import ICredentialsPlugin
@@ -12,7 +13,7 @@ from zope.app.authentication.session import SessionCredentialsPlugin
 from zope.app.security.interfaces import IAuthentication
 from zope.app.security.interfaces import ILogout
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from zope.interface import Interface
 from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
@@ -204,6 +205,11 @@ class SignIn(grok.Form):
 
     def update(self):
         super(SignIn, self).update()
+        self.peoplelist = queryUtility(IPeopleContainer, context=grok.getSite()) 
+        if self.peoplelist is None:
+            # there is no people container at the toplevel
+            SessionMessageSource().send(u'Please choose the meeting first')
+            self.redirect('index')
 
     @grok.action('sign in')
     def handle_signin(self, **data):
@@ -213,8 +219,7 @@ class SignIn(grok.Form):
         people = People()
         self.applyData(people, **data)
         # check the login is not taken
-        peoplelist = getUtility(IPeopleContainer, context=grok.getSite())
-        if people.login in peoplelist:
+        if people.login in self.peoplelist:
 
             self.redirect('signin')
 
@@ -253,7 +258,7 @@ You can connect to %s with the following informations:
             mailer.send('contact@afpy.org', people.email.encode('utf-8'), email.encode('utf-8'))
 
         # add the user
-        peoplelist[people.login] = people
+        self.peoplelist[people.login] = people
 
         # grant him the Member role
         prm = IPrincipalRoleManager(grok.getSite())

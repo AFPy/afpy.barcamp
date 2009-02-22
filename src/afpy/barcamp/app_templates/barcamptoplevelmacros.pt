@@ -58,6 +58,17 @@
   <div style="clear: both"></div>
 
   <div id="content">
+    <div id="flashmessage"
+         tal:define="source python:modules['z3c.flashmessage.sources'].SessionMessageSource()">
+        <tal:block repeat="msg source/list">
+          <p><span tal:define="dummy python:msg.prepare(source)"
+            tal:content="msg/message"
+            tal:attributes="class msg/type"
+            i18n:translate="">
+              Information or error message with respect to the last error action
+          </span></p>
+        </tal:block>
+    </div>
     <metal:block define-slot="body" />
   </div>
 
