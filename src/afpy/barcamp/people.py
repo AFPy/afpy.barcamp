@@ -84,9 +84,6 @@ class Add(formlib.AddForm):
     megrok.menu.menuitem('actions')
     grok.title(u'Add a person')
 
-    def setUpWidgets(self, ignore_request = False):
-        super(Add, self).setUpWidgets(ignore_request)
-
     @formlib.action('Add this person')
     def add(self, **data):
         obj = People()

@@ -1,5 +1,8 @@
+"""This module allows to define and manage meetings
+"""
 from afpy.barcamp.app import AfpyBarcamp
 from afpy.barcamp.authentication import setup_authentication
+from afpy.barcamp.duration import Durations, IDurations
 from afpy.barcamp.interfaces import IRegistration
 from afpy.barcamp.people import IPeopleContainer, PeopleContainer
 from afpy.barcamp.registration import IRegistrable
@@ -12,8 +15,8 @@ from zope.app.security.interfaces import IAuthentication
 from zope.component import adapts
 from zope.interface import implements, Interface
 from zope.schema import Datetime, TextLine, Text
-import megrok.menu
 import grok
+import megrok.menu
 
 class IMeeting(IContainer, IContained):
     """interface of an meeting
@@ -43,6 +46,10 @@ class Meeting(grok.Container, grok.Site):
                        public=True,
                        provides=IPeopleContainer,
                        name_in_container='people')
+    grok.local_utility(Durations,
+                       public=True,
+                       provides=IDurations,
+                       name_in_container='durations')
 
 
 class ManageMeetingsPermission(grok.Permission):
@@ -56,6 +63,9 @@ class Index(formlib.DisplayForm):
     form_fields = grok.AutoFields(IMeeting)
     megrok.menu.menuitem(menu='actions')
     grok.title(u'View')
+
+    def update(self):
+        super(Index, self).update()
 
 
 class Add(formlib.AddForm):
@@ -77,7 +87,7 @@ class Add(formlib.AddForm):
         obj = Meeting()
         self.applyData(obj, **data)
         # TODO generate a correct slug that removes accents
-        if '__name__' not in data:
+        if '__name__' not in data or data['__name__'] is None:
             name = data['name'].lower().replace(' ', '_')
         else:
             name = data['__name__']

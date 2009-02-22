@@ -95,6 +95,11 @@
            tal:attributes="href site/people/@@absolute_url"
            tal:content="item/title"
            i18n:translate="">People</a></li>
+      <li tal:repeat="item site/durations/@@view_get_menu/navigation">
+        <a href="#people"
+           tal:attributes="href site/durations/@@absolute_url"
+           tal:content="item/title"
+           i18n:translate="">Durations</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>

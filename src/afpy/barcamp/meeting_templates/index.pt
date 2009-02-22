@@ -27,18 +27,25 @@ address
        tal:content="seance/name">
     seance
     </a>
-    <tal:block condition="python: seance.start_date and not seance.duration">
-    -
+    <span i18n:translate=""
+          tal:condition="python: seance.start_date and not seance.duration">
       on <span class="start_date"
-               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
-    </tal:block>
-    <tal:block condition="python: seance.start_date and seance.duration">
-    -
+               i18n:name="start_date"
+               tal:content="python: request.locale.dates.getFormatter('dateTime',
+                   length='short').format(seance.start_date)">single date</span>
+    </span>
+    <span i18n:translate=""
+          tal:condition="python: seance.start_date and seance.duration">
       from <span class="start_date"
-                 tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">begin</span>
+               i18n:name="start_date"
+                 tal:content="python:
+request.locale.dates.getFormatter('dateTime',
+                         length='short').format(seance.start_date)">begin</span>
       to <span class="duration"
-               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
-    </tal:block>
+               i18n:name="end_date"
+               tal:content="python: request.locale.dates.getFormatter('dateTime',
+                           length='short').format(seance.end_date)">end</span>
+    </span>
     - <span i18n:translate="">Author:</span>
     <tal:block repeat="author seance/authors">
     <span tal:define="people python:site['people'].get(author)"

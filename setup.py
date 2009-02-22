@@ -27,6 +27,7 @@ setup(name='afpy.barcamp',
                         'z3c.flashmessage >= 1.0',
                         'zope.sendmail',
                         'megrok.menu',
+                        'zc.sourcefactory',
                         ],
       entry_points="""
       # Add entry points here

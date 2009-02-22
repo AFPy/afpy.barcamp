@@ -2,6 +2,7 @@ from afpy.barcamp.interfaces import IRegistration
 from zope.component import getUtility
 from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.registration import IRegistrable
+from datetime import timedelta
 from grokcore import formlib
 from interfaces import ISeance, ISeanceContainer
 from z3c.flashmessage.sources import SessionMessageSource
@@ -27,6 +28,13 @@ class Seance(grok.Container):
         super(Seance, self).__init__()
         if self.authors is None:
             self.authors = set()
+
+    @property
+    def end_date(self):
+        if type(self.duration.value) == int: 
+            return (self.start_date
+                    + timedelta(minutes=self.duration.value))
+        return self.start_date        
 
 
 class Index(formlib.DisplayForm):
@@ -77,7 +85,7 @@ class ListView(Contents, grok.View):
 
 
 class ListEdit(Contents, grok.View):
-    """view of the list of seances
+    """edit the list of seances
     """
     grok.name('edit')
     grok.context(SeanceContainer)
