@@ -4,6 +4,10 @@
 
 <body metal:fill-slot="body">
 
+<div id="explain" i18n:translate="">
+Please enter your details. A password will be sent to you by e-mail.
+</div>
+
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
 
