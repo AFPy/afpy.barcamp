@@ -165,12 +165,12 @@ div#content {
 
 div.label {
     float:left;
-    clear:left;
+    clear: left;
     margin-right: 1em;
     min-width: 9em;
 }
 div.field {
-min-height: 1em;
+    min-height: 1em;
 }
 
 div.row {

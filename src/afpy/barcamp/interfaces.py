@@ -49,4 +49,3 @@ class ISeance(IContainer):
     status = Choice(title=u'statut', values=('proposed', 'confirmed', 'cancelled'))
 
 
-
