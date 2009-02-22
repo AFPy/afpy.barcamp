@@ -162,12 +162,10 @@ div#content {
 
 div.label {
     float:left;
-    clear:left;
     margin-right: 1em;
     min-width: 9em;
 }
 
 div.row {
-    clear:left;
     background: #eee;
 }

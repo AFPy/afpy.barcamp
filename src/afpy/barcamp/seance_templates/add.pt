@@ -63,7 +63,7 @@
              tal:replace="structure action/render"
              />
     </span>
-    <a href=".">annuler</a>
+    <a href=".">cancel</a>
   </div>
 </form>
 

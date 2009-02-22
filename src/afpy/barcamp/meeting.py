@@ -7,30 +7,29 @@ from afpy.barcamp.seance import ISeanceContainer
 from afpy.barcamp.seance import SeanceContainer
 from grokcore import formlib
 from zope.app.authentication.authentication import PluggableAuthentication
-from zope.app.container.interfaces import IContainer, IContained
+from zope.app.container.interfaces import IContainer
 from zope.app.folder import Folder
 from zope.app.security.interfaces import IAuthentication
 from zope.component import adapts
 from zope.interface import implements, Interface
-from zope.schema import Datetime, TextLine, Text
+from zope.schema import Datetime, TextLine
 import grok
 
-class IMeeting(IContainer, IContained):
+class IMeeting(IContainer):
     """interface of an meeting
     """
     name = TextLine(title=u'name')
     address = TextLine(title=u'address', required=False)
     start_date = Datetime(title=u'start date', required=False)
     end_date = Datetime(title=u'end date', required=False)
-    description = Text(title=u"description", required=False)
+    date_label = TextLine(title=u"date label", required=False)
 
 
 class Meeting(grok.Container, grok.Site):
     """the meeting itself
     """
     implements(IMeeting, IRegistrable)
-    name = description = address = None
-    start_date = end_date = None
+    name = address = start_date = end_date = date_label = None
     grok.local_utility(PluggableAuthentication,
                        provides=IAuthentication,
                        setup=setup_authentication)

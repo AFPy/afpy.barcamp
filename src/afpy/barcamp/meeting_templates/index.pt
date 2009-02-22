@@ -6,71 +6,43 @@
   <div id="admin-actions">
     <ul>
       <li>
-        <a href="edit" i18n:translate="">Modifier</a>
+        <a href="edit" i18n:translate="">Edit</a>
       </li>
       <li>
-        <a href=".." i18n:translate="">Tous les événements</a>
+        <a href=".." i18n:translate="">All meetings</a>
       </li>
     </ul>
   </div>
   <div style="clear: both"></div>
 
-  <div id="meeting">
-<!-- date -->
-<div id="date">
-<tal:block condition="python: context.start_date and not context.end_date">
-on <span class="start_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.start_date)">single
-date</span>
-</tal:block>
-<tal:block condition="python: context.start_date and context.end_date and
-context.start_date != context.end_date">
-from <span class="start_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.start_date)">begin</span>
-to <span class="end_date"
-tal:content="python:
-request.locale.dates.getFormatter('date').format(context.end_date)">end</span>
-</tal:block> 
-</div>
+  <div metal:define-macro="formbody">
 
-<div id="address" tal:content="context/address">
-address
-</div>
+    <h3 tal:condition="view/label"
+        tal:content="view/label"
+        metal:define-slot="heading"
+        i18n:translate=""
+        >Display something</h3>
 
-<div id="description" tal:content="context/description">
-address
-</div>
+    <div metal:define-slot="extra_info" tal:replace="nothing">
+    </div>
 
-</div>
+    <div class="row"
+         metal:define-slot="extra_top" tal:replace="nothing">
+        <div class="label">Extra top</div>
+        <div class="field"><input type="text" style="width:100%" /></div>
+    </div>
 
+    <div metal:use-macro="context/@@form_macros/widget_rows" />
 
-<h2 i18n:translate="">Séances</h2>
+    <div class="row"
+         metal:define-slot="extra_bottom" tal:replace="nothing">
+        <div class="label">Extra bottom</div>
+        <div class="field"><input type="text" style="width:100%" /></div>
+    </div>
 
-<ul id="seancelist">
-  <li tal:repeat="seance context/seances/values">
-  <tal:block condition="python:seance.status!='proposed'">
-    <a href="#"
-       tal:attributes="href seance/@@absolute_url"
-       tal:content="seance/name">
-    seance
-    </a> -
-    <tal:block condition="python: seance.start_date and not seance.duration">
-      on <span class="start_date"
-               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">single date</span>
-    </tal:block>
-    <tal:block condition="python: seance.start_date and seance.duration">
-      from <span class="start_date"
-                 tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date)">begin</span>
-      to <span class="duration"
-               tal:content="python: request.locale.dates.getFormatter('date').format(seance.start_date + seance.duration)">end</span>
-    </tal:block>
-  </tal:block>
-  </li>
-</ul>
+  </div>
 
-<div><a href="seances/@@add">Proposez une séance !</a></div>
+<a href="seances/@@add">Propose a seance!</a>
 
 </div>
 </body>

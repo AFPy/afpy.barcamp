@@ -6,7 +6,7 @@
 <div metal:fill-slot="body">
 
 
-<h2 i18n:translate="">Tous les événements</h2>
+<h2 i18n:translate="">All meetings</h2>
 
     <form name="containerContentsForm" method="post" action="."
           tal:attributes="action request/URL"
@@ -188,7 +188,7 @@
         //-->
     </script>
 
-<a href="addmeeting">Ajouter un événement</a>
+<a href="addmeeting">add an meeting</a>
 
 </div>
 </body>

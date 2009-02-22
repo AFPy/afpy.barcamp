@@ -1,4 +1,3 @@
-#coding: utf-8
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface
 from zope.interface import Attribute
@@ -42,14 +41,11 @@ class ISeanceContainer(IContainer):
 class ISeance(IContainer):
     """interface of a seance
     """
-    name = TextLine(title=u'Titre de la séance')
-    start_date = Datetime(title=u'Date et heure', required=False)
-    duration = Choice(title=u'Type', values=('Lightning Talk (10min)',
-                                             'Presentation (20min)',
-                                             'Tutoriel (1h)',
-                                             'Atelier (2h)'))
-    description = Text(title=u'Description', required=False)
-    authors = Attribute(u'Noms des personnes qui présentent la séance')
-    status = Choice(title=u'statut', values=('proposed', 'confirmed', 'cancelled'))
+    name = TextLine(title=u'name of the seance')
+    start_date = Datetime(title=u'Date and time', required=False)
+    duration = Int(title=u'Duration in minutes', required=False)
+    description = Text(title=u'description', required=False)
+    authors = Attribute(u'names of persons leading the seance')
+    status = Choice(title=u'status', values=('draft', 'validated'))
 
 

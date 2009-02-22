@@ -4,7 +4,7 @@
 
 <body metal:fill-slot="body">
 
-<a href=".">Retour à la liste</a>
+<a href=".">return to list</a>
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
