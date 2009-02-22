@@ -3,7 +3,7 @@
 <body>
 <div metal:fill-slot="body">
 
-<h1 tal:content="context/name">meeting title</h1>
+<h1 tal:content="context/login">people login</h1>
 
   <div metal:define-macro="formbody">
 
@@ -33,12 +33,10 @@
   </div>
 
 
-<a href="edit">edit</a>
-
 <div>
     <a href=".."
        i18n:translate="">
-     People list
+     Return to list
     </a>
 
 </div>

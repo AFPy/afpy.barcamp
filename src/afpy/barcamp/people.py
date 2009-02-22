@@ -49,6 +49,7 @@ class Index(formlib.DisplayForm):
     """
     grok.context(People)
     grok.require('zope.ManageContent')
+    form_fields = grok.AutoFields(IPeople).omit('password')
     megrok.menu.menuitem('actions')
     grok.title(u'View')
 

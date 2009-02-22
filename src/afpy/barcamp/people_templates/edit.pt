@@ -4,7 +4,7 @@
 
 <body metal:fill-slot="body">
 
-<h1 tal:content="context/name">meeting title</h1>
+<h1 tal:content="context/login">people login</h1>
 
 <a href="..">return to list</a>
 

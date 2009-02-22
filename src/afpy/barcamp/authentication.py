@@ -1,15 +1,14 @@
 """This module offers authentication for afpy.barcamp
 """
 from afpy.barcamp.people import IPeople, IPeopleContainer
-from zope.sendmail.interfaces import IMailDelivery
 from afpy.barcamp.people import People
 from random import choice
 from zope import schema
+from zope.app.authentication.generic import NoChallengeCredentialsPlugin
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.authentication.interfaces import ICredentialsPlugin
 from zope.app.authentication.interfaces import IPrincipalInfo
 from zope.app.authentication.session import SessionCredentialsPlugin
-from zope.app.authentication.generic import NoChallengeCredentialsPlugin
 from zope.app.security.interfaces import IAuthentication
 from zope.app.security.interfaces import ILogout
 from zope.app.security.interfaces import IUnauthenticatedPrincipal
@@ -17,6 +16,8 @@ from zope.component import getUtility
 from zope.interface import Interface
 from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.sendmail.interfaces import IMailDelivery
+from zope.traversing.browser.absoluteurl import absoluteURL
 import grok
 
 
@@ -228,23 +229,28 @@ class SignIn(grok.Form):
         people.password = password
 
         # send an email with the password
-        email = u'''Subject: your account for %s
+        site = grok.getSite()
+        email = u'''Content-Type: text/plain; charset=UTF-8
+Subject: your account for %s
 
-        Dear %s %s,
+Dear %s %s,
 
-        thanks for your account!
-        You can connect to %s with the following informations:
+Thanks for your account!
+You can connect to %s with the following informations:
 
-        login : %s
-        password : %s''' % (grok.getSite().name,
+%s
+
+     login : %s
+     password : %s''' % (site.name,
                             people.firstname,
                             people.lastname,
-                            grok.getSite().name,
+                            site.name,
+                            absoluteURL(site, self.request),
                             people.login,
                             password)
         mailer = getUtility(IMailDelivery, 'afpy.barcamp')
         if 'nomail' not in self.request:
-            mailer.send('contact@afpy.org', people.email, email)
+            mailer.send('contact@afpy.org', people.email.encode('utf-8'), email.encode('utf-8'))
 
         # add the user
         peoplelist[people.login] = people
