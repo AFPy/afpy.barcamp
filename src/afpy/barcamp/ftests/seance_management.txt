@@ -29,7 +29,7 @@ Then we add a meeting as application admin and logout:
 
   >>> del browser
   >>> browser = Browser()
-  >>> browser.open('http://localhost:8080/barcamp/%40%40addmeeting')
+  >>> browser.open('http://localhost:8080/barcamp/%40%40add')
   >>> browser.getControl(name='form.login').value = u'admin'
   >>> browser.getControl(name='form.password').value = u'barcamp'
   >>> browser.getControl(name='form.actions.login').click()
@@ -38,23 +38,19 @@ Then we add a meeting as application admin and logout:
   >>> browser.getControl(name='form.start_date').value = '2008-05-04'
   >>> browser.getControl(name='form.end_date').value = '2008-05-07'
   >>> browser.getControl('Add').click()
-  >>> browser.getLink(text='logout').click()
 
-We manually add a new person. The new person is added
+We add a new person. The new person is added
 into the people list, but is not yet registered on the meeting:
 
-  >>> from afpy.barcamp.people import People
-  >>> root = getRootFolder()
-  >>> speaker1 = People()
-  >>> speaker1.name = 'speaker1'
-  >>> from md5 import md5
-  >>> speaker1.password = md5('secret').digest()
-  >>> pyconfr = root['barcamp']['pycon_fr']
-  >>> pyconfr['people'][speaker1.name] = speaker1
-  >>> from zope.securitypolicy.interfaces import IPrincipalPermissionManager
-  >>> import grok
-  >>> IPrincipalPermissionManager(pyconfr)\
-  ...       .grantPermissionToPrincipal('afpy.barcamp.addseance', speaker1.name)
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/people/add')
+  >>> browser.getControl(name='people.login').value = u'speaker1'
+  >>> browser.getControl(name='people.firstname').value = u'speaker1'
+  >>> browser.getControl(name='people.lastname').value = u'speaker1'
+  >>> browser.getControl(name='people.email').value = u'speaker1@somewhere'
+  >>> browser.getControl(name='people.password').value = u'secret'
+  >>> browser.getControl('Add this person').click()
+
+  >>> browser.getLink(text='logout').click()
 
 Adding a seance
 ---------------
@@ -70,7 +66,7 @@ So we login as the new attendee:
 
   >>> browser.getControl(name='form.login').value = u'speaker1'
   >>> browser.getControl(name='form.password').value = u'secret'
-  >>> browser.getControl(name='form.actions.login').click()
+  >>> browser.getControl('login').click()
 
 Then we can propose a seance:
 
@@ -89,8 +85,9 @@ Then we can visit the seance:
 We cannot edit the list of seances:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/@@edit')
-  >>> 'id="form.login"' in browser.contents
-  True
+  Traceback (most recent call last):
+  ...
+  httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 
 Listing the seances

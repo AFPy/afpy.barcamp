@@ -4,11 +4,9 @@
 
 <body metal:fill-slot="body">
 
-<div id="explain" i18n:translate="">
-Please enter the detail of the seance you want to lead. You will be able to
-edit it after validation. Your seance will be reviewed by the organization team
-and you will be contacted about it.
-</div>
+<h1 tal:content="context/title">meeting title</h1>
+
+<a href="..">return to list</a>
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">

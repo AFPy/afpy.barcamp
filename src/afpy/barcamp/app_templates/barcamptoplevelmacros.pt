@@ -28,7 +28,16 @@
   <a tal:attributes="href string:logout?camefrom=${request/PATH_INFO | nothing}"
      i18n:translate="">
         logout
-</a>
+  </a>
+</div>
+<div id="login" tal:condition="python:request.principal.id == 'zope.anybody'">
+  <span i18n:translate="">
+    You are not connected. You can
+  </span>
+  <a tal:attributes="href string:login?camefrom=${request/PATH_INFO | nothing}"
+     i18n:translate="">
+        login
+  </a>
 </div>
 
   <div id="banner">
@@ -37,10 +46,44 @@
   </div>
   <div style="clear:both"></div>
 
+  <div id="actions">
+    <ul>
+      <li tal:repeat="item context/@@view_get_menu/actions">
+      <a href="#action"
+         tal:attributes="href item/action"
+         tal:content="item/title">menu item</a>
+      </li>
+    </ul>
+  </div>
+  <div style="clear: both"></div>
+
   <div id="content">
+    <div id="flashmessage"
+         tal:define="source python:modules['z3c.flashmessage.sources'].SessionMessageSource()">
+        <tal:block repeat="msg source/list">
+          <p><span tal:define="dummy python:msg.prepare(source)"
+            tal:content="msg/message"
+            tal:attributes="class msg/type"
+            i18n:translate="">
+              Information or error message with respect to the last error action
+          </span></p>
+        </tal:block>
+    </div>
     <metal:block define-slot="body" />
   </div>
 
+
+<script type="text/javascript">
+<!--
+tags = document.getElementsByTagName('input')
+for (elem in tags) {
+  if (tags[elem].type == 'text') {
+    tags[elem].focus()
+    break
+  }
+}
+-->
+</script>
   </body>
 
 </html>

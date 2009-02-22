@@ -3,11 +3,8 @@
 <body>
 <div metal:fill-slot="body">
 
-<h2 tal:content="context/name">meeting title</h2>
+<h2 tal:content="context/title">meeting title</h2>
 
-<div tal:content="structure context/@@register">
-registration
-</div>
 
   <div metal:define-macro="formbody">
 

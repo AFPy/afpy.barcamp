@@ -1,0 +1,19 @@
+<html metal:use-macro="context/@@barcampmacros/macros/page">
+<head>
+</head>
+
+<body metal:fill-slot="body">
+
+<div id="explain" i18n:translate="">
+  Thank you for proposing a seance for 
+  <i tal:content="site/name">Pycon Fr 2009</i>!
+  <br/>
+  You may
+  <a href="edit" i18n:translate="">edit you proposal</a>
+  or return to the
+  <a href=".." i18n:translate="">list of proposals</a>.
+</div>
+
+</body>
+</html>
+

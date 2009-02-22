@@ -11,4 +11,4 @@ dist/*
 build/*
 lib/*
 include/*
-
+megrok.menu/*
