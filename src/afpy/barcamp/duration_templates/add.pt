@@ -5,9 +5,7 @@
 <body metal:fill-slot="body">
 
 <div id="explain" i18n:translate="">
-Please enter the detail of the seance you want to lead. You will be able to
-edit it after validation. Your seance will be reviewed by the organization team
-and you will be contacted about it.
+Please enter a new duration for seances
 </div>
 
 <form action="." tal:attributes="action request/URL" method="post"
