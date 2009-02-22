@@ -7,6 +7,11 @@ from zope.schema import TextLine, Password
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 import megrok.menu
 import grok
+import re
+
+check_email = re.compile(
+    r"^[a-zA-Z0-9\._%-]+@([a-zA-Z0-9_-]+\.)*[a-zA-Z]{2,4}$").match
+
 
 class IPeople(IContainer):
     """interface of a person
@@ -14,7 +19,7 @@ class IPeople(IContainer):
     login = TextLine(title=u'login')
     firstname = TextLine(title=u'firstname')
     lastname = TextLine(title=u'lastname')
-    email = TextLine(title=u'e-mail')
+    email = TextLine(title=u'e-mail', constraint = check_email)
     password = Password(title=u'password')
 
 
