@@ -42,8 +42,6 @@
   </a>
 </div>
 
-<a href=".." i18n:translate="">Other meetings</a>
-
   <!-- TODO: make the banner a Viewlet instead of using the hools module -->
 
   <div id="banner" class="vmeeting">
