@@ -44,7 +44,7 @@
   </tal:block>
 </ul>
 
-<a i18n:translate="" href="add">Propose a seance!</a>
+<a i18n:translate="" href="add" style="font-size:120%; color: white">Propose a seance!</a>
 
 </div>
 </body>
