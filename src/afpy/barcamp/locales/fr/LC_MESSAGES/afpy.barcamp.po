@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: afpy.barcamp 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sun Feb 22 23:45:45 2009\n"
-"PO-Revision-Date: 2009-02-22 23:52+0100\n"
+"PO-Revision-Date: 2009-02-25 10:52+0100\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <contact@afpy.org>\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgstr "Merci pour votre inscription."
 
 #: src/afpy/barcamp/authentication_templates/login.pt:9
 msgid "create an account"
-msgstr "créer un compte"
+msgstr "créez un compte"
 
 #: src/afpy/barcamp/authentication_templates/login.pt:9
 msgid "If you don't have a password, ${create-an-account}"
