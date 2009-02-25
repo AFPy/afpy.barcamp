@@ -1,4 +1,5 @@
-<html metal:use-macro="context/@@barcampmacros/macros/page">
+<html metal:use-macro="context/@@barcampmacros/macros/page"
+      i18n:domain="afpy.barcamp">
 <head>
 </head>
 
@@ -6,7 +7,7 @@
 
 <h1 tal:content="context/title">meeting title</h1>
 
-<a href="..">return to list</a>
+<a i18n:translate="" href="..">return to list</a>
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
@@ -67,7 +68,7 @@
              tal:replace="structure action/render"
              />
     </span>
-    <a href=".">cancel</a>
+    <a i18n:translate="" href=".">cancel</a>
   </div>
 </form>
 

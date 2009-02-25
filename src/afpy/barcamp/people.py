@@ -5,9 +5,11 @@ from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, implements
 from zope.schema import TextLine, Password
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
-import megrok.menu
 import grok
+import megrok.menu
 import re
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 check_email = re.compile(
     r"^[a-zA-Z0-9\._%-]+@([a-zA-Z0-9_-]+\.)*[a-zA-Z]{2,4}$").match
@@ -16,11 +18,11 @@ check_email = re.compile(
 class IPeople(IContainer):
     """interface of a person
     """
-    login = TextLine(title=u'login')
-    firstname = TextLine(title=u'firstname')
-    lastname = TextLine(title=u'lastname')
-    email = TextLine(title=u'e-mail', constraint = check_email)
-    password = Password(title=u'password')
+    login = TextLine(title=_(u'Login'))
+    firstname = TextLine(title=_(u'Firstname'))
+    lastname = TextLine(title=_(u'Lastname'))
+    email = TextLine(title=_(u'E-mail'), constraint = check_email)
+    password = Password(title=_(u'Password'))
 
 
 class People(grok.Container):
@@ -56,7 +58,7 @@ class Index(formlib.DisplayForm):
     grok.require('zope.ManageContent')
     form_fields = grok.AutoFields(IPeople).omit('password')
     megrok.menu.menuitem('actions')
-    grok.title(u'View')
+    grok.title(_(u'View'))
 
 
 class IPeopleContainer(IContainer):

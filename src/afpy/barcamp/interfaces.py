@@ -1,7 +1,9 @@
+from afpy.barcamp.duration import DurationSource
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, Attribute
-from afpy.barcamp.duration import DurationSource
 from zope.schema import Datetime, TextLine, Text, Int, Choice
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 class ISideBar(Interface):
     """marker interface of the sidebar
@@ -41,11 +43,11 @@ class ISeanceContainer(IContainer):
 class ISeance(IContainer):
     """interface of a seance
     """
-    name = TextLine(title=u'Title of the seance')
-    start_date = Datetime(title=u'Date and time', required=False)
-    duration = Choice(title=u'Type', source=DurationSource())
-    description = Text(title=u'Description', required=False)
-    authors = Attribute(u'Name of persones leading the seance')
-    status = Choice(title=u'statut', values=('proposed', 'confirmed', 'cancelled'))
+    name = TextLine(title=_(u'Title of the seance'))
+    start_date = Datetime(title=_(u'Date and time'), required=False)
+    duration = Choice(title=_(u'Type'), source=DurationSource())
+    description = Text(title=_(u'Description'), required=False)
+    authors = Attribute(_(u'Name of persones leading the seance'))
+    status = Choice(title=_(u'Statut'), values=('proposed', 'confirmed', 'cancelled'))
 
 

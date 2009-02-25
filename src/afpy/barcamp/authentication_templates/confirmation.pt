@@ -5,9 +5,11 @@
 <body>
 <div metal:fill-slot="body">
 
-<h2>Thank you for creating an account.</h2>
-<br/>
-Please check your e-mail, then <a href="login">login</a>.
+<h2 i18n:translate="">Thank you for creating an account.</h2>
+<p>
+<span i18n:translate="">Please check your e-mail, then</span>
+<a i18n:translate="" href="login">login</a>.
+</p>
 
 </div>
 </body>

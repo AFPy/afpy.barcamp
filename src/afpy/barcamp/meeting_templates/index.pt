@@ -56,7 +56,7 @@ request.locale.dates.getFormatter('dateTime',
   </tal:block>
 </ul>
 
-<div><a href="seances/@@add">Propose a seance!</a></div>
+<div><a i18n:translate="" href="seances/@@add">Propose a seance!</a></div>
 
 </div>
 </body>

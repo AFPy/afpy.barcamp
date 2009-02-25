@@ -6,9 +6,10 @@ from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.browser.contents import Contents
 from zope.app.security.interfaces import IAuthentication
 from zope.interface import Interface, implements
-import megrok.menu
 import grok
-
+import megrok.menu
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('afpy.barcamp')
 
 class AfpyBarcamp(grok.Application, grok.Container):
     """The main application container
@@ -20,13 +21,13 @@ class AfpyBarcamp(grok.Application, grok.Container):
 
 class Index(Contents, grok.View):
     megrok.menu.menuitem('actions')
-    grok.title(u'View')
+    grok.title(_(u'View'))
 
 
 class Edit(Contents, grok.View):
     grok.require('zope.ManageContent')
     megrok.menu.menuitem('actions')
-    grok.title(u'Edit')
+    grok.title(_(u'Edit'))
     # see app_templates/edit.pt
 
 
@@ -56,7 +57,7 @@ class Navigation(Menu):
     """main navigation menu
     """
     grok.name('navigation')
-    grok.title('Navigation menu')
+    grok.title(_(u'Navigation menu'))
     grok.description('')
 
 
@@ -64,7 +65,7 @@ class Actions(Menu):
     """context actions menu
     """
     grok.name('actions')
-    grok.title('Actions menu')
+    grok.title(_(u'Actions menu'))
     grok.description('')
 
 

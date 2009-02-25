@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xml:lang="en"
     lang="en"
-    i18n:domain="zope">
+    i18n:domain="afpy.barcamp">
 
   <head>
     <meta http-equiv="Content-Type"
@@ -55,23 +55,28 @@
       <p tal:content="site/headline">The meeting of the year. In may 2009</p>
       <!-- date -->
       <p id="date">
-      <tal:block condition="python: site.start_date and not site.end_date">
+      <span i18n:translate=""
+            tal:condition="python: site.start_date and not site.end_date">
       on
       <span class="start_date"
+            i18n:name="start_date"
             tal:content="python: request.locale.dates.getFormatter('date').format(site.start_date)">
         single date
       </span>
-      </tal:block>
-      <tal:block condition="python: site.start_date and site.end_date and site.start_date != site.end_date">
+      </span>
+      <span i18n:translate=""
+            tal:condition="python: site.start_date and site.end_date and site.start_date != site.end_date">
       from
       <span class="start_date"
+            i18n:name="start_date"
             tal:content="python: request.locale.dates.getFormatter('date').format(site.start_date)">begin</span>
       to
       <span class="end_date"
+            i18n:name="end_date"
             tal:content="python: request.locale.dates.getFormatter('date').format(site.end_date)">
         end
      </span>
-      </tal:block> 
+      </span> 
       </p>
     </div>
     <p class="url" tal:content="base_url">http://monconference.org</p>
