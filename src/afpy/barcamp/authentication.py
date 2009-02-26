@@ -251,12 +251,19 @@ You can connect to %s with the following informations:
      login : %s
      password : %s''')
 
+        url = absoluteURL(site, self.request)
+
+        if ('HTTP_X_FORWARDED_SCHEME' in self.request
+        and 'HTTP_X_FORWARDED_SERVER' in self.request):
+          url = (self.request['HTTP_X_FORWARDED_SCHEME'] + '://'
+               + self.request['HTTP_X_FORWARDED_SERVER'])
+
         email = translate(email, context=self.request) % (
                             site.name,
                             people.firstname,
                             people.lastname,
                             site.name,
-                            absoluteURL(site, self.request),
+                            url,
                             people.login,
                             password)
         mailer = getUtility(IMailDelivery, 'afpy.barcamp')
