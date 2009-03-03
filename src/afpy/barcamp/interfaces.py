@@ -43,11 +43,18 @@ class ISeanceContainer(IContainer):
 class ISeance(IContainer):
     """interface of a seance
     """
-    name = TextLine(title=_(u'Title of the seance'))
+    name = TextLine(title=_(u'Title of the session'))
     start_date = Datetime(title=_(u'Date and time'), required=False)
     duration = Choice(title=_(u'Type'), source=DurationSource())
     description = Text(title=_(u'Description'), required=False)
-    authors = Attribute(_(u'Name of persones leading the seance'))
+    keywords = TextLine(title=_(u'Keywords'),
+                        description=_(
+                u'Keywords describing your session, separated by a comma.'),
+                        required=False)
+    status = Choice(title=_(u'Audience'), # TODO configurable source
+                    values=('Debutant', 'Intermediaire', 'Avance', 'Tous niveaux'))
+    authors = Attribute(_(u'Name of persons leading the session'))
     status = Choice(title=_(u'Statut'), values=('proposed', 'confirmed', 'cancelled'))
+    unfolding = Text(title=_(u'Unfolding of the session'), required=False)
 
 

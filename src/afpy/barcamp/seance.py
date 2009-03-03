@@ -19,11 +19,9 @@ class Seance(grok.Container):
     """the seance itself
     """
     implements(ISeance, IRegistrable)
-    name = None
-    start_date = None
-    duration = None
-    description = None
-    authors = None
+    name = description = None
+    start_date = duration = None
+    keywords = authors = unfolding = None
     status = 'proposed'
 
     def __init__(self):

@@ -40,7 +40,6 @@ We can add a seance:
 
 Then visit the conference:
 
-  >>> browser.handleErrors = False
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
   >>> browser.headers['status']
   '200 Ok'
