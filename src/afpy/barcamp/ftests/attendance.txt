@@ -52,7 +52,7 @@ into the people list, but is not yet registered on the meeting:
   >>> browser.getControl(name='people.login').value = u'ccomb'
   >>> browser.getControl(name='people.firstname').value = u'ccomb'
   >>> browser.getControl(name='people.lastname').value = u'ccomb'
-  >>> browser.getControl(name='people.email').value = u'ccomb@somewhere'
+  >>> browser.getControl(name='people.email').value = u'ccomb@test.com'
   >>> browser.getControl(name='people.password').value = u'ccombsecret'
   >>> browser.getControl('Add this person').click()
 
@@ -69,7 +69,7 @@ Registering and unregistering to a conference
 Now we can register to this seance, and when doing so we need to login:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
-  >>> browser.getControl('Add me to this Seance').click()
+  >>> browser.getControl('I want to attend!').click()
   >>> browser.getControl(name='form.login').value = u'ccomb'
   >>> browser.getControl(name='form.password').value = u'ccombsecret'
   >>> browser.getControl('login').click()
@@ -86,7 +86,7 @@ We cannot edit the list of seances:
 Then we can unregister from this conference:
 
   >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/')
-  >>> browser.getControl('Remove me from this Seance').click()
+  >>> browser.getControl('I don\'t want to attend').click()
   >>> 'been removed from' in browser.contents
   True
 

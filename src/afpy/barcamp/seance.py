@@ -33,10 +33,10 @@ class Seance(grok.Container):
 
     @property
     def end_date(self):
-        if type(self.duration.value) == int: 
+        if type(self.duration.value) == int:
             return (self.start_date
                     + timedelta(minutes=self.duration.value))
-        return self.start_date        
+        return self.start_date
 
 
 class Index(formlib.DisplayForm):
@@ -92,6 +92,8 @@ class ListEdit(Contents, grok.View):
     grok.name('edit')
     grok.context(SeanceContainer)
     grok.require('zope.ManageContent')
+    megrok.menu.menuitem('actions')
+    grok.title(_(u'Edit'))
 
 
 class AddPermission(grok.Permission):

@@ -46,7 +46,7 @@ into the people list, but is not yet registered on the meeting:
   >>> browser.getControl(name='people.login').value = u'speaker1'
   >>> browser.getControl(name='people.firstname').value = u'speaker1'
   >>> browser.getControl(name='people.lastname').value = u'speaker1'
-  >>> browser.getControl(name='people.email').value = u'speaker1@somewhere'
+  >>> browser.getControl(name='people.email').value = u'speaker1@test.com'
   >>> browser.getControl(name='people.password').value = u'secret'
   >>> browser.getControl('Add this person').click()
 

@@ -3,7 +3,7 @@ from md5 import md5
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, implements
-from zope.schema import TextLine, Password
+from zope.schema import TextLine, Password, Text
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 import grok
 import megrok.menu
@@ -21,14 +21,20 @@ class IPeople(IContainer):
     login = TextLine(title=_(u'Login'))
     firstname = TextLine(title=_(u'Firstname'))
     lastname = TextLine(title=_(u'Lastname'))
-    email = TextLine(title=_(u'E-mail'), constraint = check_email)
+    email = TextLine(title=_(u'E-mail'),
+                     constraint = check_email)
     password = Password(title=_(u'Password'))
+    shortbio = Text(title=_(u'Short bio'),
+                    description=_(u'Short description of yourself'),
+                    required=False)
 
 
 class People(grok.Container):
     """a person (attendee or speaker)
     """
     login = _password = None
+    firstname = lastname = None
+    email = shortbio = None
     implements(IPeople)
 
     def _set_password(self, password):
