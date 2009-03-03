@@ -208,7 +208,7 @@ class SignIn(grok.Form):
 
     def update(self):
         super(SignIn, self).update()
-        self.peoplelist = queryUtility(IPeopleContainer, context=grok.getSite()) 
+        self.peoplelist = queryUtility(IPeopleContainer, context=grok.getSite())
         if self.peoplelist is None:
             # there is no people container at the toplevel
             SessionMessageSource().send(_(u'Please choose the meeting first'))
@@ -223,8 +223,9 @@ class SignIn(grok.Form):
         self.applyData(people, **data)
         # check the login is not taken
         if people.login in self.peoplelist:
-
-            self.redirect('signin')
+            msg = _(u'This username already exists: %s')
+            SessionMessageSource().send(translate(msg, context=self.request) % people.login)
+            return self.redirect('signin')
 
         # generate a weak but nice password
         password = u''.join(
