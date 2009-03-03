@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Tue Mar  3 10:43:04 2009\n"
+"POT-Creation-Date: Tue Mar  3 12:34:18 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -112,7 +112,11 @@ msgstr ""
 msgid "Please choose the meeting first"
 msgstr ""
 
-#: src/afpy/barcamp/authentication.py:241
+#: src/afpy/barcamp/authentication.py:226
+msgid "This username already exists: %s"
+msgstr ""
+
+#: src/afpy/barcamp/authentication.py:242
 msgid ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Subject: your account for %s\n"
