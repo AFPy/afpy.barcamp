@@ -51,7 +51,7 @@ class ISeance(IContainer):
                         description=_(
                 u'Keywords describing your session, separated by a comma.'),
                         required=False)
-    status = Choice(title=_(u'Audience'), # TODO configurable source
+    audience = Choice(title=_(u'Audience'), # TODO configurable source
                     values=('Debutant', 'Intermediaire', 'Avance', 'Tous niveaux'))
     authors = Attribute(_(u'Name of persons leading the session'))
     status = Choice(title=_(u'Statut'), values=('proposed', 'confirmed', 'cancelled'))
