@@ -23,6 +23,7 @@ class IPeople(IContainer):
     lastname = TextLine(title=_(u'Lastname'))
     email = TextLine(title=_(u'E-mail'),
                      constraint = check_email)
+    phone = TextLine(title=_(u'Telephone'))
     password = Password(title=_(u'Password'))
     shortbio = Text(title=_(u'Short bio'),
                     description=_(u'Short description of yourself'),
@@ -34,7 +35,7 @@ class People(grok.Container):
     """
     login = _password = None
     firstname = lastname = None
-    email = shortbio = None
+    email = phone = shortbio = None
     implements(IPeople)
 
     def _set_password(self, password):
