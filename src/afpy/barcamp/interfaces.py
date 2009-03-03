@@ -56,5 +56,6 @@ class ISeance(IContainer):
     authors = Attribute(_(u'Name of persons leading the session'))
     status = Choice(title=_(u'Statut'), values=('proposed', 'confirmed', 'cancelled'))
     unfolding = Text(title=_(u'Unfolding of the session'), required=False)
+    benefits = Text(title=_(u'Benefits for attendees'), required=False)
 
 

@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Tue Mar  3 10:26:30 2009\n"
+"POT-Creation-Date: Tue Mar  3 10:43:04 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: src/afpy/barcamp/app.py:24
 #: src/afpy/barcamp/duration.py:78
 #: src/afpy/barcamp/meeting.py:67
-#: src/afpy/barcamp/people.py:67
+#: src/afpy/barcamp/people.py:68
 #: src/afpy/barcamp/seance.py:46
 msgid "View"
 msgstr ""
@@ -100,7 +100,7 @@ msgid "Username"
 msgstr ""
 
 #: src/afpy/barcamp/authentication.py:153
-#: src/afpy/barcamp/people.py:26
+#: src/afpy/barcamp/people.py:27
 msgid "Password"
 msgstr ""
 
@@ -314,6 +314,10 @@ msgstr ""
 msgid "Unfolding of the session"
 msgstr ""
 
+#: src/afpy/barcamp/interfaces.py:59
+msgid "Benefits for attendees"
+msgstr ""
+
 #: src/afpy/barcamp/meeting.py:108
 msgid "Apply"
 msgstr ""
@@ -390,11 +394,15 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: src/afpy/barcamp/people.py:27
-msgid "Short bio"
+#: src/afpy/barcamp/people.py:26
+msgid "Telephone"
 msgstr ""
 
 #: src/afpy/barcamp/people.py:28
+msgid "Short bio"
+msgstr ""
+
+#: src/afpy/barcamp/people.py:29
 msgid "Short description of yourself"
 msgstr ""
 

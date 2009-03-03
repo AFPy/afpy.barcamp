@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: afpy.barcamp 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Mar  3 10:26:30 2009\n"
-"PO-Revision-Date: 2009-03-03 10:28+0100\n"
+"POT-Creation-Date: Tue Mar  3 10:43:04 2009\n"
+"PO-Revision-Date: 2009-03-03 10:43+0100\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <contact@afpy.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bitPlural-Forms: nplurals=2; plural=(n > 1);"
 
 #: src/afpy/barcamp/app.py:24 src/afpy/barcamp/duration.py:78
-#: src/afpy/barcamp/meeting.py:67 src/afpy/barcamp/people.py:67
+#: src/afpy/barcamp/meeting.py:67 src/afpy/barcamp/people.py:68
 #: src/afpy/barcamp/seance.py:46
 msgid "View"
 msgstr "Voir"
@@ -93,7 +93,7 @@ msgstr "admin"
 msgid "Username"
 msgstr "Nom utilisateur"
 
-#: src/afpy/barcamp/authentication.py:153 src/afpy/barcamp/people.py:26
+#: src/afpy/barcamp/authentication.py:153 src/afpy/barcamp/people.py:27
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -318,6 +318,10 @@ msgstr "Statut"
 msgid "Unfolding of the session"
 msgstr "Déroulement de la session"
 
+#: src/afpy/barcamp/interfaces.py:59
+msgid "Benefits for attendees"
+msgstr "Bénéfice pour les participants"
+
 #: src/afpy/barcamp/meeting.py:108
 msgid "Apply"
 msgstr "Appliquer"
@@ -394,11 +398,15 @@ msgstr "Nom"
 msgid "E-mail"
 msgstr "Courriel"
 
-#: src/afpy/barcamp/people.py:27
+#: src/afpy/barcamp/people.py:26
+msgid "Telephone"
+msgstr "Téléphone"
+
+#: src/afpy/barcamp/people.py:28
 msgid "Short bio"
 msgstr "Courte bio"
 
-#: src/afpy/barcamp/people.py:28
+#: src/afpy/barcamp/people.py:29
 msgid "Short description of yourself"
 msgstr "Courte description de vous-même"
 
