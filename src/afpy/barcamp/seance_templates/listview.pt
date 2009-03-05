@@ -19,6 +19,14 @@
     -
     (<span tal:content="seance/status">confirmed</span>)
     -
+    <tal:block repeat="author seance/authors">
+    <a href="#"
+       tal:define="people python:site['people'].get(author)"
+       tal:condition="python: people is not None"
+       tal:attributes="href people/@@absolute_url"
+       tal:content="string: ${people/firstname} ${people/lastname}">author</a>
+    </tal:block>
+    -
     <span i18n:translate=""
           tal:condition="python: seance.start_date and not seance.duration">
       on <span class="start_date"

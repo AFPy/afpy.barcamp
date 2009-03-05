@@ -5,6 +5,17 @@
 
 <h2 tal:content="context/name">meeting title</h2>
 
+<div>
+<span i18n:translate="">Author</span>
+<tal:block repeat="author context/authors">
+<a href="#"
+   tal:define="people python:site['people'].get(author)"
+   tal:condition="python: people is not None"
+   tal:attributes="href people/@@absolute_url"
+   tal:content="string: ${people/firstname} ${people/lastname}">author</a>
+</tal:block>
+</div>
+
 <div tal:content="structure context/@@register">
 registration
 </div>
