@@ -54,9 +54,27 @@ request.locale.dates.getFormatter('dateTime',
     </tal:block>
   </li>
   </tal:block>
+  <span tal:condition="python: not len([s for s in context['seances'].values() if s.status=='confirmed'])"
+        i18n:translate="">
+    No sessions have been confirmed yet
+  </span>
 </ul>
 
+
+
 <div><a i18n:translate="" href="seances/@@add" class="bigger">Propose a seance!</a></div>
+
+<div tal:define="proplen python: len([s for s in context['seances'].values()
+                                        if s.status=='proposed'])">
+  <span tal:condition="not: proplen"
+        i18n:translate="">No sessions have been proposed</span>
+  <span tal:condition="python:proplen==1"
+        i18n:translate="">1 session has been proposed</span>
+  <span tal:condition="python: proplen>1"
+        i18n:translate="">
+      <span tal:content="proplen" i18n:name="N">N</span> sessions have been proposed
+  </span>
+</div>
 
 </div>
 </body>

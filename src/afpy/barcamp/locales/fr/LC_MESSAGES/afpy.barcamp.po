@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: afpy.barcamp 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Mar  3 12:34:18 2009\n"
-"PO-Revision-Date: 2009-03-03 12:34+0100\n"
+"POT-Creation-Date: Fri Mar  6 12:13:43 2009\n"
+"PO-Revision-Date: 2009-03-06 12:15+0100\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <contact@afpy.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,13 +43,13 @@ msgstr "Menu d'actions"
 
 #: src/afpy/barcamp/app_templates/barcampmacros.pt:61
 #: src/afpy/barcamp/meeting_templates/index.pt:32
-#: src/afpy/barcamp/seance_templates/listview.pt:24
+#: src/afpy/barcamp/seance_templates/listview.pt:32
 msgid "on ${start_date}"
 msgstr "le ${start_date}"
 
 #: src/afpy/barcamp/app_templates/barcampmacros.pt:74
 #: src/afpy/barcamp/meeting_templates/index.pt:44
-#: src/afpy/barcamp/seance_templates/listview.pt:37
+#: src/afpy/barcamp/seance_templates/listview.pt:45
 msgid "from ${start_date} to ${end_date}"
 msgstr "Du ${start_date} au ${end_date}"
 
@@ -381,10 +381,26 @@ msgstr "Sessions confirmées"
 msgid "Author:"
 msgstr "Auteur :"
 
-#: src/afpy/barcamp/meeting_templates/index.pt:59
-#: src/afpy/barcamp/seance_templates/listview.pt:47
+#: src/afpy/barcamp/meeting_templates/index.pt:57
+msgid "No sessions have been confirmed yet"
+msgstr "Aucune session n'a encore été confirmée"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:65
+#: src/afpy/barcamp/seance_templates/listview.pt:55
 msgid "Propose a seance!"
 msgstr "Proposer une session !"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:69
+msgid "No sessions have been proposed"
+msgstr "Aucune session n'est actuellement proposée"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:71
+msgid "1 session has been proposed"
+msgstr "Une session a été proposée"
+
+#: src/afpy/barcamp/meeting_templates/index.pt:75
+msgid "${N} sessions have been proposed"
+msgstr "${N} sessions ont été proposées"
 
 #: src/afpy/barcamp/people.py:21
 msgid "Login"
@@ -507,6 +523,10 @@ msgstr "Merci d'avoir proposé une session pour ${meeting} ! <p>x</p>"
 #: src/afpy/barcamp/seance_templates/added.pt:15
 msgid "list of proposals"
 msgstr "liste des propositions"
+
+#: src/afpy/barcamp/seance_templates/index.pt:9
+msgid "Author"
+msgstr "Auteur"
 
 #: src/afpy/barcamp/seance_templates/listedit.pt:8
 #: src/afpy/barcamp/seance_templates/listview.pt:8
