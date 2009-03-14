@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Fri Mar  6 12:13:43 2009\n"
+"POT-Creation-Date: Sat Mar 14 08:45:58 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -23,27 +23,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
-#: src/afpy/barcamp/app.py:24
+#: src/afpy/barcamp/app.py:23
 #: src/afpy/barcamp/duration.py:78
-#: src/afpy/barcamp/meeting.py:67
-#: src/afpy/barcamp/people.py:68
-#: src/afpy/barcamp/seance.py:46
+#: src/afpy/barcamp/meeting.py:65
+#: src/afpy/barcamp/people.py:69
+#: src/afpy/barcamp/seance.py:47
 msgid "View"
 msgstr ""
 
-#: src/afpy/barcamp/app.py:30
+#: src/afpy/barcamp/app.py:29
 #: src/afpy/barcamp/duration.py:88
-#: src/afpy/barcamp/meeting.py:106
-#: src/afpy/barcamp/seance.py:60
-#: src/afpy/barcamp/seance.py:94
+#: src/afpy/barcamp/meeting.py:104
+#: src/afpy/barcamp/people.py:134
+#: src/afpy/barcamp/seance.py:61
+#: src/afpy/barcamp/seance.py:95
 msgid "Edit"
 msgstr ""
 
-#: src/afpy/barcamp/app.py:60
+#: src/afpy/barcamp/app.py:59
 msgid "Navigation menu"
 msgstr ""
 
-#: src/afpy/barcamp/app.py:68
+#: src/afpy/barcamp/app.py:67
 msgid "Actions menu"
 msgstr ""
 
@@ -100,7 +101,7 @@ msgid "Username"
 msgstr ""
 
 #: src/afpy/barcamp/authentication.py:153
-#: src/afpy/barcamp/people.py:27
+#: src/afpy/barcamp/people.py:29
 msgid "Password"
 msgstr ""
 
@@ -272,11 +273,6 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: src/afpy/barcamp/duration_templates/listview.pt:8
-#: src/afpy/barcamp/people_templates/peoplelistview.pt:8
-msgid "People"
-msgstr ""
-
 #: src/afpy/barcamp/interfaces.py:46
 msgid "Title of the session"
 msgstr ""
@@ -290,7 +286,7 @@ msgid "Type"
 msgstr ""
 
 #: src/afpy/barcamp/interfaces.py:49
-#: src/afpy/barcamp/meeting.py:31
+#: src/afpy/barcamp/meeting.py:29
 msgid "Description"
 msgstr ""
 
@@ -322,43 +318,43 @@ msgstr ""
 msgid "Benefits for attendees"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:108
+#: src/afpy/barcamp/meeting.py:106
 msgid "Apply"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:26
+#: src/afpy/barcamp/meeting.py:24
 msgid "Display name"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:27
+#: src/afpy/barcamp/meeting.py:25
 msgid "Address"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:28
+#: src/afpy/barcamp/meeting.py:26
 msgid "Start date"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:29
+#: src/afpy/barcamp/meeting.py:27
 msgid "End date"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:30
+#: src/afpy/barcamp/meeting.py:28
 msgid "Headline"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:59
+#: src/afpy/barcamp/meeting.py:57
 msgid "Manage Meetings"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:78
+#: src/afpy/barcamp/meeting.py:76
 msgid "Add a meeting"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:81
+#: src/afpy/barcamp/meeting.py:79
 msgid "URL name"
 msgstr ""
 
-#: src/afpy/barcamp/meeting.py:87
+#: src/afpy/barcamp/meeting.py:85
 msgid "Add meeting"
 msgstr ""
 
@@ -398,32 +394,46 @@ msgstr ""
 msgid "${N} sessions have been proposed"
 msgstr ""
 
-#: src/afpy/barcamp/people.py:21
-msgid "Login"
+#: src/afpy/barcamp/people.py:109
+msgid "Add a person"
 msgstr ""
 
-#: src/afpy/barcamp/people.py:22
-msgid "Firstname"
+#: src/afpy/barcamp/people.py:151
+msgid "My account"
 msgstr ""
 
 #: src/afpy/barcamp/people.py:23
-msgid "Lastname"
+msgid "Login"
 msgstr ""
 
 #: src/afpy/barcamp/people.py:24
-msgid "E-mail"
+msgid "Firstname"
+msgstr ""
+
+#: src/afpy/barcamp/people.py:25
+msgid "Lastname"
 msgstr ""
 
 #: src/afpy/barcamp/people.py:26
-msgid "Telephone"
+msgid "E-mail"
 msgstr ""
 
 #: src/afpy/barcamp/people.py:28
+msgid "Telephone"
+msgstr ""
+
+#: src/afpy/barcamp/people.py:30
 msgid "Short bio"
 msgstr ""
 
-#: src/afpy/barcamp/people.py:29
+#: src/afpy/barcamp/people.py:31
 msgid "Short description of yourself"
+msgstr ""
+
+#: src/afpy/barcamp/people.py:98
+#: src/afpy/barcamp/duration_templates/listview.pt:8
+#: src/afpy/barcamp/people_templates/peoplelistview.pt:8
+msgid "People"
 msgstr ""
 
 #: src/afpy/barcamp/people_templates/add.pt:8
@@ -434,61 +444,61 @@ msgstr ""
 msgid "Return to list"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:106
+#: src/afpy/barcamp/registration.py:101
 msgid "You have been added to: %s"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:116
+#: src/afpy/barcamp/registration.py:111
 msgid "You have been removed from: %s"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:24
+#: src/afpy/barcamp/registration.py:19
 msgid "Can register"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:28
+#: src/afpy/barcamp/registration.py:23
 msgid "Can attend"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:72
+#: src/afpy/barcamp/registration.py:67
 msgid "You are already registered"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:74
+#: src/afpy/barcamp/registration.py:69
 msgid "I want to attend!"
 msgstr ""
 
-#: src/afpy/barcamp/registration.py:75
+#: src/afpy/barcamp/registration.py:70
 msgid "I don't want to attend"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:121
+#: src/afpy/barcamp/seance.py:100
+#: src/afpy/barcamp/seance_templates/listedit.pt:190
+msgid "Add a seance"
+msgstr ""
+
+#: src/afpy/barcamp/seance.py:122
 msgid "Add seance"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:127
+#: src/afpy/barcamp/seance.py:128
 msgid "Please first register"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:158
+#: src/afpy/barcamp/seance.py:159
 msgid "Leader of a seance"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:51
+#: src/afpy/barcamp/seance.py:52
 msgid "Edit a seance"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:74
+#: src/afpy/barcamp/seance.py:75
 msgid "View the list of seances"
 msgstr ""
 
-#: src/afpy/barcamp/seance.py:84
+#: src/afpy/barcamp/seance.py:85
 msgid "Proposed seances"
-msgstr ""
-
-#: src/afpy/barcamp/seance.py:99
-#: src/afpy/barcamp/seance_templates/listedit.pt:190
-msgid "Add a seance"
 msgstr ""
 
 #: src/afpy/barcamp/seance_templates/add.pt:8
