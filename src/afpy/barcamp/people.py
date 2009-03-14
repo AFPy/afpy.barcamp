@@ -147,14 +147,12 @@ class Home(grok.View):
     """
     grok.context(IPeopleContainer)
     grok.name('home')
+    grok.require('afpy.barcamp.can_attend')
     megrok.menu.menuitem('navigation')
     grok.title(_(u'My account'))
 
     def update(self):
-        ppal_id = self.request.principal.id
-        if ppal_id == 'admin':
-            return self.redirect(self.url(self.context))
-        return self.redirect(ppal_id)
+        return self.redirect(self.request.principal.id)
 
     def render(self):
         return

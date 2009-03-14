@@ -15,10 +15,6 @@ _ = MessageFactory('afpy.barcamp')
 
 
 class RegistrationPermission(grok.Permission):
-    grok.name('afpy.barcamp.register')
-    grok.title(_(u'Can register')) # optional
-
-class RegistrationPermission(grok.Permission):
     grok.name('afpy.barcamp.can_attend')
     grok.title(_(u'Can attend')) # optional
 
