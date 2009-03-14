@@ -6,12 +6,7 @@ resource implements IRegistrable it can use our registration component to
 """
 from afpy.barcamp.interfaces import IRegistrable, IRegistration
 from afpy.barcamp.interfaces import ISideBar
-from afpy.barcamp.people import People, IPeopleContainer
 from z3c.flashmessage.sources import SessionMessageSource
-from zope.component import getUtility
-from zope.interface import Interface
-from zope.security.interfaces import Unauthorized
-from zope.securitypolicy.interfaces import IPrincipalPermissionManager
 from zope.session.interfaces import ISession
 import grok
 from zope.i18n import translate

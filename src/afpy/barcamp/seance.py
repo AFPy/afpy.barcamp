@@ -3,16 +3,16 @@ from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.registration import IRegistrable
 from datetime import timedelta
 from grokcore import formlib
-from interfaces import ISeance, ISeanceContainer
+from interfaces import ISeance
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
 from zope.component import getUtility
+from zope.i18nmessageid import MessageFactory
 from zope.interface import implements
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.session.interfaces import ISession
 import grok
 import megrok.menu
-from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('afpy.barcamp')
 
 class Seance(grok.Container):

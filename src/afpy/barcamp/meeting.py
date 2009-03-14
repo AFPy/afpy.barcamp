@@ -3,17 +3,15 @@
 from afpy.barcamp.app import AfpyBarcamp
 from afpy.barcamp.authentication import setup_authentication
 from afpy.barcamp.duration import Durations, IDurations
-from afpy.barcamp.interfaces import IRegistration
 from afpy.barcamp.people import IPeopleContainer, PeopleContainer
 from afpy.barcamp.registration import IRegistrable
-from afpy.barcamp.seance import ISeanceContainer, SeanceContainer
+from afpy.barcamp.seance import SeanceContainer
+from afpy.barcamp.interfaces import ISeanceContainer
 from grokcore import formlib
 from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.interfaces import IContainer, IContained
-from zope.app.folder import Folder
 from zope.app.security.interfaces import IAuthentication
-from zope.component import adapts
-from zope.interface import implements, Interface
+from zope.interface import implements
 from zope.schema import Datetime, TextLine, Text
 import grok
 import megrok.menu

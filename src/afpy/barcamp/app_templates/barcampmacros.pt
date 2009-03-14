@@ -76,7 +76,7 @@
             tal:content="python: request.locale.dates.getFormatter('date').format(site.end_date)">
         end
      </span>
-      </span> 
+      </span>
       </p>
     </div>
     <p class="url" tal:content="base_url">http://monconference.org</p>
@@ -95,11 +95,11 @@
            i18n:translate="">Program</a></li>
       <li tal:repeat="item site/people/@@view_get_menu/navigation">
         <a href="#people"
-           tal:attributes="href site/people/@@absolute_url"
+           tal:attributes="href string:${site/people/@@absolute_url}/@@${item/action}"
            tal:content="item/title"
            i18n:translate="">People</a></li>
       <li tal:repeat="item site/durations/@@view_get_menu/navigation">
-        <a href="#people"
+        <a href="#durations"
            tal:attributes="href site/durations/@@absolute_url"
            tal:content="item/title"
            i18n:translate="">Durations</a></li>

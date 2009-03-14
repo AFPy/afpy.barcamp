@@ -1,6 +1,5 @@
 from afpy.barcamp.authentication import setup_toplevel_authentication
 from afpy.barcamp.interfaces import ISideBar
-from grokcore import formlib
 from megrok.menu import Menu
 from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.browser.contents import Contents

@@ -3,9 +3,9 @@ from zc.sourcefactory.basic import BasicSourceFactory
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
 from zope.component import getUtility
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
 from zope.interface import implements
-from zope.schema import Datetime, TextLine, Text, Int, Choice
+from zope.schema import TextLine, Int
 import grok
 import megrok.menu
 from zope.i18nmessageid import MessageFactory
@@ -36,7 +36,7 @@ class Durations(grok.Container):
             self['presentation'] = Duration(20, u'Presentation (20min)')
             self['tutoriel'] = Duration(60, u'Tutoriel (1h)')
             self['atelier'] = Duration(120, u'Atelier (2h)')
-    
+
 
 class Duration(grok.Model):
     """a duration

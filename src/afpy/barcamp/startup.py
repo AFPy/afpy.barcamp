@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
-import code
-import zdaemon.zdctl
 import zope.app.wsgi
 import zope.app.debug
 

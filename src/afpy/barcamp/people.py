@@ -2,13 +2,15 @@ from grokcore import formlib
 from md5 import md5
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import IContainer
-from zope.interface import Interface, implements
+from zope.i18nmessageid import MessageFactory
+from zope.interface import implements
 from zope.schema import TextLine, Password, Text
+from zope.security.interfaces import Unauthorized
+from zope.security.management import checkPermission
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 import grok
 import megrok.menu
 import re
-from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('afpy.barcamp')
 
 check_email = re.compile(
@@ -62,10 +64,18 @@ class Index(formlib.DisplayForm):
     """the view of the person
     """
     grok.context(People)
-    grok.require('zope.ManageContent')
     form_fields = grok.AutoFields(IPeople).omit('password')
     megrok.menu.menuitem('actions')
     grok.title(_(u'View'))
+
+    def update(self):
+        """only allows owner and admin"""
+        super(Index, self).update()
+        if self.request.principal.id == self.context.__name__:
+            return
+        if checkPermission('zope.ManageContent', self.context):
+            return
+        raise Unauthorized()
 
 
 class IPeopleContainer(IContainer):
@@ -85,7 +95,7 @@ class PeopleListView(Contents, grok.View):
     grok.context(PeopleContainer)
     grok.require('zope.ManageContent')
     megrok.menu.menuitem('navigation')
-    grok.title(u'People')
+    grok.title(_(u'People'))
 
 
 class Add(formlib.AddForm):
@@ -96,7 +106,7 @@ class Add(formlib.AddForm):
     grok.require('zope.ManageContent')
     prefix = "people" # to avoid conflit with session credentials
     megrok.menu.menuitem('actions')
-    grok.title(u'Add a person')
+    grok.title(_(u'Add a person'))
 
     @formlib.action('Add this person')
     def add(self, **data):
@@ -120,7 +130,33 @@ class Edit(formlib.EditForm):
     """
     form_fields = grok.AutoFields(IPeople)
     grok.context(People)
-    grok.require('zope.ManageContent')
     megrok.menu.menuitem('actions')
-    grok.title(u'Edit')
+    grok.title(_(u'Edit'))
+
+    def update(self):
+        """only allows owner and admin"""
+        super(Edit, self).update()
+        if self.request.principal.id == self.context.__name__:
+            return
+        if checkPermission('zope.ManageContent', self.context):
+            return
+        raise Unauthorized()
+
+class Home(grok.View):
+    """redirection for users' home
+    """
+    grok.context(IPeopleContainer)
+    grok.name('home')
+    megrok.menu.menuitem('navigation')
+    grok.title(_(u'My account'))
+
+    def update(self):
+        ppal_id = self.request.principal.id
+        if ppal_id == 'admin':
+            return self.redirect(self.url(self.context))
+        return self.redirect(ppal_id)
+
+    def render(self):
+        return
+
 

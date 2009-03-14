@@ -1,7 +1,7 @@
 from afpy.barcamp.duration import DurationSource
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, Attribute
-from zope.schema import Datetime, TextLine, Text, Int, Choice
+from zope.schema import Datetime, TextLine, Text, Choice
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('afpy.barcamp')
 
