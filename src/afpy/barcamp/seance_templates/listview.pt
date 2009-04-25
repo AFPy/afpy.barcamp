@@ -8,7 +8,7 @@
 <h2 i18n:translate="">All seances</h2>
 
 <ul id="seancelist">
-  <tal:block repeat="seance context/values">
+  <tal:block repeat="seance view/sorted_seances">
   <li tal:condition="python:seance.status == 'proposed' or
                             seance.status == 'confirmed'">
     <a href="#"

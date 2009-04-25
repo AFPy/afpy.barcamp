@@ -20,7 +20,7 @@ address
 <h2 i18n:translate="">Confirmed seances</h2>
 
 <ul id="seancelist">
-  <tal:block repeat="seance context/seances/values">
+  <tal:block repeat="seance view/sorted_seances">
   <li tal:condition="python:seance.status == 'confirmed'">
     <a href="#"
        tal:attributes="href seance/@@absolute_url"

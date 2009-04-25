@@ -75,6 +75,14 @@ class ListPermission(grok.Permission):
     grok.title(_(u'View the list of seances')) # optional
 
 
+def start_date_sort(a, b):
+    if a.start_date is None:
+        return 1
+    if b.start_date is None:
+        return -1
+    return cmp(a.start_date, b.start_date)
+
+
 class ListView(Contents, grok.View):
     """view of the list of seances
     """
@@ -83,6 +91,11 @@ class ListView(Contents, grok.View):
     grok.require('afpy.barcamp.seances.list')
     megrok.menu.menuitem('navigation')
     grok.title(_(u'Proposed seances'))
+
+    def update(self):
+        self.sorted_seances = list(self.context.values())
+        self.sorted_seances.sort(start_date_sort)
+        super(ListView, self).update()
 
 
 class ListEdit(Contents, grok.View):

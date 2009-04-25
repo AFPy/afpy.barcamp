@@ -3,14 +3,15 @@
 from afpy.barcamp.app import AfpyBarcamp
 from afpy.barcamp.authentication import setup_authentication
 from afpy.barcamp.duration import Durations, IDurations
+from afpy.barcamp.interfaces import ISeanceContainer
 from afpy.barcamp.people import IPeopleContainer, PeopleContainer
 from afpy.barcamp.registration import IRegistrable
 from afpy.barcamp.seance import SeanceContainer
-from afpy.barcamp.interfaces import ISeanceContainer
 from grokcore import formlib
 from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.security.interfaces import IAuthentication
+from zope.component import getUtility
 from zope.interface import implements
 from zope.schema import Datetime, TextLine, Text
 import grok
@@ -57,6 +58,13 @@ class ManageMeetingsPermission(grok.Permission):
     grok.title(_(u'Manage Meetings')) # optional
 
 
+def start_date_sort(a, b):
+    if a.start_date is None:
+        return 1
+    if b.start_date is None:
+        return -1
+    return cmp(a.start_date, b.start_date)
+
 class Index(formlib.DisplayForm):
     """view of the meeting
     """
@@ -65,6 +73,10 @@ class Index(formlib.DisplayForm):
     grok.title(_(u'View'))
 
     def update(self):
+        self.sorted_seances = list(
+            getUtility(ISeanceContainer,
+                       context=grok.getSite()).values())
+        self.sorted_seances.sort(start_date_sort)
         super(Index, self).update()
 
 
