@@ -93,7 +93,7 @@ class ToplevelAuthenticatorPlugin(grok.GlobalUtility):
         if not ('login' in credentials and 'password' in credentials):
             return None
         # hardcoded admin account TODO Arghhh
-        if credentials['login'] != 'admin' and credentials['password'] != 'barcamp':
+        if credentials['login'] != 'admin' or credentials['password'] != 'barcamp':
             return None
         # grant permission to the hardcoded admin
         IPrincipalPermissionManager(grok.getSite()).grantPermissionToPrincipal ('zope.ManageContent', 'admin')
