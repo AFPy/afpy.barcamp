@@ -136,7 +136,7 @@ class Add(formlib.AddForm):
         obj.authors.add(self.request.principal.id)
 
         # TODO generate a correct slug that removes accents
-        name = data['name'].lower().replace(' ', '_')
+        name = data['name'].lower().replace(' ', '_').replace('/','_')
         self.context[name] = obj
         # assign a local role, just for this seance
         IPrincipalRoleManager(obj
