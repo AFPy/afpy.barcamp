@@ -19,46 +19,70 @@ address
 
 <h2 i18n:translate="">Confirmed seances</h2>
 
-<ul id="seancelist">
+<div id="seancelist">
   <tal:block repeat="seance view/sorted_seances">
-  <li tal:condition="python:seance.status == 'confirmed'">
-    <a href="#"
-       tal:attributes="href seance/@@absolute_url"
-       tal:content="seance/name">
-    seance
-    </a>
-    <span i18n:translate=""
-          tal:condition="python: seance.start_date and not seance.duration">
-      on <span class="start_date"
-               i18n:name="start_date"
-               tal:content="python: request.locale.dates.getFormatter('dateTime',
-                   length='short').format(seance.start_date)">single date</span>
-    </span>
-    <span i18n:translate=""
-          tal:condition="python: seance.start_date and seance.duration">
-      from <span class="start_date"
-               i18n:name="start_date"
-                 tal:content="python:
-request.locale.dates.getFormatter('dateTime',
-                         length='short').format(seance.start_date)">begin</span>
-      to <span class="duration"
-               i18n:name="end_date"
-               tal:content="python: request.locale.dates.getFormatter('dateTime',
-                           length='short').format(seance.end_date)">end</span>
-    </span>
-    - <span i18n:translate="">Author:</span>
-    <tal:block repeat="author seance/authors">
-    <span tal:define="people python:site['people'].get(author)"
-          tal:condition="people"
-          tal:content="string: ${people/firstname} ${people/lastname}">author</span>
-    </tal:block>
-  </li>
+  <div class="seance"
+       tal:condition="python:seance.status == 'confirmed'">
+    <div class="title">
+      <a href="#"
+         tal:attributes="href seance/@@absolute_url"
+         tal:content="seance/name">
+      seance
+      </a>
+      -
+      <span i18n:translate="">Author:</span>
+      <tal:block repeat="author seance/authors">
+        <span
+           tal:define="people python:site['people'].get(author)"
+           tal:condition="python: people is not None"
+           tal:content="string: ${people/firstname} ${people/lastname}">
+            author
+        </span>
+      </tal:block>
+    </div>
+
+    <div class="date">
+      <span i18n:translate=""
+            tal:condition="python: seance.start_date">
+        on <span class="start_date"
+                 i18n:name="start_date"
+                 tal:content="python: request.locale.dates.getFormatter('date',
+                      length='short').format(seance.start_date)">date</span>
+      </span>
+      <span i18n:translate=""
+            tal:condition="python: seance.start_date and not seance.duration">
+        at <span class="start_date"
+                 i18n:name="start_date"
+                 tal:content="python: request.locale.dates.getFormatter('time',
+                      length='short').format(seance.start_date)">time</span>
+      </span>
+      <span i18n:translate=""
+            tal:condition="python: seance.start_date and seance.duration">
+        from <span class="start_date"
+                 i18n:name="start_date"
+                   tal:content="python:
+  request.locale.dates.getFormatter('time',
+                           length='short').format(seance.start_date)">begin</span>
+        to <span class="duration"
+                 i18n:name="end_date"
+                 tal:content="python: request.locale.dates.getFormatter('time',
+                             length='short').format(seance.end_date)">end</span>
+      </span>
+    </div>
+
+    <div class="description" tal:content="structure seance/@@htmldescription">
+      seance description
+    </div>
+
+  </div>
   </tal:block>
-  <span tal:condition="python: not len([s for s in context['seances'].values() if s.status=='confirmed'])"
+
+  <div tal:condition="python: not len([s for s in context['seances'].values() if s.status=='confirmed'])"
         i18n:translate="">
     No sessions have been confirmed yet
-  </span>
-</ul>
+  </div>
+
+</div>
 
 
 

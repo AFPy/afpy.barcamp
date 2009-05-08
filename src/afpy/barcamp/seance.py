@@ -6,6 +6,8 @@ from grokcore import formlib
 from interfaces import ISeance
 from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.container.browser.contents import Contents
+from zope.app.form.browser.textwidgets import escape
+from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 from zope.component import getUtility
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements
@@ -165,6 +167,7 @@ class Added(grok.View):
     grok.name('added')
     grok.context(ISeance)
 
+
 class SeanceLeaderRole(grok.Role):
     """role assigned to speakers on their own seances
     """
@@ -174,4 +177,17 @@ class SeanceLeaderRole(grok.Role):
         'afpy.barcamp.editseance')
 
 
+class HtmlDescription(grok.View):
+    """an html view for the descriptions
+    """
+    grok.name('htmldescription')
+    grok.title('html')
+    grok.context(ISeance)
+
+    def render(self):
+        if self.context.description is None:
+            return _(u'(no description)')
+        return PlainTextToHTMLRenderer(escape(
+                    self.context.description),
+                    self.request).render()
 
