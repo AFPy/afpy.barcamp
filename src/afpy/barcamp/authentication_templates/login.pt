@@ -7,7 +7,8 @@
 
 <p i18n:translate="">If you don't have a password,
   <a i18n:name="create-an-account" i18n:translate="" href="@@signin">
-     create an account</a>
+     create an account</a><br/>
+Reminder: your password was sent to you by e-mail.
 </p>
 
 <form action="." tal:attributes="action request/URL" method="post"

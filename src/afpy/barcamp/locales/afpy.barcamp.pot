@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Sun May 10 23:40:44 2009\n"
+"POT-Creation-Date: Sun May 10 23:50:36 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -148,7 +148,7 @@ msgid "create an account"
 msgstr ""
 
 #: src/afpy/barcamp/authentication_templates/login.pt:9
-msgid "If you don't have a password, ${create-an-account}"
+msgid "If you don't have a password, ${create-an-account}<br /> Reminder: your password was sent to you by e-mail."
 msgstr ""
 
 #: src/afpy/barcamp/duration.py:111

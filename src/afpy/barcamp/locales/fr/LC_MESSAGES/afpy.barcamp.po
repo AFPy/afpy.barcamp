@@ -13,13 +13,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: afpy.barcamp 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Sun May 10 23:40:44 2009\n"
-"PO-Revision-Date: 2009-05-10 23:40+0200\n"
+"POT-Creation-Date: Sun May 10 23:50:36 2009\n"
+"PO-Revision-Date: 2009-05-10 23:51+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: French <contact@afpy.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bitPlural-Forms: nplurals=2; plural=(n > 1);\n"
+"Content-Transfer-Encoding: 8bitPlural-Forms: nplurals=2; plural=(n > 1);"
 
 #: src/afpy/barcamp/app.py:23 src/afpy/barcamp/duration.py:78
 #: src/afpy/barcamp/meeting.py:79 src/afpy/barcamp/people.py:69
@@ -151,8 +151,11 @@ msgid "create an account"
 msgstr "créez un compte"
 
 #: src/afpy/barcamp/authentication_templates/login.pt:9
-msgid "If you don't have a password, ${create-an-account}"
-msgstr "Si vous n'avez pas de mot de passe, ${create-an-account}"
+msgid ""
+"If you don't have a password, ${create-an-account}<br /> Reminder: your "
+"password was sent to you by e-mail."
+msgstr "Si vous n'avez pas de mot de passe, ${create-an-account}<br />"
+"Rappel : votre mot de passe vous a été envoyé par courriel."
 
 #: src/afpy/barcamp/duration.py:111
 #: src/afpy/barcamp/duration_templates/listview.pt:8
