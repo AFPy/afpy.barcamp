@@ -8,10 +8,10 @@ Your database does not need an upgrade.
 </p>
 <p tal:condition="view/need_upgrade" i18n:translate="">
 Your database needs an upgrade. To upgrade, just click on the button below:
-<form method="post" action="">
-    <input type="submit" name="do_upgrade" value="Upgrade!">
-</form>
 </p>
+<form method="post" action="" tal:condition="view/need_upgrade">
+    <input type="submit" name="do_upgrade" value="Upgrade!" i18n:attributes="value">
+</form>
 
 </div>
 </body>
