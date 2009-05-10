@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Sun May 10 23:50:36 2009\n"
+"POT-Creation-Date: Mon May 11 00:18:16 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -51,13 +51,13 @@ msgid "Actions menu"
 msgstr ""
 
 #: src/afpy/barcamp/app_templates/barcampmacros.pt:61
-#: src/afpy/barcamp/meeting_templates/index.pt:47
+#: src/afpy/barcamp/meeting_templates/index.pt:54
 #: src/afpy/barcamp/seance_templates/listview.pt:32
 msgid "on ${start_date}"
 msgstr ""
 
 #: src/afpy/barcamp/app_templates/barcampmacros.pt:74
-#: src/afpy/barcamp/meeting_templates/index.pt:66
+#: src/afpy/barcamp/meeting_templates/index.pt:73
 #: src/afpy/barcamp/seance_templates/listview.pt:45
 msgid "from ${start_date} to ${end_date}"
 msgstr ""
@@ -396,6 +396,18 @@ msgstr ""
 msgid "${DYNAMIC_CONTENT}"
 msgstr ""
 
+#: src/afpy/barcamp/meeting_templates/index.pt:100
+msgid "No sessions have been proposed"
+msgstr ""
+
+#: src/afpy/barcamp/meeting_templates/index.pt:102
+msgid "1 session has been proposed"
+msgstr ""
+
+#: src/afpy/barcamp/meeting_templates/index.pt:106
+msgid "${N} sessions have been proposed"
+msgstr ""
+
 #: src/afpy/barcamp/meeting_templates/index.pt:20
 msgid "Confirmed seances"
 msgstr ""
@@ -404,29 +416,21 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: src/afpy/barcamp/meeting_templates/index.pt:54
+#: src/afpy/barcamp/meeting_templates/index.pt:44
+msgid "Room:"
+msgstr ""
+
+#: src/afpy/barcamp/meeting_templates/index.pt:61
 msgid "at ${start_date}"
 msgstr ""
 
-#: src/afpy/barcamp/meeting_templates/index.pt:80
+#: src/afpy/barcamp/meeting_templates/index.pt:87
 msgid "No sessions have been confirmed yet"
 msgstr ""
 
-#: src/afpy/barcamp/meeting_templates/index.pt:89
-#: src/afpy/barcamp/seance_templates/listview.pt:55
+#: src/afpy/barcamp/meeting_templates/index.pt:96
+#: src/afpy/barcamp/seance_templates/listview.pt:61
 msgid "Propose a seance!"
-msgstr ""
-
-#: src/afpy/barcamp/meeting_templates/index.pt:93
-msgid "No sessions have been proposed"
-msgstr ""
-
-#: src/afpy/barcamp/meeting_templates/index.pt:95
-msgid "1 session has been proposed"
-msgstr ""
-
-#: src/afpy/barcamp/meeting_templates/index.pt:99
-msgid "${N} sessions have been proposed"
 msgstr ""
 
 #: src/afpy/barcamp/meeting_templates/upgrade.pt:13

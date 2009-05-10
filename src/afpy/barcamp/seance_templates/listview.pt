@@ -48,6 +48,12 @@
                            request.locale.dates.getFormatter('dateTime',
                            length='short').format(seance.end_date)">end</span>
     </span>
+    <tal:block condition="python:seance.room is not None">
+    -
+      <span tal:content="python:site['rooms'].get(seance.room.__name__).title">
+          author
+      </span>
+    </tal:block>
   </li>
   </tal:block>
 </ul>

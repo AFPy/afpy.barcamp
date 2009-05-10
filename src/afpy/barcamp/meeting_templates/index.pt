@@ -39,6 +39,13 @@ address
             author
         </span>
       </tal:block>
+      <tal:block condition="python:seance.room is not None">
+      -
+      <span i18n:translate="">Room:</span>
+        <span tal:content="python:site['rooms'].get(seance.room.__name__).title">
+            author
+        </span>
+      </tal:block>
     </div>
 
     <div class="date">
