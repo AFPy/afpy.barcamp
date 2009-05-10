@@ -43,7 +43,7 @@ class Index(formlib.DisplayForm):
     """view of the seance
     """
     form_fields = grok.AutoFields(ISeance).omit('name')
-    grok.require('afpy.barcamp.seances.list')
+    #grok.require('afpy.barcamp.seances.list')
     grok.context(ISeance)
     megrok.menu.menuitem('actions')
     grok.title(_(u'View'))
