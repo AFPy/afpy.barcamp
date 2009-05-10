@@ -1,0 +1,18 @@
+<html metal:use-macro="context/@@barcampmacros/macros/page"
+      i18n:domain="afpy.barcamp">
+<body>
+<div metal:fill-slot="body">
+
+<p tal:condition="not: view/need_upgrade" i18n:translate="">
+Your database does not need an upgrade.
+</p>
+<p tal:condition="view/need_upgrade" i18n:translate="">
+Your database needs an upgrade. To upgrade, just click on the button below:
+<form method="post" action="">
+    <input type="submit" name="do_upgrade" value="Upgrade!">
+</form>
+</p>
+
+</div>
+</body>
+</html>

@@ -23,6 +23,7 @@ class Seance(grok.Container):
     implements(ISeance, IRegistrable)
     name = audience = description = None
     start_date = duration = benefits = None
+    room = None
     keywords = authors = unfolding = None
     status = 'proposed'
 

@@ -1,4 +1,5 @@
 from afpy.barcamp.duration import DurationSource
+from afpy.barcamp.room import RoomSource
 from zope.app.container.interfaces import IContainer
 from zope.interface import Interface, Attribute
 from zope.schema import Datetime, TextLine, Text, Choice
@@ -46,6 +47,7 @@ class ISeance(IContainer):
     name = TextLine(title=_(u'Title of the session'))
     start_date = Datetime(title=_(u'Date and time'), required=False)
     duration = Choice(title=_(u'Type'), source=DurationSource())
+    room = Choice(title=_(u'Room'), source=RoomSource())
     description = Text(title=_(u'Description'), required=False)
     keywords = TextLine(title=_(u'Keywords'),
                         description=_(

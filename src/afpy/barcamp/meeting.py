@@ -6,8 +6,10 @@ from afpy.barcamp.duration import Durations, IDurations
 from afpy.barcamp.interfaces import ISeanceContainer
 from afpy.barcamp.people import IPeopleContainer, PeopleContainer
 from afpy.barcamp.registration import IRegistrable
+from afpy.barcamp.room import Rooms, IRooms
 from afpy.barcamp.seance import SeanceContainer
 from grokcore import formlib
+from z3c.flashmessage.sources import SessionMessageSource
 from zope.app.authentication.authentication import PluggableAuthentication
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.security.interfaces import IAuthentication
@@ -51,6 +53,10 @@ class Meeting(grok.Container, grok.Site):
                        public=True,
                        provides=IDurations,
                        name_in_container='durations')
+    grok.local_utility(Rooms,
+                       public=True,
+                       provides=IRooms,
+                       name_in_container='rooms')
 
 
 class ManageMeetingsPermission(grok.Permission):
@@ -120,5 +126,25 @@ class Edit(formlib.EditForm):
         self.applyData(self.context, **data)
         self.redirect(self.url('index'))
 
+class Upgrade(grok.View):
+    """Allows to upgrade the meeting object
+    This was added to be able to add the Room utility
+    after the meeting object was created
+    """
+    grok.require('afpy.barcamp.managemeetings')
+    megrok.menu.menuitem(menu='actions')
+    grok.title(_(u'Upgrade'))
+    def update(self):
+        # check if we need an upgrade
+        self.need_upgrade = False
+        if 'rooms' not in self.context.keys():
+            self.need_upgrade = True
+        # do the upgrade if asked
+        if 'do_upgrade' in self.request:
+            # UPGRADE
+            self.context['rooms'] = rooms = Rooms()
+            sm = grok.getSite().getSiteManager()
+            sm.registerUtility(rooms, IRooms)
+            SessionMessageSource().send(_(u'Database successfully upgraded!'))
 
 

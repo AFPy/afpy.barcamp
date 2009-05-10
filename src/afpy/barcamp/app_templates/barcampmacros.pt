@@ -103,6 +103,11 @@
            tal:attributes="href site/durations/@@absolute_url"
            tal:content="item/title"
            i18n:translate="">Durations</a></li>
+      <li tal:repeat="item site/rooms/@@view_get_menu/navigation" tal:on-error="nothing">
+        <a href="#rooms"
+           tal:attributes="href site/rooms/@@absolute_url"
+           tal:content="item/title"
+           i18n:translate="">Rooms</a></li>
     </ul>
   </div>
   <div style="clear:both"></div>

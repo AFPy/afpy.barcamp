@@ -5,9 +5,9 @@
 
 <body metal:fill-slot="body">
 
-<h1 tal:content="context/title">duration title</h1>
-
-<a i18n:translate="" href="..">return to list</a>
+<div id="explain" i18n:translate="">
+Please enter a new room
+</div>
 
 <form action="." tal:attributes="action request/URL" method="post"
       class="edit-form" enctype="multipart/form-data">
