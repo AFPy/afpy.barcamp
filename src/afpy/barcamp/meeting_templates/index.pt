@@ -19,6 +19,8 @@ address
 
 <h2 i18n:translate="">Confirmed seances</h2>
 
+<a href="seances/export" i18n:translate="">Export</a>
+
 <div id="seancelist">
   <tal:block repeat="seance view/sorted_seances">
   <div class="seance"

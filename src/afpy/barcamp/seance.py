@@ -1,7 +1,7 @@
 from afpy.barcamp.interfaces import IRegistration
 from afpy.barcamp.people import IPeopleContainer
 from afpy.barcamp.registration import IRegistrable
-from datetime import timedelta
+from datetime import date, timedelta
 from grokcore import formlib
 from interfaces import ISeance
 from z3c.flashmessage.sources import SessionMessageSource
@@ -15,6 +15,12 @@ from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.session.interfaces import ISession
 import grok
 import megrok.menu
+import xlwt
+import os
+import tempfile
+import itertools
+import logging
+
 _ = MessageFactory('afpy.barcamp')
 
 class Seance(grok.Container):
@@ -69,7 +75,6 @@ class SeanceContainer(grok.Container):
     """the container for seances
     """
 
-
 class ListPermission(grok.Permission):
     """can only see some pages when authenticated
     ex: the list of proposed seances
@@ -100,6 +105,98 @@ class ListView(Contents, grok.View):
         self.sorted_seances.sort(start_date_sort)
         super(ListView, self).update()
 
+class ExportView(Contents, grok.View):
+    """view of the list of seances
+    """
+    grok.name('export')
+    grok.context(SeanceContainer)
+    grok.require('afpy.barcamp.seances.list')
+    grok.title(_(u'export'))
+
+    def render(self):
+        datefmt = self.request.locale.dates.getFormatter('date').format
+        site = grok.getSite()
+        durations = [dur.title for dur in site['durations'].values()]
+
+        # Excel styling
+        base_sty_str = 'border: top thin, left thin, right thin, bottom thin; align: wrap yes, vert centre, horz centre;'
+        colors = itertools.cycle(('coral',
+                                  'light_green',
+                                  'tan',
+                                  'ivory',
+                                  'pale_blue',
+                                  'light_yellow',
+                                  'lavender',
+                                  'grey25',
+                                  'rose',
+                                  'light_turquoise',
+                                  'periwinkle',
+                                  'ice_blue',)) # Just in case we have more than 12 different durations
+        header_sty = xlwt.easyxf(base_sty_str+'font: bold on')
+        durations = dict((d, xlwt.easyxf(base_sty_str+'pattern: pattern solid, fore-colour %s;' % colors.next())) for d in durations)
+
+        wb = xlwt.Workbook()
+
+        seances = [v for v in self.context.values()
+                   if v.status == 'confirmed' and v.start_date is not None]
+        rooms = sorted(set(s.room.title for s in seances))
+
+        by_date = dict()
+        errors = []
+        for s in seances:
+            by_date.setdefault(s.start_date.timetuple()[:3], []).append(s)
+        for date_tuple, day_seances in sorted(by_date.iteritems()):
+            sheet_name = datefmt(date(*date_tuple))
+            by_room = dict()
+            for s in day_seances:
+                by_room.setdefault(s.room.title, []).append(s)
+            ws = wb.add_sheet(sheet_name)
+            start_hour = min(s.start_date.hour for s in day_seances)
+            end_hour = max(s.end_date.hour for s in day_seances)+1
+            hours = ['%d:%.2d' % (k, v) for k in xrange(start_hour, end_hour) for v in xrange(0, 60, 15)]
+            for line, h in enumerate(hours):
+                ws.write(line+1, 0, h, header_sty)
+            for col, room in enumerate(rooms):
+                ws.col(col+1).width = 0x2500
+                ws.write(0, col+1, room, header_sty)
+                for seance in by_room.get(room, []):
+                    start_line = 1+(seance.start_date.hour-start_hour)*4+seance.start_date.minute/15
+                    minutes_step, mod = divmod(seance.duration.value, 15)
+                    if mod == 0:
+                        minutes_step -= 1
+                    end_line = start_line + minutes_step
+                    try:
+                        ws.write_merge(start_line, end_line, col+1, col+1, seance.name, durations[seance.duration.title])
+                    except:
+                        errors.append(seance)
+
+            # write legend
+            start = len(hours)+3
+            for i, (value, style) in enumerate(sorted(durations.iteritems())):
+                ws.write(start+i, 1, value, style)
+
+            ws.show_grid = False
+            ws.panes_frozen = True
+            ws.horz_split_pos = 1
+            ws.vert_split_pos = 1
+            ws.portrait = True
+
+        for error in errors:
+            logging.error('Seance %s starting on %s and ending on %s in room %s is overriding another seance',
+                          error.name,
+                          error.start_date,
+                          error.end_date,
+                          error.room.title)
+
+        # output
+        fd, fname = tempfile.mkstemp()
+        wb.save(fname)
+        content = file(fname).read()
+        os.close(fd)
+        os.unlink(fname)
+        self.request.response.setHeader('Content-type', 'application/vnd.ms-excel')
+        self.request.response.setHeader('Content-disposition', 'attachment; filename=planning.xls')
+        return content
 
 class ListEdit(Contents, grok.View):
     """edit the list of seances
@@ -191,4 +288,3 @@ class HtmlDescription(grok.View):
         return PlainTextToHTMLRenderer(escape(
                     self.context.description),
                     self.request).render()
-

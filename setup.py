@@ -28,6 +28,7 @@ setup(name='afpy.barcamp',
                         'zope.sendmail',
                         'megrok.menu',
                         'zc.sourcefactory',
+                        'xlwt'
                         ],
       entry_points="""
       # Add entry points here
