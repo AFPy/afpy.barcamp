@@ -110,7 +110,6 @@ class ExportView(Contents, grok.View):
     """
     grok.name('export')
     grok.context(SeanceContainer)
-    grok.require('afpy.barcamp.seances.list')
     grok.title(_(u'export'))
 
     def render(self):
