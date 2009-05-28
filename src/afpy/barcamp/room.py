@@ -20,6 +20,7 @@ class IRoom(Interface):
     """interface of a room
     """
     title = TextLine(title=_(u'Title'))
+    stream_url = TextLine(title=_(u'Video stream URL'))
 
 
 class Rooms(grok.Container):
@@ -32,6 +33,7 @@ class Room(grok.Model):
     """a room
     """
     implements(IRoom)
+    stream_url = ''
 
     def __init__(self, title=None):
         super(Room, self).__init__()

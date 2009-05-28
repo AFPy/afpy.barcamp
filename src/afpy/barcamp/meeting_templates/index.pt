@@ -44,9 +44,12 @@ address
       <tal:block condition="python:seance.room is not None">
       -
       <span i18n:translate="">Room:</span>
-        <span tal:content="python:site['rooms'].get(seance.room.__name__).title">
-            author
-        </span>
+        <a href="#"
+           tal:define="room python:site['rooms'].get(seance.room.__name__)"
+           tal:content="room/title"
+           tal:attributes="href room/stream_url">
+            room
+        </a>
       </tal:block>
     </div>
 
