@@ -1,0 +1,30 @@
+
+Welcome to afpy.barcamp documentation!
+======================================
+
+*afpy.barcamp* was created to manage sessions and people registrations at PyCon FR
+2008.
+
+Installation:
+-------------
+You can try afpy.barcamp on Linux (and maybe MacOs X) in an isolated sandbox.
+You first have to install Python 2.5 and Mercurial::
+
+  $ sudo aptitude install python2.5 mercurial
+
+Then create the sandbox::
+
+  $ hg clone https://hg.afpy.org/afpy.barcamp/
+  $ cd afpy.barcamp
+  $ python bootstrap.py
+  $ ./bin/buildout
+
+When it's finished, you can run the application::
+
+  $ ./bin/zopectl fg
+
+Then open http://127.0.0.1:8080 in your browser
+
+The admin account is admin/admin. After login, just create an application in the
+Grok administration panel, click on the new application. Now you can create a
+new event and allow people to register.
