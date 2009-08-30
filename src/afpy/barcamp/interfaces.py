@@ -47,7 +47,7 @@ class ISeance(IContainer):
     name = TextLine(title=_(u'Title of the session'))
     start_date = Datetime(title=_(u'Date and time'), required=False)
     duration = Choice(title=_(u'Type'), source=DurationSource())
-    room = Choice(title=_(u'Room'), source=RoomSource())
+    room = Choice(title=_(u'Room'), source=RoomSource(), required=False)
     description = Text(title=_(u'Description'), required=False)
     keywords = TextLine(title=_(u'Keywords'),
                         description=_(
