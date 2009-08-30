@@ -20,7 +20,8 @@ class IRoom(Interface):
     """interface of a room
     """
     title = TextLine(title=_(u'Title'))
-    stream_url = TextLine(title=_(u'Video stream URL'))
+    stream_url = TextLine(title=_(u'Video stream URL'),
+                          required=False)
 
 
 class Rooms(grok.Container):

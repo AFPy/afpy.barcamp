@@ -219,6 +219,12 @@ class Add(formlib.AddForm):
     grok.context(SeanceContainer)
     form_fields = grok.AutoFields(ISeance).omit('start_date', 'status')
 
+    def __init__(self, context, request):
+        super(Add, self).__init__(context, request)
+        rooms = self.form_fields['room'].field.source.factory.getValues()
+        if not rooms:
+            self.form_fields = self.form_fields.omit('room')
+
     def update(self):
         form = self.request.form
 

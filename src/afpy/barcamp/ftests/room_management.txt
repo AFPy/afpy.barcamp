@@ -1,0 +1,147 @@
+Functional test for room management
+===================================
+:Test-Layer: functional
+
+The toplevel administrator can manage the rooms (add, remove and edit)
+
+  >>> from zope.testbrowser.testing import Browser
+  >>> browser = Browser()
+
+Enable this before the wanted line to view server errors
+  >>> #browser.handleErrors = False
+
+Enable this before the line you want to interact with:
+  >>> #import interlude; interlude.interact(locals())
+
+Prerequisites
+-------------
+
+We first add the toplevel application as grok admin:
+
+  >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> browser.addHeader('Accept-Language', 'en-US')
+  >>> browser.open('http://localhost:8080/applications/')
+  >>> browser.getControl(name='name').value = u'barcamp'
+  >>> browser.getControl(name='Add').click()
+  >>> browser.open('http://localhost:8080/barcamp/')
+
+Then we add a meeting as application admin and logout:
+
+  >>> del browser
+  >>> browser = Browser()
+  >>> browser.open('http://localhost:8080/barcamp/%40%40add')
+  >>> browser.getControl(name='form.login').value = u'admin'
+  >>> browser.getControl(name='form.password').value = u'barcamp'
+  >>> browser.getControl(name='form.actions.login').click()
+  >>> browser.getControl(name='form.name').value = u'pycon fr'
+  >>> browser.getControl(name='form.address').value = u'pycon fr'
+  >>> browser.getControl(name='form.start_date').value = '2008-05-04'
+  >>> browser.getControl(name='form.end_date').value = '2008-05-07'
+  >>> browser.getControl('Add').click()
+
+We add a new person.
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/people/add')
+  >>> browser.getControl(name='people.login').value = u'speaker1'
+  >>> browser.getControl(name='people.firstname').value = u'speaker1'
+  >>> browser.getControl(name='people.lastname').value = u'speaker1'
+  >>> browser.getControl(name='people.email').value = u'speaker1@test.com'
+  >>> browser.getControl(name='people.password').value = u'secret'
+  >>> browser.getControl('Add this person').click()
+
+We login as this new person
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/')
+  >>> browser.getLink(text='logout').click()
+  >>> browser.getLink(text='login').click()
+  >>> browser.getControl(name='form.login').value = u'speaker1'
+  >>> browser.getControl(name='form.password').value = u'secret'
+  >>> browser.getControl('login').click()
+
+Adding a seance without a room
+------------------------------
+
+Some places don't require to specify rooms (they have only one).
+So we should be able to add a seance without needing a room.
+
+We don't have any room yet
+
+  >>> len(getRootFolder()['barcamp']['pycon_fr']['rooms'])
+  0
+
+If we want to add a seance, there is no form field for the room:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
+  >>> 'room' in browser.contents
+  False
+
+We have no link to configure the rooms of the event (we are not admin):
+
+  >>> browser.getLink(text='rooms')
+  Traceback (most recent call last):
+  ...
+  LinkNotFoundError
+
+We have to login again as admin to be able to configure the rooms:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/')
+  >>> browser.getLink(text='logout').click()
+  >>> browser.getLink(text='login').click()
+  >>> browser.getControl(name='form.login').value = u'admin'
+  >>> browser.getControl(name='form.password').value = u'barcamp'
+  >>> browser.getControl('login').click()
+
+  >>> browser.getLink(text='Rooms').click()
+
+Here we can add two rooms:
+
+  >>> browser.getLink(url='add').click()
+  >>> browser.getControl(name='form.title').value = u'big room'
+  >>> browser.getControl(name='form.actions.add').click()
+
+  >>> browser.getLink(url='add').click()
+  >>> browser.getControl(name='form.title').value = u'small room'
+  >>> browser.getControl(name='form.actions.add').click()
+
+Now that we have two rooms, we can choose one when adding a seance:
+
+  >>> browser.getLink(text='logout').click()
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/add')
+  >>> browser.getControl(name='form.login').value = u'speaker1'
+  >>> browser.getControl(name='form.password').value = u'secret'
+  >>> browser.getControl('login').click()
+
+  >>> 'big room' in browser.contents
+  True
+  >>> 'small room' in browser.contents
+  True
+
+  >>> browser.getControl(name='form.name').value = u'about grok'
+  >>> browser.getControl(name='form.room').value = ['0x0190']
+  >>> browser.getControl('Add').click()
+
+Then we can visit the seance:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok')
+  >>> browser.headers['status']
+  '200 Ok'
+  >>> 'small room' in browser.contents
+  True
+
+We edit the seance, and change the room:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/edit')
+  >>> browser.getControl(name='form.room').value = ['0x018b']
+  >>> browser.getControl('Apply').click()
+  >>> browser.getControl(name='form.room').value
+  ['0x018b']
+
+We can have no room chosen:
+
+  >>> browser.open('http://localhost:8080/barcamp/pycon_fr/seances/about_grok/edit')
+  >>> browser.getControl(name='form.room').value = ['']
+  >>> browser.getControl('Apply').click()
+  >>> browser.getControl(name='form.room').value
+  ['']
+
+
